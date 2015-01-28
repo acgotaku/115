@@ -70,21 +70,196 @@ var pan_115 = function(cookies) {
             }
             return http;
         };
+        //设置aria2c下载设置的Header信息
+        var combination = {
+            header: function(type) {
+                var addheader = [];
+                var UA = $("#setting_aria2_useragent_input").val() || "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36";
+                var headers = $("#setting_aria2_headers").val();
+                var referer = $("#setting_aria2_referer_input").val() || "http://115.com/";
+                addheader.push("User-Agent: " + UA);
+                // var baidu_cookies=JSON.parse(cookies);
+                // var format_cookies=[];
+                // for(var i=0;i<baidu_cookies.length;i++){
+                //     for(var key in baidu_cookies[i]){
+                //         // addheader.push("Cookie: " + key +"=" +baidu_cookies[i][key]);
+                //         format_cookies.push(key +"=" +baidu_cookies[i][key]);
+                //     }
+                // }
+                // addheader.push("Cookie: " + format_cookies.join(";"));
+                addheader.push("Referer: " + referer);
+                if (headers) {
+                    var text = headers.split("\n");
+                    for (var i = 0; i < text.length; i++) {
+                        addheader.push(text[i]);
+                    }
+                }
+                var header = "";
+                if (type == "aria2c_line") {
+                    for (var i = 0; i < addheader.length; i++) {
+                        header += " --header " + JSON.stringify(addheader[i]) + " ";
+                    }
+                    return header;
+                } else if (type == "aria2c_txt") {
+                    for (var i = 0; i < addheader.length; i++) {
+                        header += " header=" + (addheader[i]) + " \n";
+                    }
+                    return header;
+                } else if (type == "idm_txt") {
+                    for (var i = 0; i < addheader.length; i++) {
+                        header += " header=" + (addheader[i]) + " \n";
+                    }
+                    return header;
+                } else {
+                    return addheader;
+                }
+
+            }
+        };
+        var url = (localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc") + "?tm=" + (new Date().getTime().toString());
         return {
             //初始化按钮和一些事件
             init: function() {
                 var self = this;
-                self.bind_btn();
                 self.set_down_url();
+                self.set_btn();
+                self.set_config_ui();
+                self.set_config();
                 SetMessage("载入成功!", "inf");
+            },
+            set_btn:function(){
+                //设置导出按钮的触发 js_top_panel_box
+                //设置 设置按钮
+                var self = this;
+                var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                $("<div>").text("设置导出按钮").addClass("btn-export").on('click',function(){
+                    self.bind_btn();
+                }).appendTo($(root).find("#js_top_panel_box"));
+                var setting_div=$("<a>").text("插件设置");
+                setting_div.insertAfter('a[tab_btn="privacy_set"]');
+                setting_div.on('click',function(){
+                    $("#setting_div").show();
+                    $("#setting_divtopmsg").html("");
+                    self.set_center($("#setting_div"));
+                });
+            },
+            set_config_ui:function(){
+                var self = this;
+                var setting_div = document.createElement("div");
+                setting_div.className = "download-mgr-dialog dialog-box";
+                setting_div.id = "setting_div";
+                var html_ = [
+                    '<h2 class="dialog-title" ><span rel="base_title">导出设置</span><div class="dialog-handle"><a href="javascript:;" class="diag-close" btn="close">关闭</a></div></h2>',
+                    '<div style=" margin: 20px 10px 10px 10px; ">',
+                    '<div id="setting_divtopmsg" style="position:absolute; margin-top: -18px; margin-left: 10px; color: #E15F00;"></div>',
+                    '<table id="setting_div_table" >',
+                    '<tbody>',
+                    '<tr><td width="100"><label>ARIA2 RPC：</label></td><td><input id="rpc_input" type="text" class="input-large"></td></tr>',
+                    '<tr><td><label>RPC访问设置</label></td><td><input id="rpc_distinguish" type="checkbox"></td></tr>',
+                    '<tr><td><label >RPC 用户名：</label></td><td><input type="text" id="rpc_user" disabled="disabled" class="input-small"></td></tr>',
+                    '<tr><td><label>RPC 密码：</label></td><td><input type="text" id="rpc_pass" disabled="disabled" class="input-small"></td></tr>',
+                    '<tr><td><label>Secret Token：</label></td><td><input type="text" id="rpc_token" class="input-small"><div style="position:absolute; margin-top: -20px; right: 20px;"><a id="send_test" type="0" href="javascript:;" >测试连接，成功显示版本号。</a></div></td></tr>',
+                    '<tr><td><label>下载路径:</label></td><td><input type="text" placeholder="只能设置为绝对路径" id="setting_aria2_dir" class="input-large"></td></tr>',
+                    '<tr><td><label>User-Agent :</label></td><td><input type="text" id="setting_aria2_useragent_input" class="input-large"></td></tr>',
+                    '<tr><td><label>Referer ：</label></td><td><input type="text" id="setting_aria2_referer_input" class="input-large"></td></tr>',
+                    '<tr><td colspan="2"><div style="color: #656565;">Headers<label style="margin-left: 65px;">※使用回车分隔每个headers。</label></div><li class="b-list-item separator-1"></li></td></tr>',
+                    '<tr><td><label>headers ：</label></td><td><textarea id="setting_aria2_headers" ></textarea></td></tr>',
+                    '</tbody>',
+                    '</table>',
+                    '<div style="margin-top:10px;">',
+                    '<div id="copyright">© Copyright <a href="https://github.com/acgotaku/115">雪月秋水 </a> Version:' + version + ' 更新日期: ' + update_date + ' </div>',
+                    '<div style="margin-left:70px; display:inline-block"><a href="javascript:;" id="apply" class="button" ><b>应用</b></a></div>',
+                    '</div>',
+                    '</div>'
+                ];
+                setting_div.innerHTML = html_.join("");
+                document.body.appendChild(setting_div);
+                $(".diag-close").click(function() {
+                    $("#setting_div").hide();
+                });
+                $("#apply").click(function() {
+                    self.get_config();
+                    $("#setting_divtopmsg").html("设置已保存.");
+                });
+                $("#send_test").click(function() {
+                    self.get_version();
+                });
+                $("#rpc_distinguish").change(function() {
+                    if ($(this).is(":checked")) {
+                        $("#rpc_user").removeAttr("disabled").css("background-color", "#FFF");
+                        $("#rpc_pass").removeAttr("disabled").css("background-color", "#FFF");
+                    } else {
+                        $("#rpc_user").attr({"disabled": "disabled"}).css("background-color", "#eee");
+                        $("#rpc_pass").attr({"disabled": "disabled"}).css("background-color", "#eee");
+                    }
+                });
+
+            },
+            //填充已经设置的配置数据
+            set_config: function() {
+                $("#rpc_input").val((localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc"));
+                $("#rpc_token").val(localStorage.getItem("rpc_token"));
+                $("#setting_aria2_dir").val(localStorage.getItem("rpc_dir"));
+                $("#setting_aria2_useragent_input").val(localStorage.getItem("UA") || "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.91 Safari/537.36");
+                $("#setting_aria2_referer_input").val(localStorage.getItem("referer") || "http://115.com/");
+                $("#setting_aria2_headers").val(localStorage.getItem("rpc_headers"));
+
+                if (localStorage.getItem("auth") == "true") {
+                    var rpc_user = localStorage.getItem("rpc_user");
+                    var rpc_pass = localStorage.getItem("rpc_pass");
+                    $("#rpc_user").val(rpc_user);
+                    $("#rpc_pass").val(rpc_pass);
+                    $("#rpc_distinguish").prop('checked', true).trigger("change");
+                    auth = "Basic " + btoa(rpc_user + ":" + rpc_pass);
+                }
+                else {
+                    $("#rpc_user, #rpc_pass").val("");
+                }
+            },
+            //保存配置数据
+            get_config: function() {
+                var rpc_url = $("#rpc_input").val();
+                if (rpc_url) {
+                    localStorage.setItem("rpc_url", rpc_url);
+                    url = rpc_url + "?tm=" + (new Date().getTime().toString());
+                }
+                localStorage.setItem("UA", document.getElementById("setting_aria2_useragent_input").value || "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.91 Safari/537.36");
+                if ($("#rpc_distinguish").prop('checked') == true) {
+                    localStorage.setItem("rpc_user", $("#rpc_user").attr("value"));
+                    localStorage.setItem("rpc_pass", $("#rpc_pass").attr("value"));
+                    localStorage.setItem("auth", true);
+                    auth = "Basic " + btoa($("#rpc_user").attr("value") + ":" + $("#rpc_pass").attr("value"));
+                } else {
+                    localStorage.setItem("auth", false);
+                    localStorage.setItem("rpc_user", null);
+                    localStorage.setItem("rpc_pass", null);
+                }
+                localStorage.setItem("rpc_token", $("#rpc_token").val());
+                localStorage.setItem("rpc_dir", $("#setting_aria2_dir").val());
+                localStorage.setItem("rpc_headers", $("#setting_aria2_headers").val());
+                localStorage.setItem("referer", $("#setting_aria2_referer_input").val());
+            },
+            set_center:function(obj){
+                    var screenWidth = $(window).width(), screenHeight = $(window).height();
+                    var scrolltop = $(document).scrollTop();
+                    var objLeft = (screenWidth - obj.width())/2 ;
+                    var objTop = (screenHeight - obj.height())/2 + scrolltop;
+                    obj.css({left: objLeft + 'px', top: objTop + 'px'});
             },
             bind_btn:function(){
                 var self=this;
                 //$(root).find('li[rel="item"]')
                 var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                if($(root).find(".show-export-button").length != 0){
+                    SetMessage("已设置!", "inf");
+                    return false;
+                }
                 $(root).find('li[rel="item"][file_type="1"]').each(function(){
+                    
                     $('<div class="show-export-button">导出下载</div>').appendTo($(this));
+
                 });
+                SetMessage("设置按钮成功!", "inf");
                 $(root).find('.show-export-button').on('click',function(){
                     var pick_code = $(this).parent().attr('pick_code');
                     DownBridge.getFileUrl(pick_code,function(data){
@@ -97,7 +272,6 @@ var pan_115 = function(cookies) {
             },
             set_down_url:function(){
                 var self=this;
-                console.log("get url");
                 DownBridge={};
                   $('<iframe>').attr('src', 'http://web.api.115.com/bridge_2.0.html?namespace=DownBridge&api=jQuery').css({
                     width: 0,
@@ -128,8 +302,8 @@ var pan_115 = function(cookies) {
                 }
                 var parameter = {'url': url, 'dataType': 'json', type: 'POST', data: JSON.stringify(data), 'headers': {'Authorization': auth}};
                 HttpSendRead(parameter)
-                        .done(function(json, textStatus, jqXHR) {
-
+                        .done(function(xml, textStatus, jqXHR) {
+                            $("#send_test").html("ARIA2\u7248\u672c\u4e3a\uff1a\u0020" + xml.result.version);
                         })
                         .fail(function(jqXHR, textStatus, errorThrown) {
                             $("#send_test").html("错误,请查看是否开启Aria2");
@@ -147,20 +321,20 @@ var pan_115 = function(cookies) {
                             "id": new Date().getTime(),
                             "params": [[file_list[i].link], {
                                     "out": file_list[i].name,
-                                    "dir":$("#setting_aria2_dir").val()||null
+                                    "dir":$("#setting_aria2_dir").val()||null,
+                                    "header": combination.header()
                                 }
                             ]
                         };
-                        // if ($("#rpc_token").val()) {
-                        //     rpc_data.params.unshift("token:" + $("#rpc_token").val());
-                        // }
+                        if ($("#rpc_token").val()) {
+                            rpc_data.params.unshift("token:" + $("#rpc_token").val());
+                        }
                         self.aria2send_data(rpc_data);
                     }
                 }
             },
             //和aria2c通信
             aria2send_data: function(data) {
-                var url="http://localhost:6800/jsonrpc";
                 var parameter = {'url': url, 'dataType': 'json', type: 'POST', data: JSON.stringify(data), 'headers': {'Authorization': auth}};
                 HttpSendRead(parameter)
                         .done(function(json, textStatus, jqXHR) {
@@ -192,10 +366,97 @@ var css = function() {/*
     z-index: 999;
     display: none;
 }
-
+.btn-export{
+    position: relative;
+    top: 8px;
+    float: right;
+    margin-right: 10px;
+    padding: 0 10px 0 10px;
+    line-height: 30px;
+    font-size: 14px;
+    color: white;
+    background: #2b91e3;
+    border-radius: 3px;
+    cursor: pointer;
+}
 li[rel="item"]:hover .show-export-button {
     display: block;
     cursor: pointer;
+    background:#FFD;
+}
+ */
+}.toString().slice(15, -4);
+var setting_css= function() {/*
+.download-mgr-dialog{
+    z-index: 1000000099;
+    position: fixed;
+    background: #FFF;
+    width:580px;
+    display:none;
+}
+#setting_div_table input{
+border: 1px solid #C6C6C6;
+box-shadow: 0 0 3px #C6C6C6;
+-webkit-box-shadow: 0 0 3px #C6C6C6;
+height:18px;
+}
+.input-large{
+width:90%;
+}
+.input-small{
+width:150px;
+}
+#setting_div_table input[disabled]{
+cursor: not-allowed;
+background-color: #eee;
+}
+#send_test{
+display:inline-block;
+border:1px solid #D1D1D1;
+background-color: #F7F7F7;
+text-align: center; text-decoration: none;
+color:#1B83EB;
+}
+#copyright{
+display:inline-block;
+}
+#setting_aria2_headers{
+overflow:auto;
+resize:none;
+width:90%;
+height:80px;
+border: 1px solid #C6C6C6;
+box-shadow: 0 0 3px #C6C6C6;
+-webkit-box-shadow: 0 0 3px #C6C6C6;
+}
+#apply{
+display:inline-block;
+width:100px;
+height:40px;
+text-align: center;
+text-decoration: none;
+background: #52C035;
+background: -webkit-linear-gradient(top, #52C035, #4BAC32);
+background: -moz-linear-gradient(top, #52C035, #4BAC32);
+background: -o-linear-gradient(top, #52C035, #4BAC32);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#52C035', endColorstr='#4BAC32');
+}
+#apply b{
+    float:none;
+    padding-right: 2px;
+}
+.download-mgr-dialog .content {
+padding: 10px 20px;
+height:auto;
+overflow: hidden;
+}
+#setting_div_table{
+width:100%;
+border:0;
+border-collapse:separate;
+border-spacing:10px;
+display:table;
+background-color: rgb(250, 250, 250);
 }
  */
 }.toString().slice(15, -4);
@@ -224,4 +485,8 @@ onload(function() {
     style.setAttribute('type', 'text/css');
     style.textContent = css;
     root.head.appendChild(style);
+    var style = document.createElement('style');
+    style.setAttribute('type', 'text/css');
+    style.textContent = setting_css;
+    document.head.appendChild(style);
 });
