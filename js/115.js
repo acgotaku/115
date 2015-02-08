@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.1
+// @version 0.0.2
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.1";
-    var update_date = "2015/01/26";
+    var version = "0.0.2";
+    var update_date = "2015/02/08";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -132,6 +132,13 @@ var pan_115 = function(cookies) {
                 //设置 设置按钮
                 var self = this;
                 var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
+                    self.aria2_export(true);
+                }).appendTo($(root).find("#js_top_panel_box"));
+                $("<div>").text("导出下载").addClass("btn-aria2c").on('click',function(){
+                    self.aria2_download();
+                    self.aria2_export(false);
+                }).appendTo($(root).find("#js_top_panel_box"));
                 $("<div>").text("设置导出按钮").addClass("btn-export").on('click',function(){
                     self.bind_btn();
                 }).appendTo($(root).find("#js_top_panel_box"));
@@ -141,6 +148,15 @@ var pan_115 = function(cookies) {
                     $("#setting_div").show();
                     $("#setting_divtopmsg").html("");
                     self.set_center($("#setting_div"));
+                });
+                $(root).find('li[rel="item"][file_type="1"]').each(function(){
+                    $(this).on('click',function(){
+                        console.log("147");
+                        if($(this).children().eq(3).prop('checked')){
+                            var share=$(root).find("li[menu='shareto']");
+                            $("<li>").html('<i class="icon ilo-download"></i><span>RPC导出</span>').insertAfter(share);
+                        }                        
+                    });
                 });
             },
             set_config_ui:function(){
@@ -256,7 +272,7 @@ var pan_115 = function(cookies) {
                 }
                 $(root).find('li[rel="item"][file_type="1"]').each(function(){
                     
-                    $('<div class="show-export-button">导出下载</div>').appendTo($(this));
+                    $('<div class="show-export-button">一键RPC</div>').appendTo($(this));
 
                 });
                 SetMessage("设置按钮成功!", "inf");
@@ -268,6 +284,84 @@ var pan_115 = function(cookies) {
                         self.aria2_rpc(file_list);
                     });
                 });
+
+            },
+            aria2_export:function(method){
+                var self=this;
+                var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                $(root).find('li[rel="item"][file_type="1"]').each(function(){
+                    if($(this).children().eq(3).prop('checked') == true){
+                        var pick_code = $(this).attr('pick_code');
+                        DownBridge.getFileUrl(pick_code,function(data){
+                            var file_list=[];
+                            file_list.push({"name": data.file_name, "link": data.file_url});
+                            if(method){
+                                self.aria2_rpc(file_list);
+                            }else{
+                                $("#download_ui").show();
+                                self.aria2_data(file_list);
+                            }
+                            
+                        });
+                    }
+                });                              
+            },
+            //aria2导出下载界面以及事件绑定
+            aria2_download: function() {
+                if ($("#download_ui").length == 0) {
+                    var download_ui = $("<div>").attr("id", "download_ui").addClass("download-mgr-dialog dialog-box").html('<h2 class="dialog-title" ><span rel="base_title">ARIA2导出</span><div class="dialog-handle"><a href="javascript:;" class="diag-close" btn="close">关闭</a></div></h2>');
+                    var content_ui = $("<div>").addClass("content").attr("id", "content_ui").appendTo(download_ui);
+                    download_ui.appendTo($("body"));
+                    content_ui.empty();
+                    var download_menu = $("<div>").css({"display": "block", "margin-bottom": "10px"}).appendTo(content_ui);
+                    var aria2c_btn = $("<a>").attr("id", "aria2c_btn").attr({"href": "data:text/plain;charset=utf-8,", "download": "aria2c.down", "target": "_blank"}).addClass("new-btn").html('<b>存为aria2文件</b>').appendTo(download_menu);
+                    var idm_btn = $("<a>").attr("id", "idm_btn").attr({"href": "data:text/plain;charset=utf-8,", "download": "idm.down", "target": "_blank"}).addClass("new-btn").html('<b>存为IDM文件</b>').appendTo(download_menu);
+                    var download_txt_btn = $("<a>").attr("id", "download_txt_btn").attr({"href": "data:text/plain;charset=utf-8,", "download": "download_link.down", "target": "_blank"}).addClass("new-btn").html('<b>保存下载链接</b>').appendTo(download_menu);
+                    var download_link = $("<textarea>").attr("wrap", "off").attr("id", "download_link").css({"white-space": "nowrap", "width": "100%", "overflow": "scroll", "height": "180px"});
+                    download_link.appendTo(content_ui);
+                    $(".diag-close").click(function() {
+                        download_ui.hide();
+                    });
+                } else {
+                    $("#aria2c_btn, #idm_btn, #download_txt_btn").attr("href", "data:text/plain;charset=utf-8,");
+                    $("#download_link").val("");
+                }
+            },
+            //导出填充数据和显示数据
+            aria2_data: function(file_list) {
+                var files = [];
+                var aria2c_txt = [];
+                var idm_txt = [];
+                var down_txt = [];
+                if (file_list.length > 0) {
+                    var length = file_list.length;
+                    for (var i = 0; i < length; i++) {
+                        files.push("aria2c -c -s10 -k1M -x10 -o " + JSON.stringify(file_list[i].name) + combination.header('aria2c_line') + " " + JSON.stringify(file_list[i].link) + "\n");
+                        aria2c_txt.push([
+                            file_list[i].link,
+                            combination.header("aria2c_txt"),
+                            ' out=' + file_list[i].name,
+                            ' continue=true',
+                            ' max-connection-per-server=10',
+                            '  split=10',
+                            '\n'
+                        ].join('\n'));
+                        idm_txt.push([
+                            '<',
+                            file_list[i].link,
+                            ' cookie: ' + cookies,
+                            ' out=' + file_list[i].name,
+                            ' >'
+                        ].join('\r\n'));
+                        down_txt.push([file_list[i].link, ' '].join('\n'));
+                    }
+                    $("#aria2c_btn").attr("href", $("#aria2c_btn").attr("href") + encodeURIComponent(aria2c_txt.join("")));
+                    $("#idm_btn").attr("href", $("#idm_btn").attr("href") + encodeURIComponent(idm_txt.join("")));
+                    $("#download_txt_btn").attr("href", $("#download_txt_btn").attr("href") + encodeURIComponent(down_txt.join("")));
+                    $("#download_link").val($("#download_link").val() + files.join(""));
+                    $("#download_ui").show();
+                    this.set_center($("#download_ui"));
+                }
 
             },
             set_down_url:function(){
@@ -379,6 +473,20 @@ var css = function() {/*
     border-radius: 3px;
     cursor: pointer;
 }
+.btn-aria2c{
+    position: relative;
+    top: 8px;
+    float: right;
+    margin-right: 10px;
+    padding: 0 10px 0 10px;
+    line-height: 30px;
+    font-size: 14px;
+    color: white;
+    background: #2b91e3;
+    border-radius: 3px;
+    cursor: pointer;
+    z-index:100;
+}
 li[rel="item"]:hover .show-export-button {
     display: block;
     cursor: pointer;
@@ -405,6 +513,25 @@ width:90%;
 }
 .input-small{
 width:150px;
+}
+.new-btn{
+    position: relative;
+    display: inline-block;
+    height: 30px;
+    padding: 0 10px 0 10px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border-radius: 3px;
+    margin-right: 10px;
+    background: #52C035;
+    cursor: pointer;
+}
+.new-btn:hover{
+    text-decoration: none;
+    cursor: pointer;
 }
 #setting_div_table input[disabled]{
 cursor: not-allowed;
@@ -460,33 +587,22 @@ background-color: rgb(250, 250, 250);
 }
  */
 }.toString().slice(15, -4);
-function onload(func) {
-    if (document.readyState === "complete") {
-        func();
-        setTimeout(function(){
-            func();
-        },300);
-    } else {
-        setTimeout(function(){
-            window.addEventListener('load', func);
-        },300);
-        
-    }
+if(document.querySelector("iframe[rel='wangpan']")){
+    document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
+        var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+        var script = document.createElement('script');
+        script.id = "pan_115_script";
+        script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
+        (document.body || document.head || document.documentElement).appendChild(script);
+        var style = document.createElement('style');
+        style.setAttribute('type', 'text/css');
+        style.textContent = css;
+        root.head.appendChild(style);
+        var style = document.createElement('style');
+        style.setAttribute('type', 'text/css');
+        style.textContent = setting_css;
+        document.head.appendChild(style);
+    });    
 }
 
-onload(function() {
-    //把函数注入到页面中
-    var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-    var script = document.createElement('script');
-    script.id = "pan_115_script";
-    script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-    (document.body || document.head || document.documentElement).appendChild(script);
-    var style = document.createElement('style');
-    style.setAttribute('type', 'text/css');
-    style.textContent = css;
-    root.head.appendChild(style);
-    var style = document.createElement('style');
-    style.setAttribute('type', 'text/css');
-    style.textContent = setting_css;
-    document.head.appendChild(style);
-});
+ 
