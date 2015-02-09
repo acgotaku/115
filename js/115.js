@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.2
+// @version 0.0.3
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.2";
-    var update_date = "2015/02/08";
+    var version = "0.0.3";
+    var update_date = "2015/02/09";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -286,25 +286,40 @@ var pan_115 = function(cookies) {
                 });
 
             },
+            getFileInfo:function(pick_code,method){
+                var self=this;
+                DownBridge.getFileUrl(pick_code,function(data){
+                    var file_list=[];
+                    file_list.push({"name": data.file_name, "link": data.file_url});
+                    if(method){
+                        self.aria2_rpc(file_list);
+                    }else{
+                        $("#download_ui").show();
+                        self.aria2_data(file_list);
+                    }
+                    
+                });                
+            },
             aria2_export:function(method){
                 var self=this;
                 var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
                 $(root).find('li[rel="item"][file_type="1"]').each(function(){
                     if($(this).children().eq(3).prop('checked') == true){
                         var pick_code = $(this).attr('pick_code');
-                        DownBridge.getFileUrl(pick_code,function(data){
-                            var file_list=[];
-                            file_list.push({"name": data.file_name, "link": data.file_url});
-                            if(method){
-                                self.aria2_rpc(file_list);
-                            }else{
-                                $("#download_ui").show();
-                                self.aria2_data(file_list);
-                            }
-                            
-                        });
+                        self.getFileInfo(pick_code,method);
                     }
-                });                              
+                });         
+                $(root).find('li[rel="item"][file_type="0"]').each(function(){
+                    if($(this).children().eq(2).prop('checked') == true){
+                        var cate_id = $(this).attr('cate_id');
+                        DownBridge.getFileList(cate_id,function(data){
+                            var list =data.data;
+                            for(var i=0;i<list.length;i++){
+                                self.getFileInfo(list[i].pc,method);                       
+                            }
+                        });                        
+                    }
+                });                     
             },
             //aria2导出下载界面以及事件绑定
             aria2_download: function() {
@@ -378,6 +393,11 @@ var pan_115 = function(cookies) {
                   }).one('load',function(){
                     window.DownBridge.getFileUrl=function(pickcode,callback){
                     this.jQuery.get('http://web.api.115.com/files/download?pickcode=' + pickcode, function (data) {
+                             callback(data);
+                            }, 'json');                        
+                    };
+                    window.DownBridge.getFileList=function(cate_id,callback){
+                    this.jQuery.get('http://web.api.115.com/files?aid=1&cid=' + cate_id, function (data) {
                              callback(data);
                             }, 'json');                        
                     };
