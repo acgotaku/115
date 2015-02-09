@@ -74,7 +74,7 @@ var pan_115 = function(cookies) {
         var combination = {
             header: function(type) {
                 var addheader = [];
-                var UA = $("#setting_aria2_useragent_input").val() || "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36";
+                var UA = $("#setting_aria2_useragent_input").val() || "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 115Browser/5.1.3";
                 var headers = $("#setting_aria2_headers").val();
                 var referer = $("#setting_aria2_referer_input").val() || "http://115.com/";
                 addheader.push("User-Agent: " + UA);
@@ -216,7 +216,7 @@ var pan_115 = function(cookies) {
                 $("#rpc_input").val((localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc"));
                 $("#rpc_token").val(localStorage.getItem("rpc_token"));
                 $("#setting_aria2_dir").val(localStorage.getItem("rpc_dir"));
-                $("#setting_aria2_useragent_input").val(localStorage.getItem("UA") || "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.91 Safari/537.36");
+                $("#setting_aria2_useragent_input").val(localStorage.getItem("UA") || "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 115Browser/5.1.3");
                 $("#setting_aria2_referer_input").val(localStorage.getItem("referer") || "http://115.com/");
                 $("#setting_aria2_headers").val(localStorage.getItem("rpc_headers"));
 
@@ -239,7 +239,7 @@ var pan_115 = function(cookies) {
                     localStorage.setItem("rpc_url", rpc_url);
                     url = rpc_url + "?tm=" + (new Date().getTime().toString());
                 }
-                localStorage.setItem("UA", document.getElementById("setting_aria2_useragent_input").value || "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.91 Safari/537.36");
+                localStorage.setItem("UA", document.getElementById("setting_aria2_useragent_input").value || "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 115Browser/5.1.3");
                 if ($("#rpc_distinguish").prop('checked') == true) {
                     localStorage.setItem("rpc_user", $("#rpc_user").attr("value"));
                     localStorage.setItem("rpc_pass", $("#rpc_pass").attr("value"));
