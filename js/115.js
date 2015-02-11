@@ -149,15 +149,6 @@ var pan_115 = function(cookies) {
                     $("#setting_divtopmsg").html("");
                     self.set_center($("#setting_div"));
                 });
-                $(root).find('li[rel="item"][file_type="1"]').each(function(){
-                    $(this).on('click',function(){
-                        console.log("147");
-                        if($(this).children().eq(3).prop('checked')){
-                            var share=$(root).find("li[menu='shareto']");
-                            $("<li>").html('<i class="icon ilo-download"></i><span>RPC导出</span>').insertAfter(share);
-                        }                        
-                    });
-                });
             },
             set_config_ui:function(){
                 var self = this;
@@ -613,7 +604,9 @@ if(document.querySelector("iframe[rel='wangpan']")){
         var script = document.createElement('script');
         script.id = "pan_115_script";
         script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-        (document.body || document.head || document.documentElement).appendChild(script);
+        if(document.querySelector("#pan_115_script") == null){
+            (document.body || document.head || document.documentElement).appendChild(script);
+        }
         var style = document.createElement('style');
         style.setAttribute('type', 'text/css');
         style.textContent = css;
