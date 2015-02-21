@@ -1,7 +1,12 @@
 # 115
 
 
-Project Developing
+目前支持Firefox：
+
+XPI包安装:
+
+https://raw.githubusercontent.com/acgotaku/115/master/firefox/115-exporter.xpi
+
 
 ##使用说明
 

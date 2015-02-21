@@ -1,8 +1,0 @@
-{
-   "appName": {
-      "message": "115下载助手"
-   },
-   "description": {
-      "message": "可以方便的把115网盘的下载地址导出到aria2-rpc，支持YAAW。"
-   }
-}
