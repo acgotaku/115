@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.3
+// @version 0.0.4
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.3";
-    var update_date = "2015/02/09";
+    var version = "0.0.4";
+    var update_date = "2015/02/21";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -388,7 +388,7 @@ var pan_115 = function(cookies) {
                             }, 'json');                        
                     };
                     window.DownBridge.getFileList=function(cate_id,callback){
-                    this.jQuery.get('http://web.api.115.com/files?aid=1&cid=' + cate_id, function (data) {
+                    this.jQuery.get('http://web.api.115.com/files?aid=1&limit=1000&cid=' + cate_id, function (data) {
                              callback(data);
                             }, 'json');                        
                     };
