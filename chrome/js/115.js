@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.4
+// @version 0.0.5
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.4";
-    var update_date = "2015/02/21";
+    var version = "0.0.5";
+    var update_date = "2015/02/22";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -271,7 +271,7 @@ var pan_115 = function(cookies) {
                     var pick_code = $(this).parent().attr('pick_code');
                     DownBridge.getFileUrl(pick_code,function(data){
                         var file_list=[];
-                        file_list.push({"name": data.file_name, "link": data.file_url});
+                        file_list.push({"name": $('<textarea />').html(data.file_name).text(), "link": data.file_url});
                         self.aria2_rpc(file_list);
                     });
                 });
@@ -281,7 +281,7 @@ var pan_115 = function(cookies) {
                 var self=this;
                 DownBridge.getFileUrl(pick_code,function(data){
                     var file_list=[];
-                    file_list.push({"name": data.file_name, "link": data.file_url});
+                    file_list.push({"name": $('<textarea />').html(data.file_name).text(), "link": data.file_url});
                     if(method){
                         self.aria2_rpc(file_list);
                     }else{
