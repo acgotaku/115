@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.5
+// @version 0.0.6
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.5";
-    var update_date = "2015/02/22";
+    var version = "0.0.6";
+    var update_date = "2015/04/05";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -142,8 +142,8 @@ var pan_115 = function(cookies) {
                 $("<div>").text("设置导出按钮").addClass("btn-export").on('click',function(){
                     self.bind_btn();
                 }).appendTo($(root).find("#js_top_panel_box"));
-                var setting_div=$("<a>").text("插件设置");
-                setting_div.insertAfter('a[tab_btn="privacy_set"]');
+                var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                setting_div.appendTo('.tup-logout');
                 setting_div.on('click',function(){
                     $("#setting_div").show();
                     $("#setting_divtopmsg").html("");
@@ -175,7 +175,7 @@ var pan_115 = function(cookies) {
                     '</table>',
                     '<div style="margin-top:10px;">',
                     '<div id="copyright">© Copyright <a href="https://github.com/acgotaku/115">雪月秋水 </a> Version:' + version + ' 更新日期: ' + update_date + ' </div>',
-                    '<div style="margin-left:70px; display:inline-block"><a href="javascript:;" id="apply" class="button" ><b>应用</b></a></div>',
+                    '<div style="margin-left:20px; display:inline-block"><a href="javascript:;" id="apply" class="button" ><b>应用</b></a></div>',
                     '</div>',
                     '</div>'
                 ];
@@ -277,11 +277,12 @@ var pan_115 = function(cookies) {
                 });
 
             },
-            getFileInfo:function(pick_code,method){
+            getFileInfo:function(pick_code,method,path){
                 var self=this;
+
                 DownBridge.getFileUrl(pick_code,function(data){
                     var file_list=[];
-                    file_list.push({"name": $('<textarea />').html(data.file_name).text(), "link": data.file_url});
+                    file_list.push({"name": (path||"")+$('<textarea />').html(data.file_name).text(), "link": data.file_url});
                     if(method){
                         self.aria2_rpc(file_list);
                     }else{
@@ -291,6 +292,7 @@ var pan_115 = function(cookies) {
                     
                 });                
             },
+            //115下载核心功能 导出
             aria2_export:function(method){
                 var self=this;
                 var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
@@ -299,18 +301,42 @@ var pan_115 = function(cookies) {
                         var pick_code = $(this).attr('pick_code');
                         self.getFileInfo(pick_code,method);
                     }
-                });         
+                });
                 $(root).find('li[rel="item"][file_type="0"]').each(function(){
                     if($(this).children().eq(2).prop('checked') == true){
                         var cate_id = $(this).attr('cate_id');
                         DownBridge.getFileList(cate_id,function(data){
                             var list =data.data;
                             for(var i=0;i<list.length;i++){
-                                self.getFileInfo(list[i].pc,method);                       
-                            }
-                        });                        
+                                if(list[i].sha){
+                                    self.getFileInfo(list[i].pc,method);
+                                }else{
+                                    var dir_level=data.path.length-1;
+                                    self.get_all_dir(list[i].cid,dir_level,method);
+                                }                 
+                            }                            
+                        });
                     }
-                });                     
+                });
+            },
+            //递归下载
+            get_all_dir:function(cid,dir_level,method){
+                var self=this;
+                console.log(method);
+                DownBridge.getFileList(cid,function(data){
+                    var list =data.data;
+                    var path="";
+                    for(var i=dir_level;i<data.path.length;i++){
+                        path+=data.path[i].name+"/";
+                    }
+                    for(var i=0;i<list.length;i++){
+                        if(list[i].sha){
+                            self.getFileInfo(list[i].pc,method,path);
+                        }else{
+                            self.get_all_dir(list[i].cid,dir_level,method);
+                        }                 
+                    }                   
+                });
             },
             //aria2导出下载界面以及事件绑定
             aria2_download: function() {
@@ -388,7 +414,7 @@ var pan_115 = function(cookies) {
                             }, 'json');                        
                     };
                     window.DownBridge.getFileList=function(cate_id,callback){
-                    this.jQuery.get('http://web.api.115.com/files?aid=1&limit=1000&cid=' + cate_id, function (data) {
+                    this.jQuery.get('http://web.api.115.com/files?aid=1&limit=1000&show_dir=1&cid=' + cate_id, function (data) {
                              callback(data);
                             }, 'json');                        
                     };
@@ -512,6 +538,7 @@ var setting_css= function() {/*
     background: #FFF;
     width:580px;
     display:none;
+    font-family: tahoma, arial, 宋体, 'Microsoft Yahei', Simsun;
 }
 #setting_div_table input{
 border: 1px solid #C6C6C6;

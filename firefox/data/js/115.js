@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.5
+// @version 0.0.6
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.5";
-    var update_date = "2015/02/22";
+    var version = "0.0.6";
+    var update_date = "2015/04/05";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -142,8 +142,8 @@ var pan_115 = function(cookies) {
                 $("<div>").text("设置导出按钮").addClass("btn-export").on('click',function(){
                     self.bind_btn();
                 }).appendTo($(root).find("#js_top_panel_box"));
-                var setting_div=$("<a>").text("插件设置");
-                setting_div.insertAfter('a[tab_btn="privacy_set"]');
+                var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                setting_div.appendTo('.tup-logout');
                 setting_div.on('click',function(){
                     $("#setting_div").show();
                     $("#setting_divtopmsg").html("");
@@ -175,7 +175,7 @@ var pan_115 = function(cookies) {
                     '</table>',
                     '<div style="margin-top:10px;">',
                     '<div id="copyright">© Copyright <a href="https://github.com/acgotaku/115">雪月秋水 </a> Version:' + version + ' 更新日期: ' + update_date + ' </div>',
-                    '<div style="margin-left:70px; display:inline-block"><a href="javascript:;" id="apply" class="button" ><b>应用</b></a></div>',
+                    '<div style="margin-left:20px; display:inline-block"><a href="javascript:;" id="apply" class="button" ><b>应用</b></a></div>',
                     '</div>',
                     '</div>'
                 ];
@@ -512,6 +512,7 @@ var setting_css= function() {/*
     background: #FFF;
     width:580px;
     display:none;
+    font-family: tahoma, arial, 宋体, 'Microsoft Yahei', Simsun;
 }
 #setting_div_table input{
 border: 1px solid #C6C6C6;

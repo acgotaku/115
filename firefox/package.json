@@ -6,6 +6,6 @@
   "author": "acgotaku311",
   "icon":"data/img/logo64.png",
   "icon64":"data/img/logo64.png",
-  "license": "MPL 2.0",
-  "version": "0.0.5"
+  "license": "GPL 3.0",
+  "version": "0.0.6"
 }
