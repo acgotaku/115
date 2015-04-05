@@ -5,10 +5,10 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.7
+// @version 0.0.8
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.7";
+    var version = "0.0.8";
     var update_date = "2015/04/05";
     var pan = (function() {
         //type : inf err war
@@ -309,7 +309,7 @@ var pan_115 = function(cookies) {
                             var list =data.data;
                             for(var i=0;i<list.length;i++){
                                 if(list[i].sha){
-                                    self.getFileInfo(list[i].pc,method);
+                                    self.getFileInfo(list[i].pc,method,data.path[data.path.length-1].name+"/");
                                 }else{
                                     var dir_level=data.path.length-1;
                                     self.get_all_dir(list[i].cid,dir_level,method);
@@ -322,7 +322,6 @@ var pan_115 = function(cookies) {
             //递归下载
             get_all_dir:function(cid,dir_level,method){
                 var self=this;
-                console.log(method);
                 DownBridge.getFileList(cid,function(data){
                     var list =data.data;
                     var path="";
