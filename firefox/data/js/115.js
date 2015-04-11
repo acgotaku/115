@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.8
+// @version 0.0.9
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.8";
-    var update_date = "2015/04/05";
+    var version = "0.0.9";
+    var update_date = "2015/04/11";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -135,12 +135,9 @@ var pan_115 = function(cookies) {
                 $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
                     self.aria2_export(true);
                 }).appendTo($(root).find("#js_top_panel_box"));
-                $("<div>").text("导出下载").addClass("btn-aria2c").on('click',function(){
+                $("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
                     self.aria2_download();
                     self.aria2_export(false);
-                }).appendTo($(root).find("#js_top_panel_box"));
-                $("<div>").text("设置导出按钮").addClass("btn-export").on('click',function(){
-                    self.bind_btn();
                 }).appendTo($(root).find("#js_top_panel_box"));
                 var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
                 setting_div.appendTo('.tup-logout');
@@ -252,30 +249,6 @@ var pan_115 = function(cookies) {
                     var objLeft = (screenWidth - obj.width())/2 ;
                     var objTop = (screenHeight - obj.height())/2 + scrolltop;
                     obj.css({left: objLeft + 'px', top: objTop + 'px'});
-            },
-            bind_btn:function(){
-                var self=this;
-                //$(root).find('li[rel="item"]')
-                var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                if($(root).find(".show-export-button").length != 0){
-                    SetMessage("已设置!", "inf");
-                    return false;
-                }
-                $(root).find('li[rel="item"][file_type="1"]').each(function(){
-                    
-                    $('<div class="show-export-button">一键RPC</div>').appendTo($(this));
-
-                });
-                SetMessage("设置按钮成功!", "inf");
-                $(root).find('.show-export-button').on('click',function(){
-                    var pick_code = $(this).parent().attr('pick_code');
-                    DownBridge.getFileUrl(pick_code,function(data){
-                        var file_list=[];
-                        file_list.push({"name": $('<textarea />').html(data.file_name).text(), "link": data.file_url});
-                        self.aria2_rpc(file_list);
-                    });
-                });
-
             },
             getFileInfo:function(pick_code,method,path){
                 var self=this;
@@ -496,11 +469,11 @@ var css = function() {/*
     z-index: 999;
     display: none;
 }
-.btn-export{
+.btn-aria2c{
     position: relative;
     top: 8px;
     float: right;
-    margin-right: 10px;
+    margin-right: 80px;
     padding: 0 10px 0 10px;
     line-height: 30px;
     font-size: 14px;
@@ -508,8 +481,9 @@ var css = function() {/*
     background: #2b91e3;
     border-radius: 3px;
     cursor: pointer;
+    z-index:100;
 }
-.btn-aria2c{
+.btn-txt{
     position: relative;
     top: 8px;
     float: right;

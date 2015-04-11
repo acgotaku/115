@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.8
+// @version 0.0.9
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.8";
-    var update_date = "2015/04/05";
+    var version = "0.0.9";
+    var update_date = "2015/04/11";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -473,7 +473,7 @@ var css = function() {/*
     position: relative;
     top: 8px;
     float: right;
-    margin-right: 60px;
+    margin-right: 80px;
     padding: 0 10px 0 10px;
     line-height: 30px;
     font-size: 14px;
@@ -598,7 +598,8 @@ background-color: rgb(250, 250, 250);
 }
  */
 }.toString().slice(15, -4);
-if(document.querySelector("iframe[rel='wangpan']")){
+
+if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
     document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
         var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
         var script = document.createElement('script');
