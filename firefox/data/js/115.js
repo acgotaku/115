@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.0.9
+// @version 0.1.0
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.0.9";
-    var update_date = "2015/04/11";
+    var version = "0.1.0";
+    var update_date = "2015/05/13";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -132,6 +132,9 @@ var pan_115 = function(cookies) {
                 //设置 设置按钮
                 var self = this;
                 var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                if(root.body.innerHTML == ""){
+                    location.reload();
+                }
                 $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
                     self.aria2_export(true);
                 }).appendTo($(root).find("#js_top_panel_box"));
@@ -319,7 +322,7 @@ var pan_115 = function(cookies) {
                     content_ui.empty();
                     var download_menu = $("<div>").css({"display": "block", "margin-bottom": "10px"}).appendTo(content_ui);
                     var aria2c_btn = $("<a>").attr("id", "aria2c_btn").attr({"href": "data:text/plain;charset=utf-8,", "download": "aria2c.down", "target": "_blank"}).addClass("new-btn").html('<b>存为aria2文件</b>').appendTo(download_menu);
-                    var idm_btn = $("<a>").attr("id", "idm_btn").attr({"href": "data:text/plain;charset=utf-8,", "download": "idm.down", "target": "_blank"}).addClass("new-btn").html('<b>存为IDM文件</b>').appendTo(download_menu);
+                    var idm_btn = $("<a>").attr("id", "idm_btn").attr({"href": "data:text/plain;charset=utf-8,", "download": "idm.txt", "target": "_blank"}).addClass("new-btn").html('<b>存为IDM文件</b>').appendTo(download_menu);
                     var download_txt_btn = $("<a>").attr("id", "download_txt_btn").attr({"href": "data:text/plain;charset=utf-8,", "download": "download_link.down", "target": "_blank"}).addClass("new-btn").html('<b>保存下载链接</b>').appendTo(download_menu);
                     var download_link = $("<textarea>").attr("wrap", "off").attr("id", "download_link").css({"white-space": "nowrap", "width": "100%", "overflow": "scroll", "height": "180px"});
                     download_link.appendTo(content_ui);
@@ -598,6 +601,7 @@ background-color: rgb(250, 250, 250);
 }
  */
 }.toString().slice(15, -4);
+
 if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
     if(document.querySelector("iframe[rel='wangpan']").contentDocument.readyState=="complete"){
         var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
