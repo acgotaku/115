@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.1.0
+// @version 0.1.1
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.1.0";
-    var update_date = "2015/05/13";
+    var version = "0.1.1";
+    var update_date = "2015/05/14";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -116,6 +116,58 @@ var pan_115 = function(cookies) {
 
             }
         };
+        var css = function() {/*
+        .show-export-button {
+            font-size: 14px;
+            width: 140px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            background: rgba(255,255,255,0.75);
+            top: 20px;
+            left: 0px;
+            right: 0px;
+            bottom: auto;
+            margin: auto;
+            position: absolute;
+            z-index: 999;
+            display: none;
+        }
+        .btn-aria2c{
+            position: relative;
+            top: 8px;
+            float: right;
+            margin-right: 80px;
+            padding: 0 10px 0 10px;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            background: #2b91e3;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index:100;
+        }
+        .btn-txt{
+            position: relative;
+            top: 8px;
+            float: right;
+            margin-right: 10px;
+            padding: 0 10px 0 10px;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            background: #2b91e3;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index:100;
+        }
+        li[rel="item"]:hover .show-export-button {
+            display: block;
+            cursor: pointer;
+            background:#FFD;
+        }
+         */
+        }.toString().slice(15, -4);
         var url = (localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc") + "?tm=" + (new Date().getTime().toString());
         return {
             //初始化按钮和一些事件
@@ -132,16 +184,10 @@ var pan_115 = function(cookies) {
                 //设置 设置按钮
                 var self = this;
                 var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                if(root.body.innerHTML == ""){
-                    location.reload();
-                }
-                $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
-                    self.aria2_export(true);
-                }).appendTo($(root).find("#js_top_panel_box"));
-                $("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
-                    self.aria2_download();
-                    self.aria2_export(false);
-                }).appendTo($(root).find("#js_top_panel_box"));
+                top_panel_box_btn();
+                document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
+                    top_panel_box_btn();
+                });
                 var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
                 setting_div.appendTo('.tup-logout');
                 setting_div.on('click',function(){
@@ -149,6 +195,20 @@ var pan_115 = function(cookies) {
                     $("#setting_divtopmsg").html("");
                     self.set_center($("#setting_div"));
                 });
+                function top_panel_box_btn(){
+                    var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                    $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
+                        self.aria2_export(true);
+                    }).appendTo($(root).find("#js_top_panel_box"));
+                    $("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
+                        self.aria2_download();
+                        self.aria2_export(false);
+                    }).appendTo($(root).find("#js_top_panel_box")); 
+                    var style = document.createElement('style');
+                    style.setAttribute('type', 'text/css');
+                    style.textContent = css;
+                    root.head.appendChild(style);                   
+                }
             },
             set_config_ui:function(){
                 var self = this;
@@ -455,58 +515,7 @@ var pan_115 = function(cookies) {
     })();
     pan.init();
 };
-var css = function() {/*
-.show-export-button {
-    font-size: 14px;
-    width: 140px;
-    height: 24px;
-    line-height: 24px;
-    text-align: center;
-    background: rgba(255,255,255,0.75);
-    top: 20px;
-    left: 0px;
-    right: 0px;
-    bottom: auto;
-    margin: auto;
-    position: absolute;
-    z-index: 999;
-    display: none;
-}
-.btn-aria2c{
-    position: relative;
-    top: 8px;
-    float: right;
-    margin-right: 80px;
-    padding: 0 10px 0 10px;
-    line-height: 30px;
-    font-size: 14px;
-    color: white;
-    background: #2b91e3;
-    border-radius: 3px;
-    cursor: pointer;
-    z-index:100;
-}
-.btn-txt{
-    position: relative;
-    top: 8px;
-    float: right;
-    margin-right: 10px;
-    padding: 0 10px 0 10px;
-    line-height: 30px;
-    font-size: 14px;
-    color: white;
-    background: #2b91e3;
-    border-radius: 3px;
-    cursor: pointer;
-    z-index:100;
-}
-li[rel="item"]:hover .show-export-button {
-    display: block;
-    cursor: pointer;
-    background:#FFD;
-}
- */
-}.toString().slice(15, -4);
+
 var setting_css= function() {/*
 .download-mgr-dialog{
     z-index: 1000000099;
@@ -610,17 +619,11 @@ if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
         script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
         if(document.querySelector("#pan_115_script") == null){
             (document.body || document.head || document.documentElement).appendChild(script);
+            var style = document.createElement('style');
+            style.setAttribute('type', 'text/css');
+            style.textContent = setting_css;
+            document.head.appendChild(style);
         }
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.textContent = css;
-        root.head.appendChild(style);
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.textContent = setting_css;
-        document.head.appendChild(style);
     }
 
 }
-
- 
