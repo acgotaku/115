@@ -117,49 +117,65 @@ var pan_115 = function(cookies) {
             }
         };
         var css = function() {/*
-        .show-export-button {
-            font-size: 14px;
-            width: 140px;
-            height: 24px;
-            line-height: 24px;
-            text-align: center;
-            background: rgba(255,255,255,0.75);
-            top: 20px;
-            left: 0px;
-            right: 0px;
-            bottom: auto;
-            margin: auto;
-            position: absolute;
-            z-index: 999;
-            display: none;
+        @media (min-width: 1240px){
+            .btn-aria2c{
+                position: relative;
+                top: 8px;
+                float: right;
+                margin-right: 80px;
+                padding: 0 10px 0 10px;
+                line-height: 30px;
+                font-size: 14px;
+                color: white;
+                background: #2b91e3;
+                border-radius: 3px;
+                cursor: pointer;
+                z-index:100;
+            }
+            .btn-txt{
+                position: relative;
+                top: 8px;
+                float: right;
+                margin-right: 10px;
+                padding: 0 10px 0 10px;
+                line-height: 30px;
+                font-size: 14px;
+                color: white;
+                background: #2b91e3;
+                border-radius: 3px;
+                cursor: pointer;
+                z-index:100;
+            }
         }
-        .btn-aria2c{
-            position: relative;
-            top: 8px;
-            float: right;
-            margin-right: 80px;
-            padding: 0 10px 0 10px;
-            line-height: 30px;
-            font-size: 14px;
-            color: white;
-            background: #2b91e3;
-            border-radius: 3px;
-            cursor: pointer;
-            z-index:100;
-        }
-        .btn-txt{
-            position: relative;
-            top: 8px;
-            float: right;
-            margin-right: 10px;
-            padding: 0 10px 0 10px;
-            line-height: 30px;
-            font-size: 14px;
-            color: white;
-            background: #2b91e3;
-            border-radius: 3px;
-            cursor: pointer;
-            z-index:100;
+        @media (max-width: 1000px){
+            .btn-aria2c{
+                position: relative;
+                top: 8px;
+                float: right;
+                margin-right: 20px;
+                padding: 0 10px 0 10px;
+                line-height: 30px;
+                font-size: 14px;
+                color: white;
+                background: #2b91e3;
+                border-radius: 3px;
+                cursor: pointer;
+                z-index:100;
+            }
+            .btn-txt{
+                position: relative;
+                top: 8px;
+                float: right;
+                margin-right: 10px;
+                padding: 0 10px 0 10px;
+                line-height: 30px;
+                font-size: 14px;
+                color: white;
+                background: #2b91e3;
+                border-radius: 3px;
+                cursor: pointer;
+                z-index:100;
+            }
         }
         li[rel="item"]:hover .show-export-button {
             display: block;
