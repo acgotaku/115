@@ -117,66 +117,35 @@ var pan_115 = function(cookies) {
             }
         };
         var css = function() {/*
-        @media (min-width: 1240px){
-            .btn-aria2c{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 80px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
-            .btn-txt{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 10px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
+        .btn-aria2c{
+            position: relative;
+            top:2px;
+            float: right;
+            margin-right: 80px;
+            padding: 0 10px 0 10px;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            background: #2b91e3;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index:100;
         }
-        @media (max-width: 1000px){
-            .btn-aria2c{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 20px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
-            .btn-txt{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 10px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
+        .btn-txt{
+            position: relative;
+            top:2px;
+            float: right;
+            margin-right: 10px;
+            padding: 0 10px 0 10px;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            background: #2b91e3;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index:100;
         }
+
         li[rel="item"]:hover .show-export-button {
             display: block;
             cursor: pointer;
@@ -184,6 +153,7 @@ var pan_115 = function(cookies) {
         }
          */
         }.toString().slice(15, -4);
+        console.log(css);
         var url = (localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc") + "?tm=" + (new Date().getTime().toString());
         return {
             //初始化按钮和一些事件
@@ -205,7 +175,7 @@ var pan_115 = function(cookies) {
                     top_panel_box_btn();
                 });
                 var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
-                setting_div.appendTo('.tup-logout');
+                setting_div.appendTo($(root).find(".tup-logout"));
                 setting_div.on('click',function(){
                     $("#setting_div").show();
                     $("#setting_divtopmsg").html("");
@@ -215,11 +185,11 @@ var pan_115 = function(cookies) {
                     var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
                     $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
                         self.aria2_export(true);
-                    }).appendTo($(root).find("#js_top_panel_box"));
+                    }).appendTo($(root).find(".main-top-box"));
                     $("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
                         self.aria2_download();
                         self.aria2_export(false);
-                    }).appendTo($(root).find("#js_top_panel_box"));
+                    }).appendTo($(root).find(".main-top-box"));
                     var style = document.createElement('style');
                     style.setAttribute('type', 'text/css');
                     style.textContent = css;
