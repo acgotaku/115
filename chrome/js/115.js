@@ -121,7 +121,6 @@ var pan_115 = function(cookies) {
             position: relative;
             top:2px;
             float: right;
-            margin-right: 80px;
             padding: 0 10px 0 10px;
             line-height: 30px;
             font-size: 14px;
@@ -153,7 +152,6 @@ var pan_115 = function(cookies) {
         }
          */
         }.toString().slice(15, -4);
-        console.log(css);
         var url = (localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc") + "?tm=" + (new Date().getTime().toString());
         return {
             //初始化按钮和一些事件
@@ -183,13 +181,13 @@ var pan_115 = function(cookies) {
                 });
                 function top_panel_box_btn(){
                     var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                    $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
+                    $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
                         self.aria2_export(true);
-                    }).appendTo($(root).find(".main-top-box"));
-                    $("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
+                    }));
+                    $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
                         self.aria2_download();
                         self.aria2_export(false);
-                    }).appendTo($(root).find(".main-top-box"));
+                    }));
                     var style = document.createElement('style');
                     style.setAttribute('type', 'text/css');
                     style.textContent = css;
@@ -600,7 +598,6 @@ background-color: rgb(250, 250, 250);
 if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
     document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
         var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-        console.log(root);
         var script = document.createElement('script');
         script.id = "pan_115_script";
         script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
