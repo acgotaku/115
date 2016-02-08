@@ -174,15 +174,15 @@ var pan_115 = function(cookies) {
                 document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
                     top_panel_box_btn();
                 });
-                var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
-                setting_div.appendTo($(root).find(".tup-logout"));
-                setting_div.on('click',function(){
-                    $("#setting_div").show();
-                    $("#setting_divtopmsg").html("");
-                    self.set_center($("#setting_div"));
-                });
                 function top_panel_box_btn(){
                     var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                    var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    setting_div.appendTo($(root).find(".tup-logout"));
+                    setting_div.on('click',function(){
+                        $("#setting_div").show();
+                        $("#setting_divtopmsg").html("");
+                        self.set_center($("#setting_div"));
+                    });
                     $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
                         self.aria2_export(true);
                     }));
