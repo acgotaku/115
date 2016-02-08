@@ -121,6 +121,8 @@ var pan_115 = function(cookies) {
             position: relative;
             top:2px;
             float: right;
+            margin-right: 10px;
+            margin-left: 10px;
             padding: 0 10px 0 10px;
             line-height: 30px;
             font-size: 14px;
