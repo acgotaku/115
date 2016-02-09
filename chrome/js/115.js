@@ -174,10 +174,18 @@ var pan_115 = function(cookies) {
                 document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
                     top_panel_box_btn();
                 });
+                document.addEventListener('load',function(){
+                    if(document.querySelector("div[id='js_main_container']")){
+                         top_panel_box_btn();
+                    }
+                });
                 function top_panel_box_btn(){
                     var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
+                    var firstPage=document.querySelector("div[id='js_main_container']");
+                    console.log(firstPage);
                     var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
                     setting_div.appendTo($(root).find(".tup-logout"));
+                    setting_div.appendTo($(firstPage).find(".tup-logout"));
                     setting_div.on('click',function(){
                         $("#setting_div").show();
                         $("#setting_divtopmsg").html("");
@@ -596,7 +604,6 @@ background-color: rgb(250, 250, 250);
 }
  */
 }.toString().slice(15, -4);
-
 if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
     document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
         var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
@@ -612,3 +619,17 @@ if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
         }
     });    
 }
+if(document.querySelector("div[id='js_main_container']")){
+    var script = document.createElement('script');
+    script.id = "pan_115_script";
+    script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
+    if(document.querySelector("#pan_115_script") == null){
+        (document.body || document.head || document.documentElement).appendChild(script);
+        var style = document.createElement('style');
+        style.setAttribute('type', 'text/css');
+        style.textContent = setting_css;
+        document.head.appendChild(style);
+    }
+}
+
+
