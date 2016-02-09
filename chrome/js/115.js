@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.1.2
+// @version 0.1.4
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.1.2";
-    var update_date = "2015/06/04";
+    var version = "0.1.4";
+    var update_date = "2016/02/09";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
