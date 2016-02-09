@@ -169,23 +169,43 @@ var pan_115 = function(cookies) {
                 //设置导出按钮的触发 js_top_panel_box
                 //设置 设置按钮
                 var self = this;
-                var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                top_panel_box_btn();
                 document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
+                    console.log("ubload");
                     top_panel_box_btn();
                 });
-                document.addEventListener('load',function(){
-                    if(document.querySelector("div[id='js_main_container']")){
-                         top_panel_box_btn();
+                window.onload = function(){//onchange
+                    if(document.querySelector("iframe[rel='wangpan']").src=="about:blank"){
+                        main_page_setting_btn();
                     }
-                });
+                }
+                function main_page_setting_btn(){
+                    console.log("main page ");
+                    var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    main_setting_div.attr("id","main_setting_div");
+                    if(!document.querySelector("a[id='main_setting_div']")){
+                         main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
+                         main_setting_div.on('click',function(){
+                            $("#setting_div").show();
+                            $("#setting_divtopmsg").html("");
+                            self.set_center($("#setting_div"));
+                        });
+                    }
+                }
                 function top_panel_box_btn(){
                     var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                    var firstPage=document.querySelector("div[id='js_main_container']");
-                    console.log(firstPage);
                     var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    main_setting_div.attr("id","main_setting_div");
                     setting_div.appendTo($(root).find(".tup-logout"));
-                    setting_div.appendTo($(firstPage).find(".tup-logout"));
+                    if(!document.querySelector("a[id='main_setting_div']")){
+                        main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
+                        main_setting_div.on('click',function(){
+                            $("#setting_div").show();
+                            $("#setting_divtopmsg").html("");
+                            self.set_center($("#setting_div"));
+                        });
+                    }
                     setting_div.on('click',function(){
                         $("#setting_div").show();
                         $("#setting_divtopmsg").html("");
@@ -619,17 +639,15 @@ if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
         }
     });    
 }
-if(document.querySelector("div[id='js_main_container']")){
-    var script = document.createElement('script');
-    script.id = "pan_115_script";
-    script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-    if(document.querySelector("#pan_115_script") == null){
-        (document.body || document.head || document.documentElement).appendChild(script);
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.textContent = setting_css;
-        document.head.appendChild(style);
-    }
+var script = document.createElement('script');
+script.id = "pan_115_script";
+script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
+if(document.querySelector("#pan_115_script") == null){
+    (document.body || document.head || document.documentElement).appendChild(script);
+    var style = document.createElement('style');
+    style.setAttribute('type', 'text/css');
+    style.textContent = setting_css;
+    document.head.appendChild(style);
 }
 
 
