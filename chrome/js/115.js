@@ -170,16 +170,10 @@ var pan_115 = function(cookies) {
                 //设置 设置按钮
                 var self = this;
                 document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
-                    console.log("ubload");
                     top_panel_box_btn();
                 });
-                window.onload = function(){//onchange
-                    if(document.querySelector("iframe[rel='wangpan']").src=="about:blank"){
-                        main_page_setting_btn();
-                    }
-                }
+                main_page_setting_btn();
                 function main_page_setting_btn(){
-                    console.log("main page ");
                     var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
                     var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
                     main_setting_div.attr("id","main_setting_div");
