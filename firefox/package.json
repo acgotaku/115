@@ -8,11 +8,8 @@
   "engines": {
     "firefox": ">=38.0a1"
   },
-  "icon":"data/img/logo64.png",
-  "icon64":"data/img/logo64.png",
   "license": "GPL 3.0",
   "keywords": [
     "115"
-  ],
-  "version": "0.1.4"
+  ]
 }

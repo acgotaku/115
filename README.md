@@ -1,7 +1,7 @@
 # 115
 
 ## 插件下载地址
-
++ Firefox：https://addons.mozilla.org/zh-CN/firefox/addon/115exporter/
 + Firefox，XPI 包安装：https://raw.githubusercontent.com/acgotaku/115/master/firefox/115-exporter.xpi
 + Google Chrome，Web Store 安装：https://chrome.google.com/webstore/detail/115exporter/ojafklbojgenkohhdgdjeaepnbjffdjf
 + Safari：https://raw.githubusercontent.com/acgotaku/115/master/safari/115.safariextz
