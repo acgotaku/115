@@ -1,11 +1,18 @@
 {
-  "name": "115-exporter",
   "title": "115Exporter",
-  "id": "acgotaku311@outlook.com",
+  "name": "115-exporter",
+  "version": "0.1.4",
   "description": "Assistant for 115 to export download links to aria2/aria2-rpc",
+  "main": "index.js",
   "author": "acgotaku311",
+  "engines": {
+    "firefox": ">=38.0a1"
+  },
   "icon":"data/img/logo64.png",
   "icon64":"data/img/logo64.png",
   "license": "GPL 3.0",
-  "version": "0.1.1"
+  "keywords": [
+    "115"
+  ],
+  "version": "0.1.4"
 }

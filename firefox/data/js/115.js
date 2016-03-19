@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.1.1
+// @version 0.1.4
 // ==/UserScript==
 var pan_115 = function(cookies) {
-    var version = "0.1.1";
-    var update_date = "2015/05/14";
+    var version = "0.1.4";
+    var update_date = "2016/02/09";
     var pan = (function() {
         //type : inf err war
         var SetMessage = function(msg, type) {   
@@ -117,27 +117,12 @@ var pan_115 = function(cookies) {
             }
         };
         var css = function() {/*
-        .show-export-button {
-            font-size: 14px;
-            width: 140px;
-            height: 24px;
-            line-height: 24px;
-            text-align: center;
-            background: rgba(255,255,255,0.75);
-            top: 20px;
-            left: 0px;
-            right: 0px;
-            bottom: auto;
-            margin: auto;
-            position: absolute;
-            z-index: 999;
-            display: none;
-        }
         .btn-aria2c{
             position: relative;
-            top: 8px;
+            top:2px;
             float: right;
-            margin-right: 80px;
+            margin-right: 10px;
+            margin-left: 10px;
             padding: 0 10px 0 10px;
             line-height: 30px;
             font-size: 14px;
@@ -149,7 +134,7 @@ var pan_115 = function(cookies) {
         }
         .btn-txt{
             position: relative;
-            top: 8px;
+            top:2px;
             float: right;
             margin-right: 10px;
             padding: 0 10px 0 10px;
@@ -161,6 +146,7 @@ var pan_115 = function(cookies) {
             cursor: pointer;
             z-index:100;
         }
+
         li[rel="item"]:hover .show-export-button {
             display: block;
             cursor: pointer;
@@ -183,31 +169,53 @@ var pan_115 = function(cookies) {
                 //设置导出按钮的触发 js_top_panel_box
                 //设置 设置按钮
                 var self = this;
-                var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                top_panel_box_btn();
                 document.querySelector("iframe[rel='wangpan']").addEventListener('load',function(){
                     top_panel_box_btn();
                 });
-                var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
-                setting_div.appendTo('.tup-logout');
-                setting_div.on('click',function(){
-                    $("#setting_div").show();
-                    $("#setting_divtopmsg").html("");
-                    self.set_center($("#setting_div"));
-                });
+                main_page_setting_btn();
+                function main_page_setting_btn(){
+                    var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    main_setting_div.attr("id","main_setting_div");
+                    if(!document.querySelector("a[id='main_setting_div']")){
+                         main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
+                         main_setting_div.on('click',function(){
+                            $("#setting_div").show();
+                            $("#setting_divtopmsg").html("");
+                            self.set_center($("#setting_div"));
+                        });
+                    }
+                }
                 function top_panel_box_btn(){
                     var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                    $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
+                    var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    main_setting_div.attr("id","main_setting_div");
+                    setting_div.appendTo($(root).find(".tup-logout"));
+                    if(!document.querySelector("a[id='main_setting_div']")){
+                        main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
+                        main_setting_div.on('click',function(){
+                            $("#setting_div").show();
+                            $("#setting_divtopmsg").html("");
+                            self.set_center($("#setting_div"));
+                        });
+                    }
+                    setting_div.on('click',function(){
+                        $("#setting_div").show();
+                        $("#setting_divtopmsg").html("");
+                        self.set_center($("#setting_div"));
+                    });
+                    $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
                         self.aria2_export(true);
-                    }).appendTo($(root).find("#js_top_panel_box"));
-                    $("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
+                    }));
+                    $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
                         self.aria2_download();
                         self.aria2_export(false);
-                    }).appendTo($(root).find("#js_top_panel_box")); 
+                    }));
                     var style = document.createElement('style');
                     style.setAttribute('type', 'text/css');
                     style.textContent = css;
-                    root.head.appendChild(style);                   
+                    root.head.appendChild(style);           
                 }
             },
             set_config_ui:function(){
