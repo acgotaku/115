@@ -192,7 +192,7 @@ var pan_115 = function(cookies) {
                     var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
                     main_setting_div.attr("id","main_setting_div");
                     setting_div.appendTo($(root).find(".tup-logout"));
-                    if(!document.querySelector("a[id='main_setting_div']")){
+                    if(!document.querySelector("a[id='main_setting_div']")&&document.querySelector("iframe[rel='wangpan']").src.indexOf('ct=rb&is_wl_tpl=1')<0){
                         main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
                         main_setting_div.on('click',function(){
                             $("#setting_div").show();
@@ -205,13 +205,16 @@ var pan_115 = function(cookies) {
                         $("#setting_divtopmsg").html("");
                         self.set_center($("#setting_div"));
                     });
-                    $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
-                        self.aria2_export(true);
-                    }));
-                    $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
-                        self.aria2_download();
-                        self.aria2_export(false);
-                    }));
+                    if(!root.querySelector("a[menu='clear']")){
+                        $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
+                            self.aria2_export(true);
+                        }));
+                        $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
+                            self.aria2_download();
+                            self.aria2_export(false);
+                        }));
+                    }
+                    
                     var style = document.createElement('style');
                     style.setAttribute('type', 'text/css');
                     style.textContent = css;
