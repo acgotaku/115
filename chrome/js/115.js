@@ -154,7 +154,7 @@ var pan_115 = function(cookies) {
         }
          */
         }.toString().slice(15, -4);
-        var url = (localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc") + "?tm=" + (new Date().getTime().toString());
+        var url = (localStorage.getItem("rpc_url") || "http://192.168.1.1:6800/jsonrpc") + "?tm=" + (new Date().getTime().toString());
         return {
             //初始化按钮和一些事件
             init: function() {
