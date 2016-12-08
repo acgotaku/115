@@ -274,7 +274,7 @@ var pan_115 = function(cookies) {
             },
             //填充已经设置的配置数据
             set_config: function() {
-                $("#rpc_input").val((localStorage.getItem("rpc_url") || "http://localhost:6800/jsonrpc"));
+                $("#rpc_input").val((localStorage.getItem("rpc_url") || "http://192.168.1.1:6800/jsonrpc"));
                 $("#rpc_token").val(localStorage.getItem("rpc_token"));
                 $("#setting_aria2_dir").val(localStorage.getItem("rpc_dir"));
                 $("#setting_aria2_useragent_input").val(localStorage.getItem("UA") || "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 115Browser/5.1.3");
