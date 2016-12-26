@@ -12,10 +12,10 @@ var pan_115 = function(cookies) {
     var update_date = "2016/02/09";
     var pan = (function() {
         //type : inf err war
-        var SetMessage = function(msg, type) {   
+        var SetMessage = function(msg, type) {
             Core.MinMessage.Show({
-                text: msg, 
-                type: type, 
+                text: msg,
+                type: type,
                 timeout: 2000
             });
         };
@@ -178,7 +178,7 @@ var pan_115 = function(cookies) {
                     var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
                     main_setting_div.attr("id","main_setting_div");
                     if(!document.querySelector("a[id='main_setting_div']")){
-                         main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
+                         main_setting_div.appendTo($(document.querySelector("div[id='js-ch-member-info_box']")).find(".tup-logout"));
                          main_setting_div.on('click',function(){
                             $("#setting_div").show();
                             $("#setting_divtopmsg").html("");
@@ -193,7 +193,7 @@ var pan_115 = function(cookies) {
                     main_setting_div.attr("id","main_setting_div");
                     setting_div.appendTo($(root).find(".tup-logout"));
                     if(!document.querySelector("a[id='main_setting_div']")&&document.querySelector("iframe[rel='wangpan']").src.indexOf('ct=rb&is_wl_tpl=1')<0){
-                        main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
+                        main_setting_div.appendTo($(document.querySelector("div[id='js-ch-member-info_box']")).find(".tup-logout"));
                         main_setting_div.on('click',function(){
                             $("#setting_div").show();
                             $("#setting_divtopmsg").html("");
@@ -217,7 +217,7 @@ var pan_115 = function(cookies) {
                     var style = document.createElement('style');
                     style.setAttribute('type', 'text/css');
                     style.textContent = css;
-                    root.head.appendChild(style);           
+                    root.head.appendChild(style);
                 }
             },
             set_config_ui:function(){
@@ -335,8 +335,8 @@ var pan_115 = function(cookies) {
                         $("#download_ui").show();
                         self.aria2_data(file_list);
                     }
-                    
-                });                
+
+                });
             },
             //115下载核心功能 导出
             aria2_export:function(method){
@@ -359,8 +359,8 @@ var pan_115 = function(cookies) {
                                 }else{
                                     var dir_level=data.path.length-1;
                                     self.get_all_dir(list[i].cid,dir_level,method);
-                                }                 
-                            }                            
+                                }
+                            }
                         });
                     }
                 });
@@ -379,8 +379,8 @@ var pan_115 = function(cookies) {
                             self.getFileInfo(list[i].pc,method,path);
                         }else{
                             self.get_all_dir(list[i].cid,dir_level,method);
-                        }                 
-                    }                   
+                        }
+                    }
                 });
             },
             //aria2导出下载界面以及事件绑定
@@ -456,12 +456,12 @@ var pan_115 = function(cookies) {
                     window.DownBridge.getFileUrl=function(pickcode,callback){
                     this.jQuery.get('//webapi.115.com/files/download?pickcode=' + pickcode, function (data) {
                              callback(data);
-                            }, 'json');                        
+                            }, 'json');
                     };
                     window.DownBridge.getFileList=function(cate_id,callback){
                     this.jQuery.get('//webapi.115.com/files?aid=1&limit=1000&show_dir=1&cid=' + cate_id, function (data) {
                              callback(data);
-                            }, 'json');                        
+                            }, 'json');
                     };
                   }).appendTo('html');
             },
@@ -633,7 +633,7 @@ if(document.querySelector("iframe[rel='wangpan']")&&top.location==location){
             style.textContent = setting_css;
             document.head.appendChild(style);
         }
-    });    
+    });
 }
 var script = document.createElement('script');
 script.id = "pan_115_script";
