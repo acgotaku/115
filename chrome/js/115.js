@@ -349,7 +349,7 @@ var pan_115 = function(cookies) {
                     }
                 });
                 $(root).find('li[rel="item"][file_type="0"]').each(function(){
-                    if($(this).children().eq(2).prop('checked') == true){
+                    if($(this).children().eq(1).prop('checked') == true){
                         var cate_id = $(this).attr('cate_id');
                         DownBridge.getFileList(cate_id,function(data){
                             var list =data.data;
