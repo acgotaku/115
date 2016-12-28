@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.1.6
+// @version 0.1.7
 // ==/UserScript==
 var pan_115 = function(cookies) {
-        var version = "0.1.6";
-        var update_date = "2016/12/27";
+        var version = "0.1.7";
+        var update_date = "2016/12/28";
         var pan = (function() {
                     //type : inf err war
                     var SetMessage = function(msg, type) {
@@ -344,13 +344,13 @@ var pan_115 = function(cookies) {
                 var self = this;
                 var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
                 $(root).find('li[rel="item"][file_type="1"]').each(function() {
-                    if ($(this).children().eq(3).prop('checked') == true) {
+                    if ($(this).hasClass("selected") == true) {
                         var pick_code = $(this).attr('pick_code');
                         self.getFileInfo(pick_code, method);
                     }
                 });
                 $(root).find('li[rel="item"][file_type="0"]').each(function() {
-                    if ($(this).children().eq(1).prop('checked') == true) {
+                    if ($(this).hasClass("selected") == true) {
                         var cate_id = $(this).attr('cate_id');
                         DownBridge.getFileList(cate_id, function(data) {
                             var list = data.data;
