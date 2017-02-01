@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.1.7
+// @version 0.1.8
 // ==/UserScript==
 var pan_115 = function(cookies) {
-        var version = "0.1.7";
-        var update_date = "2016/12/28";
+        var version = "0.1.8";
+        var update_date = "2017/02/01";
         var pan = (function() {
                     //type : inf err war
                     var SetMessage = function(msg, type) {
@@ -168,9 +168,10 @@ var pan_115 = function(cookies) {
                 //设置导出按钮的触发 js_top_panel_box
                 //设置 设置按钮
                 var self = this;
-                document.querySelector("iframe[rel='wangpan']").addEventListener('load', function() {
-                    top_panel_box_btn();
-                });
+                if(document.querySelector("iframe[rel='wangpan']").contentDocument.readyState=="complete"){
+                   top_panel_box_btn();
+                }
+                document.querySelector("iframe[rel='wangpan']").addEventListener('load', top_panel_box_btn);
                 main_page_setting_btn();
 
                 function main_page_setting_btn() {
@@ -346,6 +347,7 @@ var pan_115 = function(cookies) {
                 $(root).find('li[rel="item"][file_type="1"]').each(function() {
                     if ($(this).hasClass("selected") == true) {
                         var pick_code = $(this).attr('pick_code');
+                        // console.log(pick_code);
                         self.getFileInfo(pick_code, method);
                     }
                 });
@@ -395,7 +397,7 @@ var pan_115 = function(cookies) {
                     var aria2c_btn = $("<a>").attr("id", "aria2c_btn").attr({ "href": "data:text/plain;charset=utf-8,", "download": "aria2c.down", "target": "_blank" }).addClass("new-btn").html('<b>存为aria2文件</b>').appendTo(download_menu);
                     var idm_btn = $("<a>").attr("id", "idm_btn").attr({ "href": "data:text/plain;charset=utf-8,", "download": "idm.txt", "target": "_blank" }).addClass("new-btn").html('<b>存为IDM文件</b>').appendTo(download_menu);
                     var download_txt_btn = $("<a>").attr("id", "download_txt_btn").attr({ "href": "data:text/plain;charset=utf-8,", "download": "download_link.down", "target": "_blank" }).addClass("new-btn").html('<b>保存下载链接</b>').appendTo(download_menu);
-                    var download_link = $("<textarea>").attr("wrap", "off").attr("id", "download_link").css({ "white-space": "nowrap", "width": "100%", "overflow": "scroll", "height": "180px" });
+                    var download_link = $("<textarea>").attr("wrap", "off").attr("id", "download_link").css({"width": "100%", "overflow": "scroll", "height": "180px" });
                     download_link.appendTo(content_ui);
                     $(".diag-close").click(function() {
                         download_ui.hide();
@@ -438,6 +440,7 @@ var pan_115 = function(cookies) {
                     $("#download_txt_btn").attr("href", $("#download_txt_btn").attr("href") + encodeURIComponent(down_txt.join("")));
                     $("#download_link").val($("#download_link").val() + files.join(""));
                     $("#download_ui").show();
+                    // console.log($("#download_link").val());
                     this.set_center($("#download_ui"));
                 }
 
@@ -623,28 +626,53 @@ background-color: rgb(250, 250, 250);
 }
  */
 }.toString().slice(15, -4);
+
+function addJS(){
+    var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
+    var script = document.createElement('script');
+    script.id = "pan_115_script";
+    script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
+    if (document.querySelector("#pan_115_script") == null) {
+        (document.body || document.head || document.documentElement).appendChild(script);
+        var style = document.createElement('style');
+        style.setAttribute('type', 'text/css');
+        style.textContent = setting_css;
+        document.head.appendChild(style);
+    }
+}
+
 if (document.querySelector("iframe[rel='wangpan']") && top.location == location) {
-    document.querySelector("iframe[rel='wangpan']").addEventListener('load', function() {
-        var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
-        var script = document.createElement('script');
-        script.id = "pan_115_script";
-        script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-        if (document.querySelector("#pan_115_script") == null) {
-            (document.body || document.head || document.documentElement).appendChild(script);
-            var style = document.createElement('style');
-            style.setAttribute('type', 'text/css');
-            style.textContent = setting_css;
-            document.head.appendChild(style);
-        }
-    });
+    if(document.querySelector("iframe[rel='wangpan']").contentDocument.readyState=="complete"){
+        addJS();
+    }
+    document.querySelector("iframe[rel='wangpan']").addEventListener('load', addJS);
 }
-var script = document.createElement('script');
-script.id = "pan_115_script";
-script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-if (document.querySelector("#pan_115_script") == null) {
-    (document.body || document.head || document.documentElement).appendChild(script);
-    var style = document.createElement('style');
-    style.setAttribute('type', 'text/css');
-    style.textContent = setting_css;
-    document.head.appendChild(style);
-}
+
+
+
+
+// if (document.querySelector("iframe[rel='wangpan']") && top.location == location) {
+//     document.querySelector("iframe[rel='wangpan']").addEventListener('load', function() {
+//         var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
+//         var script = document.createElement('script');
+//         script.id = "pan_115_script";
+//         script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
+//         if (document.querySelector("#pan_115_script") == null) {
+//             (document.body || document.head || document.documentElement).appendChild(script);
+//             var style = document.createElement('style');
+//             style.setAttribute('type', 'text/css');
+//             style.textContent = setting_css;
+//             document.head.appendChild(style);
+//         }
+//     });
+// }
+// var script = document.createElement('script');
+// script.id = "pan_115_script";
+// script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
+// if (document.querySelector("#pan_115_script") == null) {
+//     (document.body || document.head || document.documentElement).appendChild(script);
+//     var style = document.createElement('style');
+//     style.setAttribute('type', 'text/css');
+//     style.textContent = setting_css;
+//     document.head.appendChild(style);
+// }
