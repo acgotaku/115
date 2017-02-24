@@ -423,7 +423,7 @@ var pan_115 = function(cookies) {
                             ' out=' + file_list[i].name,
                             ' continue=true',
                             ' max-connection-per-server=10',
-                            '  split=10',
+                            '  split=2',
                             '\n'
                         ].join('\n'));
                         idm_txt.push([
