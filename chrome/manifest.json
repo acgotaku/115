@@ -3,6 +3,9 @@
       "js": [ "js/115.js" ],
       "matches": ["*://*.115.com/*"]
    } ],
+   "background": {
+      "scripts": ["js/background.js"]
+   },
    "default_locale": "en",
    "description": "__MSG_description__",
    "icons": {
