@@ -76,15 +76,7 @@ var pan_115 = function(cookies) {
                             var headers = $("#setting_aria2_headers").val();
                             var referer = $("#setting_aria2_referer_input").val() || "http://115.com/";
                             addheader.push("User-Agent: " + UA);
-                            // var baidu_cookies=JSON.parse(cookies);
-                            // var format_cookies=[];
-                            // for(var i=0;i<baidu_cookies.length;i++){
-                            //     for(var key in baidu_cookies[i]){
-                            //         // addheader.push("Cookie: " + key +"=" +baidu_cookies[i][key]);
-                            //         format_cookies.push(key +"=" +baidu_cookies[i][key]);
-                            //     }
-                            // }
-                            // addheader.push("Cookie: " + format_cookies.join(";"));
+                            addheader.push("Cookie: " + cookies);
                             addheader.push("Referer: " + referer);
                             if (headers) {
                                 var text = headers.split("\n");
@@ -627,11 +619,12 @@ background-color: rgb(250, 250, 250);
  */
 }.toString().slice(15, -4);
 
+var format_cookies=[];
 function addJS(){
     var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
     var script = document.createElement('script');
     script.id = "pan_115_script";
-    script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
+    script.appendChild(document.createTextNode('(' + pan_115 + ')(\"'+format_cookies.join(";")+'\");'));
     if (document.querySelector("#pan_115_script") == null) {
         (document.body || document.head || document.documentElement).appendChild(script);
         var style = document.createElement('style');
@@ -640,39 +633,13 @@ function addJS(){
         document.head.appendChild(style);
     }
 }
-
-if (document.querySelector("iframe[rel='wangpan']") && top.location == location) {
-    if(document.querySelector("iframe[rel='wangpan']").contentDocument.readyState=="complete"){
+chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+    if (msg.action == 'getCookies') {
+        var cookies = msg.cookies;
+        format_cookies = [];
+        for(var i=0;i<cookies.length;i++){
+            format_cookies.push(cookies[i]['name']+"="+cookies[i]['value']);
+        }
         addJS();
     }
-    document.querySelector("iframe[rel='wangpan']").addEventListener('load', addJS);
-}
-
-
-
-
-// if (document.querySelector("iframe[rel='wangpan']") && top.location == location) {
-//     document.querySelector("iframe[rel='wangpan']").addEventListener('load', function() {
-//         var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
-//         var script = document.createElement('script');
-//         script.id = "pan_115_script";
-//         script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-//         if (document.querySelector("#pan_115_script") == null) {
-//             (document.body || document.head || document.documentElement).appendChild(script);
-//             var style = document.createElement('style');
-//             style.setAttribute('type', 'text/css');
-//             style.textContent = setting_css;
-//             document.head.appendChild(style);
-//         }
-//     });
-// }
-// var script = document.createElement('script');
-// script.id = "pan_115_script";
-// script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-// if (document.querySelector("#pan_115_script") == null) {
-//     (document.body || document.head || document.documentElement).appendChild(script);
-//     var style = document.createElement('style');
-//     style.setAttribute('type', 'text/css');
-//     style.textContent = setting_css;
-//     document.head.appendChild(style);
-// }
+});
