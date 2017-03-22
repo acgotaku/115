@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.1.8
+// @version 0.2.0
 // ==/UserScript==
 var pan_115 = function(cookies) {
-        var version = "0.1.8";
-        var update_date = "2017/02/01";
+        var version = "0.2.0";
+        var update_date = "2017/03/22";
         var pan = (function() {
                     //type : inf err war
                     var SetMessage = function(msg, type) {
@@ -76,15 +76,14 @@ var pan_115 = function(cookies) {
                             var headers = $("#setting_aria2_headers").val();
                             var referer = $("#setting_aria2_referer_input").val() || "http://115.com/";
                             addheader.push("User-Agent: " + UA);
-                            // var baidu_cookies=JSON.parse(cookies);
-                            // var format_cookies=[];
-                            // for(var i=0;i<baidu_cookies.length;i++){
-                            //     for(var key in baidu_cookies[i]){
-                            //         // addheader.push("Cookie: " + key +"=" +baidu_cookies[i][key]);
-                            //         format_cookies.push(key +"=" +baidu_cookies[i][key]);
-                            //     }
-                            // }
-                            // addheader.push("Cookie: " + format_cookies.join(";"));
+                            if (cookies) {
+                                var cookies_115 =JSON.parse(cookies);
+                                var format_cookies = [];
+                                for (var key in cookies_115) {
+                                    format_cookies.push(key + "=" + cookies_115[key]);
+                                }
+                                addheader.push("Cookie: " + format_cookies.join("; "));
+                            }
                             addheader.push("Referer: " + referer);
                             if (headers) {
                                 var text = headers.split("\n");
@@ -416,7 +415,7 @@ var pan_115 = function(cookies) {
                 if (file_list.length > 0) {
                     var length = file_list.length;
                     for (var i = 0; i < length; i++) {
-                        files.push("aria2c -c -s10 -k1M -x10 -o " + JSON.stringify(file_list[i].name) + combination.header('aria2c_line') + " " + JSON.stringify(file_list[i].link) + "\n");
+                        files.push("aria2c -c -s10 -k1M -x16 --enable-rpc=false -o " + JSON.stringify(file_list[i].name) + combination.header('aria2c_line') + " " + JSON.stringify(file_list[i].link) + "\n");
                         aria2c_txt.push([
                             file_list[i].link,
                             combination.header("aria2c_txt"),
@@ -627,18 +626,31 @@ background-color: rgb(250, 250, 250);
  */
 }.toString().slice(15, -4);
 
+function sendToBackground(method, data, callback){
+    chrome.runtime.sendMessage({
+        method: method,
+        data: data
+    }, callback);
+}
+function requestCookies(names){
+    sendToBackground("get_cookies", names, function(value) { cookies = value });
+}
+//self.requestCookies([{ url: "http://115.com/", name: "UID" }, { url: "http://115.com/", name: "CID" }, { url: "http://115.com/", name: "SEID" }]);
 function addJS(){
-    var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
-    var script = document.createElement('script');
-    script.id = "pan_115_script";
-    script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-    if (document.querySelector("#pan_115_script") == null) {
-        (document.body || document.head || document.documentElement).appendChild(script);
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.textContent = setting_css;
-        document.head.appendChild(style);
-    }
+    var names=[{ url: "http://115.com/", name: "UID" }, { url: "http://115.com/", name: "CID" }, { url: "http://115.com/", name: "SEID" }];
+    sendToBackground("get_cookies", names, function(cookies){
+        var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
+        var script = document.createElement('script');
+        script.id = "pan_115_script";
+        script.appendChild(document.createTextNode('(' + pan_115 + ')(\'' +JSON.stringify(cookies) + '\');'));
+        if (document.querySelector("#pan_115_script") == null) {
+            (document.body || document.head || document.documentElement).appendChild(script);
+            var style = document.createElement('style');
+            style.setAttribute('type', 'text/css');
+            style.textContent = setting_css;
+            document.head.appendChild(style);
+        }
+    })
 }
 
 if (document.querySelector("iframe[rel='wangpan']") && top.location == location) {
@@ -647,32 +659,3 @@ if (document.querySelector("iframe[rel='wangpan']") && top.location == location)
     }
     document.querySelector("iframe[rel='wangpan']").addEventListener('load', addJS);
 }
-
-
-
-
-// if (document.querySelector("iframe[rel='wangpan']") && top.location == location) {
-//     document.querySelector("iframe[rel='wangpan']").addEventListener('load', function() {
-//         var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
-//         var script = document.createElement('script');
-//         script.id = "pan_115_script";
-//         script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-//         if (document.querySelector("#pan_115_script") == null) {
-//             (document.body || document.head || document.documentElement).appendChild(script);
-//             var style = document.createElement('style');
-//             style.setAttribute('type', 'text/css');
-//             style.textContent = setting_css;
-//             document.head.appendChild(style);
-//         }
-//     });
-// }
-// var script = document.createElement('script');
-// script.id = "pan_115_script";
-// script.appendChild(document.createTextNode('(' + pan_115 + ')();'));
-// if (document.querySelector("#pan_115_script") == null) {
-//     (document.body || document.head || document.documentElement).appendChild(script);
-//     var style = document.createElement('style');
-//     style.setAttribute('type', 'text/css');
-//     style.textContent = setting_css;
-//     document.head.appendChild(style);
-// }
