@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.2.0
+// @version 0.2.1
 // ==/UserScript==
 var pan_115 = function(cookies) {
-        var version = "0.2.0";
-        var update_date = "2017/03/22";
+        var version = "0.2.1";
+        var update_date = "2017/03/23";
         var pan = (function() {
                     //type : inf err war
                     var SetMessage = function(msg, type) {
@@ -103,10 +103,12 @@ var pan_115 = function(cookies) {
                                 }
                                 return header;
                             } else if (type == "idm_txt") {
-                                for (var i = 0; i < addheader.length; i++) {
-                                    header += " header=" + (addheader[i]) + " \n";
+                                for (i = 0; i < addheader.length; i++) {
+                                    if (addheader[i].indexOf("Referer") != 0) {
+                                        header += (addheader[i].split(": ")[0].toLowerCase() + ": " + addheader[i].split(": ")[1]) + "\n";
+                                    }
                                 }
-                                return header;
+                                return header.replace(/\n$/, "");
                             } else {
                                 return addheader;
                             }
@@ -394,7 +396,7 @@ var pan_115 = function(cookies) {
                     content_ui.empty();
                     var download_menu = $("<div>").css({ "display": "block", "margin-bottom": "10px" }).appendTo(content_ui);
                     var aria2c_btn = $("<a>").attr("id", "aria2c_btn").attr({ "href": "data:text/plain;charset=utf-8,", "download": "aria2c.down", "target": "_blank" }).addClass("new-btn").html('<b>存为aria2文件</b>').appendTo(download_menu);
-                    var idm_btn = $("<a>").attr("id", "idm_btn").attr({ "href": "data:text/plain;charset=utf-8,", "download": "idm.txt", "target": "_blank" }).addClass("new-btn").html('<b>存为IDM文件</b>').appendTo(download_menu);
+                    var idm_btn = $("<a>").attr("id", "idm_btn").attr({ "href": "data:text/plain;charset=utf-8,", "download": "idm.ef2", "target": "_blank" }).addClass("new-btn").html('<b>存为IDM文件</b>').appendTo(download_menu);
                     var download_txt_btn = $("<a>").attr("id", "download_txt_btn").attr({ "href": "data:text/plain;charset=utf-8,", "download": "download_link.down", "target": "_blank" }).addClass("new-btn").html('<b>保存下载链接</b>').appendTo(download_menu);
                     var download_link = $("<textarea>").attr("wrap", "off").attr("id", "download_link").css({"width": "100%", "overflow": "scroll", "height": "180px" });
                     download_link.appendTo(content_ui);
@@ -422,15 +424,15 @@ var pan_115 = function(cookies) {
                             ' out=' + file_list[i].name,
                             ' continue=true',
                             ' max-connection-per-server=10',
-                            '  split=2',
+                            ' split=2',
                             '\n'
                         ].join('\n'));
                         idm_txt.push([
                             '<',
                             file_list[i].link,
-                            ' cookie: ' + cookies,
-                            ' out=' + file_list[i].name,
-                            ' >'
+                            combination.header("idm_txt"),
+                            'out=' + file_list[i].name,
+                            '>\r\n'
                         ].join('\r\n'));
                         down_txt.push([file_list[i].link, ' '].join('\n'));
                     }
