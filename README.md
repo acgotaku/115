@@ -1,5 +1,10 @@
 # 115
 
+## 配合使用
+
+使用 fake115可以在chrome上登录115.详细见： https://github.com/kkHAIKE/fake115
+
+
 ## 插件下载地址
 + Firefox：https://addons.mozilla.org/zh-CN/firefox/addon/115exporter/
 + Firefox，XPI 包安装：https://raw.githubusercontent.com/acgotaku/115/master/firefox/115-exporter.xpi
