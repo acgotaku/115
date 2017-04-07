@@ -146,6 +146,20 @@ var pan_115 = function(cookies) {
             cursor: pointer;
             z-index:100;
         }
+        .btn-setting{
+            position: relative;
+            top:2px;
+            float: right;
+            margin-right: 10px;
+            padding: 0 10px 0 10px;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            background: #2b91e3;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index:100;
+        }
 
         li[rel="item"]:hover .show-export-button {
             display: block;
@@ -212,9 +226,12 @@ var pan_115 = function(cookies) {
                         $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click', function() {
                             self.aria2_export(true);
                         }));
-                        $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click', function() {
+                        $(root).find(".file-path").after($("<div>").text("导出").addClass("btn-txt").on('click', function() {
                             self.aria2_download();
                             self.aria2_export(false);
+                        }));
+                        $(root).find(".file-path").after($("<div>").text("⚙").addClass("btn-setting").on('click', function() {
+                            $("#setting_div").show();
                         }));
                     }
                     var style = document.createElement('style');
