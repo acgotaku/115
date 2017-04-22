@@ -5,11 +5,11 @@
 // @encoding           utf-8
 // @include     http://*.115.com/*
 // @run-at       document-end
-// @version 0.2.1
+// @version 0.2.2
 // ==/UserScript==
 var pan_115 = function(cookies) {
-        var version = "0.2.1";
-        var update_date = "2017/03/23";
+        var version = "0.2.2";
+        var update_date = "2017/04/22";
         var pan = (function() {
                     //type : inf err war
                     var SetMessage = function(msg, type) {
@@ -173,41 +173,9 @@ var pan_115 = function(cookies) {
                    top_panel_box_btn();
                 }
                 document.querySelector("iframe[rel='wangpan']").addEventListener('load', top_panel_box_btn);
-                main_page_setting_btn();
-
-                function main_page_setting_btn() {
-                    var setting_div = $("<a>").text("插件设置").attr("href", "javascript:;");
-                    var main_setting_div = $("<a>").text("插件设置").attr("href", "javascript:;");
-                    main_setting_div.attr("id", "main_setting_div");
-                    if (!document.querySelector("a[id='main_setting_div']")) {
-                        main_setting_div.appendTo($(document.querySelector("div[id='js-ch-member-info_box']")).find(".tup-logout"));
-                        main_setting_div.on('click', function() {
-                            $("#setting_div").show();
-                            $("#setting_divtopmsg").html("");
-                            self.set_center($("#setting_div"));
-                        });
-                    }
-                }
 
                 function top_panel_box_btn() {
                     var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
-                    var setting_div = $("<a>").text("插件设置").attr("href", "javascript:;");
-                    var main_setting_div = $("<a>").text("插件设置").attr("href", "javascript:;");
-                    main_setting_div.attr("id", "main_setting_div");
-                    setting_div.appendTo($(root).find(".tup-logout"));
-                    if (!document.querySelector("a[id='main_setting_div']") && document.querySelector("iframe[rel='wangpan']").src.indexOf('ct=rb&is_wl_tpl=1') < 0) {
-                        main_setting_div.appendTo($(document.querySelector("div[id='js-ch-member-info_box']")).find(".tup-logout"));
-                        main_setting_div.on('click', function() {
-                            $("#setting_div").show();
-                            $("#setting_divtopmsg").html("");
-                            self.set_center($("#setting_div"));
-                        });
-                    }
-                    setting_div.on('click', function() {
-                        $("#setting_div").show();
-                        $("#setting_divtopmsg").html("");
-                        self.set_center($("#setting_div"));
-                    });
                     if (!root.querySelector("a[menu='clear']")) {
                         $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click', function() {
                             self.aria2_export(true);
@@ -216,6 +184,11 @@ var pan_115 = function(cookies) {
                             self.aria2_download();
                             self.aria2_export(false);
                         }));
+                       $(root).find(".file-path").after($("<div>").text("插件设置").addClass("btn-txt").on('click', function() {
+                            $("#setting_div").show();
+                            $("#setting_divtopmsg").html("");
+                            self.set_center($("#setting_div"));
+                       }));
                     }
                     var style = document.createElement('style');
                     style.setAttribute('type', 'text/css');
