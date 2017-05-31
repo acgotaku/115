@@ -198,6 +198,7 @@ var pan_115 = function(cookies) {
             set_btn:function(){
                 //设置导出按钮的触发 js_top_panel_box
                 //设置 设置按钮
+		/*
                 var self = this;
                 var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
                 top_panel_box_btn();
@@ -224,6 +225,37 @@ var pan_115 = function(cookies) {
                     style.setAttribute('type', 'text/css');
                     style.textContent = css;
                     root.head.appendChild(style);           
+                }
+		*/
+
+		var self = this;
+
+                if(document.querySelector("iframe[rel='wangpan']").contentDocument.readyState=="complete"){
+                   top_panel_box_btn();
+                }
+
+                document.querySelector("iframe[rel='wangpan']").addEventListener('load', top_panel_box_btn);
+		
+		function top_panel_box_btn() {
+                    var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
+                    if (!root.querySelector("a[menu='clear']")) {
+                        $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click', function() {
+                            self.aria2_export(true);
+                        }));
+                        $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click', function() {
+                            self.aria2_download();
+                            self.aria2_export(false);
+                        }));
+                       $(root).find(".file-path").after($("<div>").text("插件设置").addClass("btn-txt").on('click', function() {
+                            $("#setting_div").show();
+                            $("#setting_divtopmsg").html("");
+                            self.set_center($("#setting_div"));
+                       }));
+                    }
+                    var style = document.createElement('style');
+                    style.setAttribute('type', 'text/css');
+                    style.textContent = css;
+                    root.head.appendChild(style);
                 }
             },
             set_config_ui:function(){
