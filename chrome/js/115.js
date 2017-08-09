@@ -390,7 +390,7 @@ var pan_115 = function(cookies) {
                 if (file_list.length > 0) {
                     var length = file_list.length;
                     for (var i = 0; i < length; i++) {
-                        files.push("aria2c -c -s10 -k1M -x16 --enable-rpc=false -o " + JSON.stringify(file_list[i].name) + combination.header('aria2c_line') + " " + JSON.stringify(file_list[i].link) + "\n");
+                        files.push("aria2c -c -s10 -k1M -x2 --enable-rpc=false -o " + JSON.stringify(file_list[i].name) + combination.header('aria2c_line') + " " + JSON.stringify(file_list[i].link) + "\n");
                         aria2c_txt.push([
                             file_list[i].link,
                             combination.header("aria2c_txt"),
