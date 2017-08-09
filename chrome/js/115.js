@@ -8,8 +8,8 @@
 // @version 0.2.2
 // ==/UserScript==
 var pan_115 = function(cookies) {
-        var version = "0.2.2";
-        var update_date = "2017/04/22";
+        var version = "0.2.3";
+        var update_date = "2017/08/09";
         var pan = (function() {
                     //type : inf err war
                     var SetMessage = function(msg, type) {
@@ -177,14 +177,14 @@ var pan_115 = function(cookies) {
                 function top_panel_box_btn() {
                     var root = document.querySelector("iframe[rel='wangpan']").contentDocument;
                     if (!root.querySelector("a[menu='clear']")) {
-                        $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click', function() {
+                        $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").attr("menu", "test").on('click', function() {
                             self.aria2_export(true);
                         }));
-                        $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click', function() {
+                        $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").attr("menu", "test").on('click', function() {
                             self.aria2_download();
                             self.aria2_export(false);
                         }));
-                       $(root).find(".file-path").after($("<div>").text("插件设置").addClass("btn-txt").on('click', function() {
+                       $(root).find(".file-path").after($("<div>").text("插件设置").addClass("btn-txt").attr("menu", "test").on('click', function() {
                             $("#setting_div").show();
                             $("#setting_divtopmsg").html("");
                             self.set_center($("#setting_div"));
