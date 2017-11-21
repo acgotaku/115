@@ -1,20 +1,22 @@
-{  
+{
    "background": {
     "scripts": [ "background.js" ],
     "persistent": false
   },
    "content_scripts": [ {
-      "js": [ "js/115.js" ],
+     "js": ["js/start.js" ],
+     "css": [ "css/style.css" ],
       "matches": ["*://*.115.com/*"]
    } ],
    "default_locale": "en",
    "description": "__MSG_description__",
    "icons": {
-      "32": "images/logo32.png",
-      "16": "images/logo16.png",
-      "48": "images/logo48.png",
-      "128": "images/logo128.png"
+      "32": "img/logo32.png",
+      "16": "img/logo16.png",
+      "48": "img/logo48.png",
+      "128": "img/logo128.png"
    },
+    "web_accessible_resources": [ "js/115.js" ],
    "manifest_version": 2,
    "permissions": [ "cookies", "tabs", "*://*.115.com/*"],
    "name": "__MSG_appName__",

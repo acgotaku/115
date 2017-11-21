@@ -1,0 +1,56 @@
+{
+  "name": "115",
+  "version": "0.2.4",
+  "description": "Assistant for 115 to export download links to aria2-rpc.",
+  "main": "background.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "NODE_ENV=development gulp serve",
+    "build": "NODE_ENV=production gulp public",
+    "clean": "gulp clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acgotaku/115.git"
+  },
+  "keywords": [
+    "115",
+    "aria2c"
+  ],
+  "author": "acgotaku311",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/acgotaku/115/issues"
+  },
+  "homepage": "https://github.com/acgotaku/115#readme",
+  "devDependencies": {
+    "autoprefixer": "^7.1.4",
+    "babel-preset-env": "^1.6.0",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "gulp": "^3.9.1",
+    "gulp-buffer": "0.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-eslint": "^4.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^3.4.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^7.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-stylelint": "^5.0.0",
+    "gulp-tap": "^1.0.1",
+    "gulp-uglify": "^3.0.0",
+    "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-pngquant": "^5.0.1",
+    "run-sequence": "^2.2.0",
+    "stylelint": "^8.1.1",
+    "stylelint-config-sass-guidelines": "^3.1.0"
+  }
+}
