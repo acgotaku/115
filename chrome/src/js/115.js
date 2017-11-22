@@ -1,20 +1,20 @@
 class Disk {
   constructor () {
-    this.context = document.querySelector('iframe[rel="wangpan"]')
+    this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
   }
-  // 封装的百度的Toast提示消息
   // Type类型有
-  // caution       警告  failure       失败  loading      加载 success      成功
+  // inf err war
   showToast ({message, type}) {
-    this.context.ui.tip({
-      mode: type,
-      msg: message
+    window.Core.MinMessage.Show({
+      text: message,
+      type: type,
+      timeout: 2000
     })
   }
   startListen () {
     window.addEventListener('message', (event) => {
       if (event.data.type && event.data.type === 'getSelected') {
-        window.postMessage({ type: 'selected', data: this.context.list.getSelected() }, location.origin)
+        window.postMessage({ type: 'selected', data: this.getSelected() }, location.origin)
       }
       if (event.data.type && event.data.type === 'showToast') {
         this.showToast(event.data.data)

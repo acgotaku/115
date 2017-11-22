@@ -15,7 +15,6 @@ class UI {
     this.addTextExport()
     Store.trigger('initConfigData')
   }
-  // z-index resolve share page show problem
   addMenu (element, position) {
     const menu = `
       <div id="exportMenu" class="g-dropdown-button">
@@ -25,7 +24,7 @@ class UI {
             <span class="text">导出下载</span>
           </span>
         </a>
-        <div id="aria2List" class="menu" style="z-index:50;">
+        <div id="aria2List" class="menu">
           <a class="g-button-menu" id="aria2Text" href="javascript:void(0);">文本导出</a>
           <a class="g-button-menu" id="settingButton" href="javascript:void(0);">设置</a>
         </div>

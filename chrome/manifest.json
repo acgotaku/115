@@ -18,7 +18,7 @@
    },
     "web_accessible_resources": [ "js/115.js" ],
    "manifest_version": 2,
-   "permissions": [ "cookies", "tabs", "*://*.115.com/*"],
+   "permissions": [ "cookies", "storage", "tabs", "*://*.115.com/*"],
    "name": "__MSG_appName__",
-   "version": "0.2.3"
+   "version": "0.2.4"
 }
