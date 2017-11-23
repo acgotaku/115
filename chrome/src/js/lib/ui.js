@@ -5,6 +5,7 @@ class UI {
   constructor () {
     this.version = '0.9.10'
     this.updateDate = '2017/10/02'
+    this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     Store.on('updateView', (configData) => {
       this.updateSetting(configData)
       this.updateMenu(configData)
@@ -17,34 +18,34 @@ class UI {
   }
   addMenu (element, position) {
     const menu = `
-      <div id="exportMenu" class="g-dropdown-button">
-        <a class="g-button">
-          <span class="g-button-right">
-            <em class="icon icon-download"></em>
-            <span class="text">导出下载</span>
-          </span>
-        </a>
-        <div id="aria2List" class="menu">
-          <a class="g-button-menu" id="aria2Text" href="javascript:void(0);">文本导出</a>
-          <a class="g-button-menu" id="settingButton" href="javascript:void(0);">设置</a>
+      <div id="exportMenu" class="export">
+        <a class="export-button">导出下载</a>
+        <div id="aria2List" class="export-menu">
+          <a class="export-menu-item" id="aria2Text" href="javascript:void(0);">文本导出</a>
+          <a class="export-menu-item" id="settingButton" href="javascript:void(0);">设置</a>
         </div>
       </div>`
     element.insertAdjacentHTML(position, menu)
-    const exportMenu = document.querySelector('#exportMenu')
+    const exportMenu = this.context.querySelector('#exportMenu')
     exportMenu.addEventListener('mouseenter', () => {
-      exportMenu.classList.add('button-open')
+      exportMenu.classList.add('open-o')
     })
     exportMenu.addEventListener('mouseleave', () => {
-      exportMenu.classList.remove('button-open')
+      exportMenu.classList.remove('open-o')
     })
-    const settingButton = document.querySelector('#settingButton')
+    const settingButton = this.context.querySelector('#settingButton')
     const settingMenu = document.querySelector('#settingMenu')
-    settingButton.addEventListener('click', () => {
+    settingButton.addEventListener('click', (event) => {
       settingMenu.classList.add('open-o')
+    })
+    // fix click select file
+    const aria2List = this.context.querySelector('#aria2List')
+    aria2List.addEventListener('mousedown', (event) => {
+      event.stopPropagation()
     })
   }
   resetMenu () {
-    document.querySelectorAll('.rpc-button').forEach((rpc) => {
+    this.context.querySelectorAll('.rpc-button').forEach((rpc) => {
       rpc.remove()
     })
   }
@@ -53,28 +54,28 @@ class UI {
     const { rpcList } = configData
     let rpcDOMList = ''
     rpcList.forEach((rpc) => {
-      const rpcDOM = `<a class="g-button-menu rpc-button" href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a>`
+      const rpcDOM = `<a class="export-menu-item rpc-button" href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a>`
       rpcDOMList += rpcDOM
     })
-    document.querySelector('#aria2List').insertAdjacentHTML('afterbegin', rpcDOMList)
+    this.context.querySelector('#aria2List').insertAdjacentHTML('afterbegin', rpcDOMList)
   }
   addTextExport () {
     const text = `
-      <div id="textMenu" class="modal export-menu">
+      <div id="textMenu" class="modal text-menu">
         <div class="modal-inner">
           <div class="modal-header">
             <div class="modal-title">文本导出</div>
             <div class="modal-close">×</div>
           </div>
           <div class="modal-body">
-            <div class="export-menu-row">
-              <a class="export-menu-button" href="javascript:void(0);" id="aria2Txt" download="aria2c.down">存为Aria2文件</a>
-              <a class="export-menu-button" href="javascript:void(0);" id="idmTxt" download="idm.ef2">存为IDM文件</a>
-              <a class="export-menu-button" href="javascript:void(0);" id="downloadLinkTxt" download="link.txt">保存下载链接</a>
-              <a class="export-menu-button" href="javascript:void(0);" id="copyDownloadLinkTxt">拷贝下载链接</a>
+            <div class="text-menu-row">
+              <a class="text-menu-button" href="javascript:void(0);" id="aria2Txt" download="aria2c.down">存为Aria2文件</a>
+              <a class="text-menu-button" href="javascript:void(0);" id="idmTxt" download="idm.ef2">存为IDM文件</a>
+              <a class="text-menu-button" href="javascript:void(0);" id="downloadLinkTxt" download="link.txt">保存下载链接</a>
+              <a class="text-menu-button" href="javascript:void(0);" id="copyDownloadLinkTxt">拷贝下载链接</a>
             </div>
-            <div class="export-menu-row">
-              <textarea class="export-menu-textarea" type="textarea" wrap="off" spellcheck="false" id="aria2CmdTxt"></textarea>
+            <div class="text-menu-row">
+              <textarea class="text-menu-textarea" type="textarea" wrap="off" spellcheck="false" id="aria2CmdTxt"></textarea>
             </div>
           </div>
         </div>
@@ -130,10 +131,10 @@ class UI {
             </div><!-- /.setting-menu-row -->
             <div class="setting-menu-row">
               <div class="setting-menu-name">
-                <label class="setting-menu-label">MD5校验</label>
+                <label class="setting-menu-label">SHA1校验</label>
               </div>
               <div class="setting-menu-value">
-                <input type="checkbox" class="setting-menu-checkbox md5Check-s">
+                <input type="checkbox" class="setting-menu-checkbox sha1Check-s">
               </div>
             </div><!-- /.setting-menu-row -->
             <div class="setting-menu-row">
@@ -243,7 +244,7 @@ class UI {
     testAria2.innerText = '测试连接，成功显示版本号'
   }
   updateSetting (configData) {
-    const { rpcList, configSync, md5Check, interval, downloadPath, userAgent, referer, headers } = configData
+    const { rpcList, configSync, sha1Check, interval, downloadPath, userAgent, referer, headers } = configData
     // reset dom
     document.querySelectorAll('.rpc-s').forEach((rpc, index) => {
       if (index !== 0) {
@@ -269,7 +270,7 @@ class UI {
       }
     })
     document.querySelector('.configSync-s').checked = configSync
-    document.querySelector('.md5Check-s').checked = md5Check
+    document.querySelector('.sha1Check-s').checked = sha1Check
     document.querySelector('.interval-s').value = interval
     document.querySelector('.downloadPath-s').value = downloadPath
     document.querySelector('.userAgent-s').value = userAgent
@@ -287,7 +288,7 @@ class UI {
       }
     }).filter(el => el)
     const configSync = document.querySelector('.configSync-s').checked
-    const md5Check = document.querySelector('.md5Check-s').checked
+    const sha1Check = document.querySelector('.sha1Check-s').checked
     const interval = document.querySelector('.interval-s').value
     const downloadPath = document.querySelector('.downloadPath-s').value
     const userAgent = document.querySelector('.userAgent-s').value
@@ -297,7 +298,7 @@ class UI {
     const configData = {
       rpcList,
       configSync,
-      md5Check,
+      sha1Check,
       interval,
       downloadPath,
       userAgent,

@@ -5,7 +5,10 @@
   },
    "content_scripts": [ {
      "js": ["js/start.js" ],
+      "matches": ["*://*.115.com/*"]
+   }, {
      "css": [ "css/style.css" ],
+     "all_frames": true,
       "matches": ["*://*.115.com/*"]
    } ],
    "default_locale": "en",

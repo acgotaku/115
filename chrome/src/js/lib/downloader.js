@@ -22,11 +22,11 @@ class Downloader {
     this.files = {}
     this.completedCount = 0
   }
-  addFolder (path) {
-    this.folders.push(path)
+  addFolder (cateId) {
+    this.folders.push(cateId)
   }
   addFile (file) {
-    this.files[file.fs_id] = file
+    this.files[file.pick_code] = file
   }
   getNextFile (taskId) {
     if (taskId !== this.currentTaskId) {
@@ -34,23 +34,27 @@ class Downloader {
     }
     if (this.folders.length !== 0) {
       this.completedCount++
-      Core.showToast(`正在获取文件列表... ${this.completedCount}/${this.completedCount + this.folders.length - 1}`, 'success')
-      const dir = this.folders.pop()
-      this.listParameter.search.dir = dir
-      fetch(`${window.location.origin}${this.listParameter.url}${Core.objectToQueryString(this.listParameter.search)}`, this.listParameter.options).then((response) => {
+      Core.showToast(`正在获取文件列表... ${this.completedCount}/${this.completedCount + this.folders.length - 1}`, 'inf')
+      const cid = this.folders.pop()
+      this.listParameter.search.cid = cid
+      fetch(`${this.listParameter.url}${Core.objectToQueryString(this.listParameter.search)}`, this.listParameter.options).then((response) => {
         if (response.ok) {
           response.json().then((data) => {
             setTimeout(() => this.getNextFile(taskId), this.interval)
-            if (data.errno !== 0) {
-              Core.showToast('未知错误', 'failure')
-              console.log(data)
-              return
+            let path = ''
+            for (var i = 1; i < data.path.length; i++) {
+              path += data.path[i].name + '/'
             }
-            data.list.forEach((item) => {
-              if (item.isdir) {
-                this.folders.push(item.path)
+            data.data.forEach((item) => {
+              if (!item.sha) {
+                this.folders.push(item.cid)
               } else {
-                this.files[item.fs_id] = item
+                this.files[item.pc] = {
+                  path,
+                  isdir: false,
+                  sha1: item.sha,
+                  pick_code: item.pc
+                }
               }
             })
           })
@@ -58,17 +62,17 @@ class Downloader {
           console.log(response)
         }
       }).catch((err) => {
-        Core.showToast('网络请求失败', 'failure')
+        Core.showToast('网络请求失败', 'err')
         console.log(err)
         setTimeout(() => this.getNextFile(taskId), this.interval)
       })
     } else if (this.files.length !== 0) {
-      Core.showToast('正在获取下载地址...', 'success')
+      Core.showToast('正在获取下载地址...', 'inf')
       this.getFiles(this.files).then(() => {
         this.done(this.fileDownloadInfo)
       })
     } else {
-      Core.showToast('一个文件都没有哦...', 'caution')
+      Core.showToast('一个文件都没有哦...', 'war')
       this.reset()
     }
   }

@@ -155,14 +155,14 @@ class Core {
           }
         ]
       }
-      const md5Check = this.getConfigData('md5Check')
+      const sha1Check = this.getConfigData('sha1Check')
       const rpcOption = rpcData.params[1]
       const dir = this.getConfigData('downloadPath')
       if (dir) {
         rpcOption['dir'] = dir
       }
-      if (md5Check) {
-        rpcOption['checksum'] = `md5=${file.md5}`
+      if (sha1Check) {
+        rpcOption['checksum'] = `sha-1=${file.sha1}`
       }
       if (options) {
         for (let key in options) {
@@ -188,10 +188,10 @@ class Core {
       const name = JSON.stringify(file.name)
       let aria2CmdLine = `aria2c -c -s10 -k1M -x16 --enable-rpc=false -o ${name} ${this.getHeader('aria2Cmd')} ${JSON.stringify(file.link)}`
       let aria2Line = [file.link, this.getHeader('aria2c'), ` out=${name}`].join('\n')
-      const md5Check = this.getConfigData('md5Check')
-      if (md5Check) {
-        aria2CmdLine += ` --checksum=md5=${file.md5}`
-        aria2Line += ` checksum=md5=${file.md5}`
+      const sha1Check = this.getConfigData('sha1Check')
+      if (sha1Check) {
+        aria2CmdLine += ` --checksum=sha-1=${file.sha1}`
+        aria2Line += ` checksum=sha-1=${file.sha1}`
       }
       aria2CmdTxt.push(aria2CmdLine)
       aria2Txt.push(aria2Line)

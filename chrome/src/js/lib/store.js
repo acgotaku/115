@@ -4,12 +4,12 @@ class Store extends EventEmitter {
   constructor () {
     super()
     this.defaultRPC = [{name: 'ARIA2 RPC', url: 'http://localhost:6800/jsonrpc'}]
-    this.defaultUserAgent = 'netdisk;5.3.4.5;PC;PC-Windows;5.1.2600;WindowsBaiduYunGuanJia'
-    this.defaultReferer = 'https://pan.baidu.com/disk/home'
+    this.defaultUserAgent = 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 115Browser/5.1.3'
+    this.defaultReferer = 'https://115.com/'
     this.defaultConfigData = {
       rpcList: this.defaultRPC,
       configSync: false,
-      md5Check: false,
+      sha1Check: false,
       interval: 300,
       downloadPath: '',
       userAgent: this.defaultUserAgent,

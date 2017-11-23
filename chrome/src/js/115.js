@@ -8,7 +8,7 @@ class Disk {
     window.Core.MinMessage.Show({
       text: message,
       type: type,
-      timeout: 2000
+      timeout: 1000
     })
   }
   startListen () {
@@ -31,7 +31,8 @@ class Disk {
         selected.push({
           isdir: false,
           sha1: item.getAttribute('sha1'),
-          pick_code: item.getAttribute('pick_code')
+          pick_code: item.getAttribute('pick_code'),
+          path: ''
         })
       }
       // fold

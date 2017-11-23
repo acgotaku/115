@@ -5,14 +5,14 @@ import Downloader from './lib/downloader'
 class Home extends Downloader {
   constructor () {
     const search = {
-      dir: '',
-      channel: 'chunlei',
-      clienttype: 0,
-      web: 1
+      aid: 1,
+      limit: 1000,
+      show_dir: 1,
+      cid: ''
     }
     const listParameter = {
       search,
-      url: `/api/list?`,
+      url: `//webapi.115.com/files?`,
       options: {
         credentials: 'include',
         method: 'GET'
@@ -20,9 +20,8 @@ class Home extends Downloader {
     }
     super(listParameter)
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
-    console.log(this.context)
     UI.init()
-    UI.addMenu(this.context.querySelector('#js_top_panel_box'), 'beforeend')
+    UI.addMenu(this.context.querySelector('#js_top_bar_box'), 'beforeend')
     Core.requestCookies([{ url: 'http://115.com/', name: 'UID' }, { url: 'http://115.com/', name: 'CID' }, { url: 'http://115.com/', name: 'SEID' }])
     Core.showToast('初始化成功!', 'inf')
     this.mode = 'RPC'
@@ -31,20 +30,16 @@ class Home extends Downloader {
 
   startListen () {
     window.addEventListener('message', (event) => {
-      if (event.source !== window) {
-        return
-      }
-
       if (event.data.type && event.data.type === 'selected') {
         this.reset()
         const selectedFile = event.data.data
         if (selectedFile.length === 0) {
-          Core.showToast('请选择一下你要保存的文件哦', 'failure')
+          Core.showToast('请选择一下你要保存的文件哦', 'war')
           return
         }
         selectedFile.forEach((item) => {
           if (item.isdir) {
-            this.addFolder(item.path)
+            this.addFolder(item.cate_id)
           } else {
             this.addFile(item)
           }
@@ -60,7 +55,7 @@ class Home extends Downloader {
         })
       }
     })
-    const menuButton = document.querySelector('#aria2List')
+    const menuButton = this.context.querySelector('#aria2List')
     menuButton.addEventListener('click', (event) => {
       const rpcURL = event.target.dataset.url
       if (rpcURL) {
@@ -82,16 +77,40 @@ class Home extends Downloader {
     const path = Core.getHashParameter('list/path') || Core.getHashParameter('path')
     return path.length === 1 ? path.length : path.length + 1
   }
-  getFiles (files) {
-    const prefix = this.getPrefixLength()
-    for (let key in files) {
-      this.fileDownloadInfo.push({
-        name: files[key].path.substr(prefix),
-        link: `${location.protocol}//pcs.baidu.com/rest/2.0/pcs/file?method=download&app_id=250528&path=${encodeURIComponent(files[key].path)}`,
-        md5: files[key].md5
-      })
+  getFile (file) {
+    const options = {
+      credentials: 'include',
+      method: 'GET'
     }
-    return Promise.resolve()
+    return new Promise((resolve) => {
+      fetch(`//webapi.115.com/files/download?pickcode=${file}`, options).then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            resolve(data)
+          })
+        } else {
+          console.log(response)
+        }
+      }).catch((err) => {
+        Core.showToast('网络请求失败', 'err')
+        console.log(err)
+      })
+    })
+  }
+  getFiles (files) {
+    const list = Object.keys(files).map(item => this.getFile(item))
+    return new Promise((resolve) => {
+      Promise.all(list).then((items) => {
+        items.forEach((item) => {
+          this.fileDownloadInfo.push({
+            name: files[item.pickcode].path + item.file_name,
+            link: item.file_url,
+            sha1: files[item.pickcode].sha1
+          })
+        })
+        resolve()
+      })
+    })
   }
 }
 
