@@ -18,3 +18,16 @@
 
 这个是 Aria2 的设置界面，按钮放在帐号设置的下面：
 ![2015-01-28-231106_935x644_scrot](https://cloud.githubusercontent.com/assets/1191834/6996710/232aed42-dbca-11e4-87ff-11af0f8064df.png)
+
+## License
+
+![GPLv3](https://www.gnu.org/graphics/gplv3-127x51.png)
+
+115Exporter is licensed under [GNU General Public License](https://www.gnu.org/licenses/gpl.html) Version 3 or later.
+
+115Exporter is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+115Exporter is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 115Exporter.  If not, see <http://www.gnu.org/licenses/>.
