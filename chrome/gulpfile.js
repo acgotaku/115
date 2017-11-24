@@ -5,6 +5,7 @@ const tap = require('gulp-tap')
 const buffer = require('gulp-buffer')
 
 const del = require('del')
+const zip = require('gulp-zip')
 const gulpIf = require('gulp-if')
 const runSequence = require('run-sequence')
 
@@ -101,6 +102,11 @@ gulp.task('copy', function () {
 })
 gulp.task('build', ['js', 'css', 'img', 'copy'])
 
+gulp.task('zip', function () {
+  return gulp.src('dist/**/*')
+    .pipe(zip('chrome.zip'))
+    .pipe(gulp.dest('dist/'))
+})
 gulp.task('clean', function () {
   return del([
     'dist/**/*'
@@ -115,7 +121,7 @@ gulp.task('serve', ['clean'], function () {
 })
 
 gulp.task('public', ['clean'], function () {
-  runSequence(['build'])
+  runSequence('build', 'zip')
 })
 
 gulp.task('default', function () {
