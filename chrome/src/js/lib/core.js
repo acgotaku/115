@@ -195,13 +195,13 @@ class Core {
       }
       aria2CmdTxt.push(aria2CmdLine)
       aria2Txt.push(aria2Line)
-      const idmLine = ['<', file.link, this.getHeader('idm'), `out=${name}`, '>\r\n'].join('\r\n')
+      const idmLine = ['<', file.link, this.getHeader('idm'), `out=${name}`, '>'].join('\r\n')
       idmTxt.push(idmLine)
       downloadLinkTxt.push(file.link)
     })
     document.querySelector('#aria2CmdTxt').value = `${aria2CmdTxt.join('\n')}`
     document.querySelector('#aria2Txt').href = `${prefixTxt}${encodeURIComponent(aria2Txt.join('\n'))}`
-    document.querySelector('#idmTxt').href = `${prefixTxt}${encodeURIComponent(idmTxt.join('\r\n'))}`
+    document.querySelector('#idmTxt').href = `${prefixTxt}${encodeURIComponent(idmTxt.join('\r\n') + '\r\n')}`
     document.querySelector('#downloadLinkTxt').href = `${prefixTxt}${encodeURIComponent(downloadLinkTxt.join('\n'))}`
     document.querySelector('#copyDownloadLinkTxt').dataset.link = downloadLinkTxt.join('\n')
   }
