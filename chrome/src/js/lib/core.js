@@ -132,9 +132,9 @@ class Core {
     const result = document.execCommand('copy')
     input.remove()
     if (result) {
-      this.showToast('拷贝成功~', 'success')
+      this.showToast('拷贝成功~', 'inf')
     } else {
-      this.showToast('拷贝失败 QAQ', 'failure')
+      this.showToast('拷贝失败 QAQ', 'err')
     }
   }
   // cookies format  [{"url": "http://pan.baidu.com/", "name": "BDUSS"},{"url": "http://pcs.baidu.com/", "name": "pcsett"}]
@@ -171,9 +171,9 @@ class Core {
       }
       this.sendToBackground('rpcData', this.generateParameter(authStr, path, rpcData), (success) => {
         if (success) {
-          this.showToast('下载成功!赶紧去看看吧~', 'success')
+          this.showToast('下载成功!赶紧去看看吧~', 'inf')
         } else {
-          this.showToast('下载失败!是不是没有开启Aria2?', 'failure')
+          this.showToast('下载失败!是不是没有开启Aria2?', 'err')
         }
       })
     })

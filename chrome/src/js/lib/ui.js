@@ -25,7 +25,11 @@ class UI {
           <a class="export-menu-item" id="settingButton" href="javascript:void(0);">设置</a>
         </div>
       </div>`
-    element.insertAdjacentHTML(position, menu)
+    if (element) {
+      element.insertAdjacentHTML(position, menu)
+    } else {
+      return
+    }
     const exportMenu = this.context.querySelector('#exportMenu')
     exportMenu.addEventListener('mouseenter', () => {
       exportMenu.classList.add('open-o')
