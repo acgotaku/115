@@ -185,9 +185,8 @@ class Core {
     const downloadLinkTxt = []
     const prefixTxt = 'data:text/plain;charset=utf-8,'
     fileDownloadInfo.forEach((file) => {
-      const name = JSON.stringify(file.name)
-      let aria2CmdLine = `aria2c -c -s10 -k1M -x16 --enable-rpc=false -o ${name} ${this.getHeader('aria2Cmd')} ${JSON.stringify(file.link)}`
-      let aria2Line = [file.link, this.getHeader('aria2c'), ` out=${name}`].join('\n')
+      let aria2CmdLine = `aria2c -c -s10 -k1M -x16 --enable-rpc=false -o ${JSON.stringify(file.name)} ${this.getHeader('aria2Cmd')} ${JSON.stringify(file.link)}`
+      let aria2Line = [file.link, this.getHeader('aria2c'), ` out=${file.name}`].join('\n')
       const sha1Check = this.getConfigData('sha1Check')
       if (sha1Check) {
         aria2CmdLine += ` --checksum=sha-1=${file.sha1}`
@@ -195,7 +194,7 @@ class Core {
       }
       aria2CmdTxt.push(aria2CmdLine)
       aria2Txt.push(aria2Line)
-      const idmLine = ['<', file.link, this.getHeader('idm'), `out=${name}`, '>'].join('\r\n')
+      const idmLine = ['<', file.link, this.getHeader('idm'), '>'].join('\r\n')
       idmTxt.push(idmLine)
       downloadLinkTxt.push(file.link)
     })
