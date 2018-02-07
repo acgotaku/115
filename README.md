@@ -1,5 +1,7 @@
 # 115Exporter [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ojafklbojgenkohhdgdjeaepnbjffdjf.svg)](https://chrome.google.com/webstore/detail/115exporter/ojafklbojgenkohhdgdjeaepnbjffdjf)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/acgotaku/115.svg)](https://greenkeeper.io/)
+
 ## 配合使用
 
 使用 fake115可以在chrome上登录115.详细见： https://github.com/kkHAIKE/fake115
