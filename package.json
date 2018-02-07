@@ -7,7 +7,10 @@
     "start": "npm run dev",
     "dev": "NODE_ENV=development gulp serve",
     "build": "NODE_ENV=production gulp public",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "lint:js": "gulp lint:js",
+    "lint:css": "gulp lint:css",
+    "test": "npm run lint:js && npm run lint:css"
   },
   "repository": {
     "type": "git",

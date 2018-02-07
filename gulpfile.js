@@ -41,6 +41,22 @@ const config = {
   }
 }
 
+gulp.task('lint:js', function () {
+  return gulp.src(jsTargets)
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+})
+
+gulp.task('lint:css', function () {
+  return gulp.src(cssTargets)
+    .pipe(stylelint({
+      reporters: [
+        {formatter: 'string', console: true}
+      ]
+    }))
+})
+
 gulp.task('js', function () {
   return gulp.src(jsEntries)
     .pipe(plumber(config.plumberConfig))

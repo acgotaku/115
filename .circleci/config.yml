@@ -1,0 +1,65 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/project/115
+  docker:
+    - image: circleci/node:6-browsers
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-chache-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: npm install
+      - save_cache:
+          key: node-chache-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules/
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - 115
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+
+      - run:
+          name: install dependency
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libpng-dev
+      - run: npm run build
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: check PR
+          command: |
+            if [[ -n $CIRCLE_PULL_REQUEST ]]; then
+              npm run test
+            fi
+
+workflows:
+  version: 2
+  install_and_test:
+    jobs:
+      - install
+      - build:
+          requires:
+            - install
+          filters:
+            branches:
+              only:
+                - master
+      - test:
+          requires:
+            - install
