@@ -1,6 +1,5 @@
-# 115Exporter [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ojafklbojgenkohhdgdjeaepnbjffdjf.svg)](https://chrome.google.com/webstore/detail/115exporter/ojafklbojgenkohhdgdjeaepnbjffdjf)
+# 115Exporter [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ojafklbojgenkohhdgdjeaepnbjffdjf.svg)](https://chrome.google.com/webstore/detail/115exporter/ojafklbojgenkohhdgdjeaepnbjffdjf)[![Greenkeeper badge](https://badges.greenkeeper.io/acgotaku/115.svg)](https://greenkeeper.io/)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/acgotaku/115.svg)](https://greenkeeper.io/)
 
 ## 配合使用
 
