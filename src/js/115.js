@@ -39,7 +39,8 @@ class Disk {
       if (type === '0' && item.classList.contains('selected')) {
         selected.push({
           isdir: true,
-          cate_id: item.getAttribute('cate_id')
+          cate_id: item.getAttribute('cate_id'),
+          path: ''
         })
       }
     })

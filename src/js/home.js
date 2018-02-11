@@ -39,7 +39,7 @@ class Home extends Downloader {
         }
         selectedFile.forEach((item) => {
           if (item.isdir) {
-            this.addFolder(item.cate_id)
+            this.addFolder(item)
           } else {
             this.addFile(item)
           }
@@ -73,10 +73,6 @@ class Home extends Downloader {
   getSelected () {
     window.postMessage({ type: 'getSelected' }, location.origin)
   }
-  getPrefixLength () {
-    const path = Core.getHashParameter('list/path') || Core.getHashParameter('path')
-    return path.length === 1 ? path.length : path.length + 1
-  }
   getFile (file) {
     const options = {
       credentials: 'include',
@@ -98,6 +94,7 @@ class Home extends Downloader {
     })
   }
   getFiles (files) {
+    console.log(files)
     const list = Object.keys(files).map(item => this.getFile(item))
     return new Promise((resolve) => {
       Promise.all(list).then((items) => {

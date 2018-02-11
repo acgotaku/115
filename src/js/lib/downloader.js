@@ -22,8 +22,8 @@ class Downloader {
     this.files = {}
     this.completedCount = 0
   }
-  addFolder (cateId) {
-    this.folders.push(cateId)
+  addFolder (item) {
+    this.folders.push(item)
   }
   addFile (file) {
     this.files[file.pick_code] = file
@@ -35,19 +35,19 @@ class Downloader {
     if (this.folders.length !== 0) {
       this.completedCount++
       Core.showToast(`正在获取文件列表... ${this.completedCount}/${this.completedCount + this.folders.length - 1}`, 'inf')
-      const cid = this.folders.pop()
-      this.listParameter.search.cid = cid
+      const fold = this.folders.pop()
+      this.listParameter.search.cid = fold.cate_id
       fetch(`${this.listParameter.url}${Core.objectToQueryString(this.listParameter.search)}`, this.listParameter.options).then((response) => {
         if (response.ok) {
           response.json().then((data) => {
             setTimeout(() => this.getNextFile(taskId), this.interval)
-            let path = ''
-            for (var i = 1; i < data.path.length; i++) {
-              path += data.path[i].name + '/'
-            }
+            let path = fold.path + data.path[data.path.length - 1].name + '/'
             data.data.forEach((item) => {
               if (!item.sha) {
-                this.folders.push(item.cid)
+                this.folders.push({
+                  cate_id: item.cid,
+                  path
+                })
               } else {
                 this.files[item.pc] = {
                   path,
