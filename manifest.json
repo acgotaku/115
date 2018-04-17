@@ -5,7 +5,8 @@
   },
    "content_scripts": [ {
      "js": ["js/start.js" ],
-      "matches": ["*://*.115.com/*"]
+      "matches": ["*://*.115.com/*"],
+      "run_at": "document_end"
    }, {
      "css": [ "css/style.css" ],
      "all_frames": true,

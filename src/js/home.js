@@ -94,7 +94,6 @@ class Home extends Downloader {
     })
   }
   getFiles (files) {
-    console.log(files)
     const list = Object.keys(files).map(item => this.getFile(item))
     return new Promise((resolve) => {
       Promise.all(list).then((items) => {
