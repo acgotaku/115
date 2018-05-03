@@ -47,6 +47,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
     "gulp-sass": "^4.0.0",
+    "hoek": "^4.2.1",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-stylelint": "^7.0.0",
     "gulp-tap": "^1.0.1",
