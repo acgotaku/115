@@ -190,7 +190,7 @@ class Core {
       const sha1Check = this.getConfigData('sha1Check')
       if (sha1Check) {
         aria2CmdLine += ` --checksum=sha-1=${file.sha1}`
-        aria2Line += ` checksum=sha-1=${file.sha1}`
+        aria2Line += `\n checksum=sha-1=${file.sha1}`
       }
       aria2CmdTxt.push(aria2CmdLine)
       aria2Txt.push(aria2Line)
