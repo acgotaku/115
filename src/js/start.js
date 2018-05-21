@@ -1,6 +1,6 @@
 const iframe = document.querySelector('iframe[rel="wangpan"]')
 function add115JS () {
-  if (iframe.contentDocument.querySelector('#js_top_bar_box')) {
+  if (iframe.contentDocument.querySelector('#js_top_panel_box')) {
     const script = document.createElement('script')
     script.src = chrome.runtime.getURL('js/115.js')
     document.body.appendChild(script)

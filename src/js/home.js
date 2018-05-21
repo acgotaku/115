@@ -21,7 +21,7 @@ class Home extends Downloader {
     super(listParameter)
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     UI.init()
-    UI.addMenu(this.context.querySelector('#js_top_bar_box'), 'beforeend')
+    UI.addMenu(this.context.querySelector('#js_upload_btn'), 'beforebegin')
     Core.requestCookies([{ url: 'http://115.com/', name: 'UID' }, { url: 'http://115.com/', name: 'CID' }, { url: 'http://115.com/', name: 'SEID' }])
     Core.showToast('初始化成功!', 'inf')
     this.mode = 'RPC'

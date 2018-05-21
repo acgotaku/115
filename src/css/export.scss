@@ -4,14 +4,14 @@
 
 .export {
   cursor: pointer;
-  float: right;
+  float: left;
   font-size: 14px;
   line-height: 30px;
   margin-right: 36px;
   position: relative;
   text-align: center;
-  top: 2px;
   width: 82px;
+  z-index: 1111;
 
   &.open-o {
     .export-button {
@@ -38,6 +38,8 @@
     display: none;
     flex-direction: column;
     margin-top: 2px;
+    position: absolute;
+    width: 82px;
 
     &-item:hover {
       background: $grey-da;
