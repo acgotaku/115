@@ -4,11 +4,11 @@
 
 .export {
   cursor: pointer;
-  float: left;
   font-size: 14px;
   line-height: 30px;
   margin-right: 36px;
-  position: relative;
+  position: absolute;
+  right: 220px;
   text-align: center;
   width: 82px;
   z-index: 1111;
@@ -37,9 +37,6 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     display: none;
     flex-direction: column;
-    margin-top: 2px;
-    position: absolute;
-    width: 82px;
 
     &-item:hover {
       background: $grey-da;
