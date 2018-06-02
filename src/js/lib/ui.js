@@ -167,7 +167,7 @@ class UI {
                 <input class="setting-menu-input userAgent-s" spellcheck="false">
                 <label class="setting-menu-label"></label>
                 <input type="checkbox" class="setting-menu-checkbox browser-userAgent-s">
-                <label class="setting-menu-label">浏览器 UA</label>
+                <label class="setting-menu-label for-checkbox">使用浏览器 UA</label>
               </div>
             </div><!-- /.setting-menu-row -->
             <div class="setting-menu-row">
