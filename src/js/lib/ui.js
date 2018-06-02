@@ -48,7 +48,40 @@ class UI {
       event.stopPropagation()
     })
   }
+  addMenuOneRPCSectionWithCallback (callback) {
+    const addMenuOneRPCSection = (node) => {
+      const menuOneDOM = `<div class="cell" id="more-menu-rpc-section"><ul></ul></div>`
+      node.insertAdjacentHTML('beforebegin', menuOneDOM)
+      if (this.mostRecentConfigData) {
+        this.updateMenu(this.mostRecentConfigData)
+      }
+      if (callback) {
+        callback()
+      }
+    }
+
+    const menuOneNode = this.context.querySelector('body > .context-menu .cell')
+    if (menuOneNode) {
+      addMenuOneRPCSection(menuOneNode)
+    } else if ("MutationObserver" in window) {
+      const body = this.context.querySelector('body')
+      let observer
+      observer = new MutationObserver((mutationsList) => {
+        let menuOneNode = this.context.querySelector('body > .context-menu .cell')
+        if (menuOneNode) {
+          observer.disconnect()
+          addMenuOneRPCSection(menuOneNode)
+        }
+      });
+      observer.observe(body, {
+        childList: true
+      });
+    }
+  }
   resetMenu () {
+    this.context.querySelectorAll('#more-menu-rpc-section li').forEach((item) => {
+      item.remove()
+    })
     this.context.querySelectorAll('.rpc-button').forEach((rpc) => {
       rpc.remove()
     })
@@ -57,11 +90,18 @@ class UI {
     this.resetMenu()
     const { rpcList } = configData
     let rpcDOMList = ''
+    let menuOneDOMList = ''
     rpcList.forEach((rpc) => {
       const rpcDOM = `<a class="export-menu-item rpc-button" href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a>`
       rpcDOMList += rpcDOM
+      menuOneDOMList += `<li><a href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a></li>`
     })
     this.context.querySelector('#aria2List').insertAdjacentHTML('afterbegin', rpcDOMList)
+
+    const menuOneSection = this.context.querySelector('#more-menu-rpc-section ul')
+    if (menuOneSection) {
+      menuOneSection.insertAdjacentHTML('afterbegin', menuOneDOMList)
+    }
   }
   addTextExport () {
     const text = `
@@ -280,6 +320,8 @@ class UI {
     document.querySelector('.userAgent-s').value = userAgent
     document.querySelector('.referer-s').value = referer
     document.querySelector('.headers-s').value = headers
+
+    this.mostRecentConfigData = configData
   }
 
   saveSetting () {

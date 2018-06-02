@@ -16,18 +16,20 @@ class Disk {
       if (event.data.type && event.data.type === 'getSelected') {
         window.postMessage({ type: 'selected', data: this.getSelected() }, location.origin)
       }
+      if (event.data.type && event.data.type === 'getHovered') {
+        window.postMessage({ type: 'hovered', data: this.getHovered() }, location.origin)
+      }
       if (event.data.type && event.data.type === 'showToast') {
         this.showToast(event.data.data)
       }
     })
   }
-  getSelected () {
+  getFileInfoFromElements (list) {
     const selected = []
-    const list = this.context.querySelectorAll('li[rel="item"]')
     Array.from(list).forEach((item) => {
       const type = item.getAttribute('file_type')
       // file
-      if (type === '1' && item.classList.contains('selected')) {
+      if (type === '1') {
         selected.push({
           isdir: false,
           sha1: item.getAttribute('sha1'),
@@ -36,7 +38,7 @@ class Disk {
         })
       }
       // fold
-      if (type === '0' && item.classList.contains('selected')) {
+      if (type === '0') {
         selected.push({
           isdir: true,
           cate_id: item.getAttribute('cate_id'),
@@ -45,6 +47,14 @@ class Disk {
       }
     })
     return selected
+  }
+  getSelected () {
+    const list = this.context.querySelectorAll('li[rel="item"].selected')
+    return this.getFileInfoFromElements(list)
+  }
+  getHovered () {
+    const list = this.context.querySelectorAll('li[rel="item"].hover')
+    return this.getFileInfoFromElements(list)
   }
 }
 

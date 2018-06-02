@@ -22,6 +22,9 @@ class Home extends Downloader {
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     UI.init()
     UI.addMenu(this.context.querySelector('#js_upload_btn'), 'beforebegin')
+    UI.addMenuOneRPCSectionWithCallback(() => {
+      this.addMenuOneEventListener()
+    })
     Core.requestCookies([{ url: 'http://115.com/', name: 'UID' }, { url: 'http://115.com/', name: 'CID' }, { url: 'http://115.com/', name: 'SEID' }])
     Core.showToast('初始化成功!', 'inf')
     this.mode = 'RPC'
@@ -29,30 +32,38 @@ class Home extends Downloader {
   }
 
   startListen () {
+    const exportFiles = (files) => {
+      files.forEach((item) => {
+        if (item.isdir) {
+          this.addFolder(item)
+        } else {
+          this.addFile(item)
+        }
+      })
+      this.start(Core.getConfigData('interval'), (fileDownloadInfo) => {
+        if (this.mode === 'RPC') {
+          Core.aria2RPCMode(this.rpcURL, fileDownloadInfo)
+        }
+        if (this.mode === 'TXT') {
+          Core.aria2TXTMode(fileDownloadInfo)
+          document.querySelector('#textMenu').classList.add('open-o')
+        }
+      })
+    }
+
     window.addEventListener('message', (event) => {
-      if (event.data.type && event.data.type === 'selected') {
+      const type = event.data.type
+      if (!type) {
+        return
+      }
+      if (type === 'selected' || type === 'hovered') {
         this.reset()
         const selectedFile = event.data.data
         if (selectedFile.length === 0) {
           Core.showToast('请选择一下你要保存的文件哦', 'war')
           return
         }
-        selectedFile.forEach((item) => {
-          if (item.isdir) {
-            this.addFolder(item)
-          } else {
-            this.addFile(item)
-          }
-        })
-        this.start(Core.getConfigData('interval'), (fileDownloadInfo) => {
-          if (this.mode === 'RPC') {
-            Core.aria2RPCMode(this.rpcURL, fileDownloadInfo)
-          }
-          if (this.mode === 'TXT') {
-            Core.aria2TXTMode(fileDownloadInfo)
-            document.querySelector('#textMenu').classList.add('open-o')
-          }
-        })
+        exportFiles(selectedFile)
       }
     })
     const menuButton = this.context.querySelector('#aria2List')
@@ -70,8 +81,23 @@ class Home extends Downloader {
     })
   }
 
+  addMenuOneEventListener () {
+    const section = this.context.querySelector('#more-menu-rpc-section')
+    section.addEventListener('click', (event) => {
+      const rpcURL = event.target.dataset.url
+      if (rpcURL) {
+        this.rpcURL = rpcURL
+        this.getHovered()
+        this.mode = 'RPC'
+      }
+    })
+  }
+
   getSelected () {
     window.postMessage({ type: 'getSelected' }, location.origin)
+  }
+  getHovered () {
+    window.postMessage({ type: 'getHovered' }, location.origin)
   }
   getFile (file) {
     const options = {
