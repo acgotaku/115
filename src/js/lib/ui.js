@@ -165,6 +165,9 @@ class UI {
               </div>
               <div class="setting-menu-value">
                 <input class="setting-menu-input userAgent-s" spellcheck="false">
+                <label class="setting-menu-label"></label>
+                <input type="checkbox" class="setting-menu-checkbox browser-userAgent-s">
+                <label class="setting-menu-label">浏览器 UA</label>
               </div>
             </div><!-- /.setting-menu-row -->
             <div class="setting-menu-row">
@@ -240,6 +243,12 @@ class UI {
     testAria2.addEventListener('click', () => {
       Core.getVersion(Store.getConfigData('rpcList')[0].url, testAria2)
     })
+
+    const userAgentField = document.querySelector('.userAgent-s')
+    const browserUACheckbox = document.querySelector('.browser-userAgent-s')
+    browserUACheckbox.addEventListener('change', () => {
+      userAgentField.disabled = browserUACheckbox.checked
+    })
   }
   resetSetting () {
     const message = document.querySelector('#message')
@@ -248,7 +257,7 @@ class UI {
     testAria2.innerText = '测试连接，成功显示版本号'
   }
   updateSetting (configData) {
-    const { rpcList, configSync, sha1Check, interval, downloadPath, userAgent, referer, headers } = configData
+    const { rpcList, configSync, sha1Check, interval, downloadPath, userAgent, browserUserAgent, referer, headers} = configData
     // reset dom
     document.querySelectorAll('.rpc-s').forEach((rpc, index) => {
       if (index !== 0) {
@@ -278,6 +287,8 @@ class UI {
     document.querySelector('.interval-s').value = interval
     document.querySelector('.downloadPath-s').value = downloadPath
     document.querySelector('.userAgent-s').value = userAgent
+    document.querySelector('.userAgent-s').disabled = browserUserAgent
+    document.querySelector('.browser-userAgent-s').checked = browserUserAgent
     document.querySelector('.referer-s').value = referer
     document.querySelector('.headers-s').value = headers
   }
@@ -296,6 +307,7 @@ class UI {
     const interval = document.querySelector('.interval-s').value
     const downloadPath = document.querySelector('.downloadPath-s').value
     const userAgent = document.querySelector('.userAgent-s').value
+    const browserUserAgent = document.querySelector('.browser-userAgent-s').checked
     const referer = document.querySelector('.referer-s').value
     const headers = document.querySelector('.headers-s').value
 
@@ -306,6 +318,7 @@ class UI {
       interval,
       downloadPath,
       userAgent,
+      browserUserAgent,
       referer,
       headers
     }

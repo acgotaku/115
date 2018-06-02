@@ -49,7 +49,15 @@ class Core {
   }
   getHeader (type = 'RPC') {
     const headerOption = []
-    headerOption.push(`User-Agent: ${this.getConfigData('userAgent')}`)
+    const useBrowserUA = this.getConfigData('browserUserAgent');
+    var userAgent = this.getConfigData('userAgent');
+    if (useBrowserUA) {
+      const browserUA = navigator.userAgent;
+      if (browserUA && browserUA.length) {
+        userAgent = browserUA;
+      }
+    }
+    headerOption.push(`User-Agent: ${userAgent}`)
     headerOption.push(`Referer: ${this.getConfigData('referer')}`)
     headerOption.push(`Cookie: ${this.formatCookies()}`)
     const headers = this.getConfigData('headers')
