@@ -44,7 +44,7 @@ jobs:
       - run:
           name: check PR
           command: |
-            if [[ -n $CIRCLE_PULL_REQUEST ]]; then
+            if [[ ! -z $CIRCLE_PULL_REQUEST ]]; then
               npm run test
             fi
 
