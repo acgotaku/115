@@ -48,10 +48,10 @@ class UI {
       event.stopPropagation()
     })
   }
-  addMenuOneRPCSectionWithCallback (callback) {
-    const addMenuOneRPCSection = (node) => {
-      const menuOneDOM = `<div class="cell" id="more-menu-rpc-section"><ul></ul></div>`
-      node.insertAdjacentHTML('beforebegin', menuOneDOM)
+  addContextMenuRPCSectionWithCallback (callback) {
+    const addContextMenuRPCSection = (node) => {
+      const dom = `<div class="cell" id="more-menu-rpc-section"><ul></ul></div>`
+      node.insertAdjacentHTML('beforebegin', dom)
       if (this.mostRecentConfigData) {
         this.updateMenu(this.mostRecentConfigData)
       }
@@ -60,17 +60,17 @@ class UI {
       }
     }
 
-    const menuOneNode = this.context.querySelector('body > .context-menu .cell')
-    if (menuOneNode) {
-      addMenuOneRPCSection(menuOneNode)
+    const contextMenuNode = this.context.querySelector('body > .context-menu .cell')
+    if (contextMenuNode) {
+      addContextMenuRPCSection(contextMenuNode)
     } else if ("MutationObserver" in window) {
       const body = this.context.querySelector('body')
       let observer
       observer = new MutationObserver((mutationsList) => {
-        let menuOneNode = this.context.querySelector('body > .context-menu .cell')
-        if (menuOneNode) {
+        let contextMenuNode = this.context.querySelector('body > .context-menu .cell')
+        if (contextMenuNode) {
           observer.disconnect()
-          addMenuOneRPCSection(menuOneNode)
+          addContextMenuRPCSection(contextMenuNode)
         }
       });
       observer.observe(body, {
@@ -90,17 +90,17 @@ class UI {
     this.resetMenu()
     const { rpcList } = configData
     let rpcDOMList = ''
-    let menuOneDOMList = ''
+    let contextMenuDOMList = ''
     rpcList.forEach((rpc) => {
       const rpcDOM = `<a class="export-menu-item rpc-button" href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a>`
       rpcDOMList += rpcDOM
-      menuOneDOMList += `<li><a href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a></li>`
+      contextMenuDOMList += `<li><a href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a></li>`
     })
     this.context.querySelector('#aria2List').insertAdjacentHTML('afterbegin', rpcDOMList)
 
-    const menuOneSection = this.context.querySelector('#more-menu-rpc-section ul')
-    if (menuOneSection) {
-      menuOneSection.insertAdjacentHTML('afterbegin', menuOneDOMList)
+    const contextMenuSection = this.context.querySelector('#more-menu-rpc-section ul')
+    if (contextMenuSection) {
+      contextMenuSection.insertAdjacentHTML('afterbegin', contextMenuDOMList)
     }
   }
   addTextExport () {

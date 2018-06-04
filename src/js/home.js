@@ -22,8 +22,8 @@ class Home extends Downloader {
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     UI.init()
     UI.addMenu(this.context.querySelector('#js_upload_btn'), 'beforebegin')
-    UI.addMenuOneRPCSectionWithCallback(() => {
-      this.addMenuOneEventListener()
+    UI.addContextMenuRPCSectionWithCallback(() => {
+      this.addContextMenuEventListener()
     })
     Core.requestCookies([{ url: 'http://115.com/', name: 'UID' }, { url: 'http://115.com/', name: 'CID' }, { url: 'http://115.com/', name: 'SEID' }])
     Core.showToast('初始化成功!', 'inf')
@@ -81,7 +81,7 @@ class Home extends Downloader {
     })
   }
 
-  addMenuOneEventListener () {
+  addContextMenuEventListener () {
     const section = this.context.querySelector('#more-menu-rpc-section')
     section.addEventListener('click', (event) => {
       const rpcURL = event.target.dataset.url
