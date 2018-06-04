@@ -63,7 +63,7 @@ class UI {
     const contextMenuNode = this.context.querySelector('body > .context-menu .cell')
     if (contextMenuNode) {
       addContextMenuRPCSection(contextMenuNode)
-    } else if ("MutationObserver" in window) {
+    } else if ('MutationObserver' in window) {
       const body = this.context.querySelector('body')
       let observer
       observer = new MutationObserver((mutationsList) => {
@@ -72,10 +72,10 @@ class UI {
           observer.disconnect()
           addContextMenuRPCSection(contextMenuNode)
         }
-      });
+      })
       observer.observe(body, {
         childList: true
-      });
+      })
     }
   }
   resetMenu () {
