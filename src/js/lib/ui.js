@@ -257,7 +257,7 @@ class UI {
     testAria2.innerText = '测试连接，成功显示版本号'
   }
   updateSetting (configData) {
-    const { rpcList, configSync, sha1Check, interval, downloadPath, userAgent, browserUserAgent, referer, headers} = configData
+    const { rpcList, configSync, sha1Check, interval, downloadPath, userAgent, browserUserAgent, referer, headers } = configData
     // reset dom
     document.querySelectorAll('.rpc-s').forEach((rpc, index) => {
       if (index !== 0) {

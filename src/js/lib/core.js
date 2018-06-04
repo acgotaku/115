@@ -49,12 +49,12 @@ class Core {
   }
   getHeader (type = 'RPC') {
     const headerOption = []
-    const useBrowserUA = this.getConfigData('browserUserAgent');
-    var userAgent = this.getConfigData('userAgent');
+    const useBrowserUA = this.getConfigData('browserUserAgent')
+    var userAgent = this.getConfigData('userAgent')
     if (useBrowserUA) {
-      const browserUA = navigator.userAgent;
+      const browserUA = navigator.userAgent
       if (browserUA && browserUA.length) {
-        userAgent = browserUA;
+        userAgent = browserUA
       }
     }
     headerOption.push(`User-Agent: ${userAgent}`)
