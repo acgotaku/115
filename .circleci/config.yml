@@ -28,11 +28,7 @@ jobs:
       - attach_workspace:
           at: ~/project
 
-      - run:
-          name: install dependency
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y libpng-dev
+      - run: npm run test
       - run: npm run build
 
   test:
