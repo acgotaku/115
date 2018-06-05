@@ -13,6 +13,7 @@ class Store extends EventEmitter {
       interval: 300,
       downloadPath: '',
       userAgent: this.defaultUserAgent,
+      browserUserAgent: true,
       referer: this.defaultReferer,
       headers: ''
     }
