@@ -50,7 +50,7 @@ class Core {
   getHeader (type = 'RPC') {
     const headerOption = []
     const useBrowserUA = this.getConfigData('browserUserAgent')
-    var userAgent = this.getConfigData('userAgent')
+    let userAgent = this.getConfigData('userAgent')
     if (useBrowserUA) {
       const browserUA = navigator.userAgent
       if (browserUA && browserUA.length) {

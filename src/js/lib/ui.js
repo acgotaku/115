@@ -3,8 +3,8 @@ import Store from './store'
 
 class UI {
   constructor () {
-    this.version = '0.3.0'
-    this.updateDate = '2018/05/23'
+    this.version = '0.3.1'
+    this.updateDate = '2018/06/05'
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     Store.on('updateView', (configData) => {
       this.updateSetting(configData)
