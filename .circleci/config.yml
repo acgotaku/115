@@ -3,8 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/project/115
   docker:
-    - image: circleci/node:6-browsers
-
+    - image: circleci/node:8-stretch-browsers
 jobs:
   install:
     <<: *defaults
@@ -44,7 +43,7 @@ jobs:
       - run:
           name: check PR
           command: |
-            if [[ ! -z $CIRCLE_PULL_REQUEST ]]; then
+            if [[ -n $CIRCLE_PULL_REQUEST ]]; then
               npm run test
             fi
 
