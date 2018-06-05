@@ -67,7 +67,7 @@ class UI {
       const body = this.context.querySelector('body')
       let observer
       observer = new MutationObserver((mutationsList) => {
-        let contextMenuNode = this.context.querySelector('body > .context-menu .cell')
+        const contextMenuNode = this.context.querySelector('body > .context-menu .cell')
         if (contextMenuNode) {
           observer.disconnect()
           addContextMenuRPCSection(contextMenuNode)
