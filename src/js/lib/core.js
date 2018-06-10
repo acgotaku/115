@@ -174,6 +174,7 @@ class Core {
                     // ioiiooowoot4
                     this.showToast('下载成功!赶紧去看看吧~', 'inf')
                 } else {
+                    // test aria
                     this.showToast('下载失败!是不是没有开启Aria2?', 'err')
                 }
             })
