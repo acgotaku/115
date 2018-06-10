@@ -1,3 +1,22 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ @lxy2222
+Sign out
+35
+491 74 acgotaku/115
+ Code  Issues 3  Pull requests 1  Projects 0  Wiki  Insights
+115/src/js/lib/core.js
+99f7acd  4 hours ago
+@acgotaku acgotaku add 0.3.2 version
+@acgotaku @gitchs @Naituw
+     
+224 lines (221 sloc)  7.09 KB
 import Store from './store'
 
 class Core {
@@ -221,3 +240,16 @@ class Core {
 }
 
 export default new Core()
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog
+About
+Press h to open a hovercard with more details.
