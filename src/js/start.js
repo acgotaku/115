@@ -11,4 +11,6 @@ function add115JS () {
   }
 }
 
-iframe.addEventListener('load', add115JS)
+if (iframe) {
+  iframe.addEventListener('load', add115JS)
+}

@@ -25,7 +25,6 @@ class Home extends Downloader {
     UI.addContextMenuRPCSectionWithCallback(() => {
       this.addContextMenuEventListener()
     })
-    Core.requestCookies([{ url: 'http://115.com/', name: 'UID' }, { url: 'http://115.com/', name: 'CID' }, { url: 'http://115.com/', name: 'SEID' }])
     Core.showToast('初始化成功!', 'inf')
     this.mode = 'RPC'
     this.rpcURL = 'http://localhost:6800/jsonrpc'
@@ -108,7 +107,11 @@ class Home extends Downloader {
       fetch(`//webapi.115.com/files/download?pickcode=${file}`, options).then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            resolve(data)
+            const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
+            Core.requestCookies([{path}]).then((cookies) => {
+              data.cookies = cookies
+              resolve(data)
+            })
           })
         } else {
           console.log(response)
@@ -127,10 +130,11 @@ class Home extends Downloader {
           this.fileDownloadInfo.push({
             name: files[item.pickcode].path + item.file_name,
             link: item.file_url,
-            sha1: files[item.pickcode].sha1
+            sha1: files[item.pickcode].sha1,
+            cookies: item.cookies
           })
+          resolve()
         })
-        resolve()
       })
     })
   }

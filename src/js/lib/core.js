@@ -147,11 +147,16 @@ class Core {
   }
   // cookies format  [{"url": "http://pan.baidu.com/", "name": "BDUSS"},{"url": "http://pcs.baidu.com/", "name": "pcsett"}]
   requestCookies (cookies) {
-    this.sendToBackground('getCookies', cookies, (value) => { this.cookies = value })
+    return new Promise((resolve) => {
+      this.sendToBackground('getCookies', cookies, (value) => {
+        resolve(value)
+      })
+    })
   }
   aria2RPCMode (rpcPath, fileDownloadInfo) {
     const {authStr, path, options} = this.parseURL(rpcPath)
     fileDownloadInfo.forEach((file) => {
+      this.cookies = file.cookies
       const rpcData = {
         jsonrpc: '2.0',
         method: 'aria2.addUri',
@@ -193,6 +198,7 @@ class Core {
     const downloadLinkTxt = []
     const prefixTxt = 'data:text/plain;charset=utf-8,'
     fileDownloadInfo.forEach((file) => {
+      this.cookies = file.cookies
       let aria2CmdLine = `aria2c -c -s10 -k1M -x16 --enable-rpc=false -o ${JSON.stringify(file.name)} ${this.getHeader('aria2Cmd')} ${JSON.stringify(file.link)}`
       let aria2Line = [file.link, this.getHeader('aria2c'), ` out=${file.name}`].join('\n')
       const sha1Check = this.getConfigData('sha1Check')
