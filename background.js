@@ -47,7 +47,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 // Promise style `chrome.cookies.get()`
 const getCookie = (detail) => {
   return new Promise(function (resolve) {
-    chrome.cookies.get(detail, resolve)
+    chrome.cookies.getAll(detail, resolve)
   })
 }
 
@@ -56,9 +56,11 @@ const getCookies = (details) => {
     const list = details.map(item => getCookie(item))
     Promise.all(list).then(function (cookies) {
       let obj = {}
-      for (let item of cookies) {
-        if (item !== null) {
-          obj[item.name] = item.value
+      for (let cookie of cookies) {
+        for (let item of cookie) {
+          if (item !== null) {
+            obj[item.name] = item.value
+          }
         }
       }
       resolve(obj)
