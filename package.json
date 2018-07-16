@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/acgotaku/115#readme",
   "devDependencies": {
-    "autoprefixer": "^8.0.0",
+    "autoprefixer": "^9.0.0",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babelify": "^8.0.0",
