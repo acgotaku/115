@@ -4,7 +4,7 @@ class Core {
   constructor () {
     this.cookies = {}
   }
-  httpSend ({url, options}, resolve, reject) {
+  httpSend ({ url, options }, resolve, reject) {
     fetch(url, options).then((response) => {
       if (response.ok) {
         response.json().then((data) => {
@@ -95,7 +95,7 @@ class Core {
       options[key[0]] = key.length === 2 ? key[1] : 'enabled'
     }
     const path = parseURL.origin + parseURL.pathname
-    return {authStr, path, options}
+    return { authStr, path, options }
   }
   generateParameter (authStr, path, data) {
     if (authStr && authStr.startsWith('token')) {
@@ -122,7 +122,7 @@ class Core {
       id: 1,
       params: []
     }
-    const {authStr, path} = this.parseURL(rpcPath)
+    const { authStr, path } = this.parseURL(rpcPath)
     this.sendToBackground('rpcVersion', this.generateParameter(authStr, path, data), (version) => {
       if (version) {
         element.innerText = `Aria2版本为: ${version}`
@@ -154,7 +154,7 @@ class Core {
     })
   }
   aria2RPCMode (rpcPath, fileDownloadInfo) {
-    const {authStr, path, options} = this.parseURL(rpcPath)
+    const { authStr, path, options } = this.parseURL(rpcPath)
     fileDownloadInfo.forEach((file) => {
       this.cookies = file.cookies
       const rpcData = {
