@@ -4,7 +4,7 @@ class Disk {
   }
   // Type类型有
   // inf err war
-  showToast ({message, type}) {
+  showToast ({ message, type }) {
     window.Core.MinMessage.Show({
       text: message,
       type: type,

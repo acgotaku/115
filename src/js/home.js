@@ -108,7 +108,7 @@ class Home extends Downloader {
         if (response.ok) {
           response.json().then((data) => {
             const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
-            Core.requestCookies([{path}]).then((cookies) => {
+            Core.requestCookies([{ path }]).then((cookies) => {
               data.cookies = cookies
               resolve(data)
             })

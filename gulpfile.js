@@ -65,7 +65,7 @@ gulp.task('js', function () {
     .pipe(tap(function (file) {
       console.log('bundling ' + file.path)
       // replace file contents with browserify's bundle stream
-      file.contents = browserify(file.path, {debug: config.env.dev}).transform(babelify, {presets: ['env']}).bundle().on('error', config.errorHandler)
+      file.contents = browserify(file.path, {debug: config.env.dev}).transform(babelify, {presets: ['@babel/preset-env']}).bundle().on('error', config.errorHandler)
     }))
     .pipe(buffer())
     .pipe(gulpIf(config.env.dev, sourcemaps.init({loadMaps: true})))
