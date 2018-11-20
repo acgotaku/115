@@ -57,7 +57,7 @@
     "run-sequence": "^2.2.0",
     "stylelint": "^9.6.0",
     "stylelint-config-sass-guidelines": "^5.2.0",
-    "stylelint-order": "^1.0.0",
+    "stylelint-order": "^2.0.0",
     "stylelint-scss": "^3.3.1"
   }
 }
