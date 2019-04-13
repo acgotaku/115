@@ -55,7 +55,7 @@
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^7.0.0",
     "run-sequence": "^2.2.0",
-    "stylelint": "^9.6.0",
+    "stylelint": "^10.0.0",
     "stylelint-config-sass-guidelines": "^5.2.0",
     "stylelint-order": "^2.0.0",
     "stylelint-scss": "^3.3.1"
