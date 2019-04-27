@@ -8,6 +8,7 @@ function add115JS () {
       method: 'addScript',
       data: 'js/home.js'
     })
+    iframe.removeEventListener('load', add115JS)
   }
 }
 

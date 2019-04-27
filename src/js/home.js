@@ -19,15 +19,21 @@ class Home extends Downloader {
       }
     }
     super(listParameter)
+    this.mode = 'RPC'
+    this.rpcURL = 'http://localhost:6800/jsonrpc'
+    this.iframe = document.querySelector('iframe[rel="wangpan"]')
+  }
+
+  initialize () {
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     UI.init()
     UI.addMenu(this.context.querySelector('#js_upload_btn'), 'beforebegin')
+    this.addMenuButtonEventListener()
     UI.addContextMenuRPCSectionWithCallback(() => {
       this.addContextMenuEventListener()
     })
     Core.showToast('初始化成功!', 'inf')
-    this.mode = 'RPC'
-    this.rpcURL = 'http://localhost:6800/jsonrpc'
+    return this
   }
 
   startListen () {
@@ -65,6 +71,13 @@ class Home extends Downloader {
         exportFiles(selectedFile)
       }
     })
+    this.iframe.addEventListener('load', () => {
+      this.initialize()
+      window.postMessage({ type: 'refresh' }, location.origin)
+    })
+  }
+
+  addMenuButtonEventListener () {
     const menuButton = this.context.querySelector('#aria2List')
     menuButton.addEventListener('click', (event) => {
       const rpcURL = event.target.dataset.url
@@ -79,7 +92,6 @@ class Home extends Downloader {
       }
     })
   }
-
   addContextMenuEventListener () {
     const section = this.context.querySelector('#more-menu-rpc-section')
     section.addEventListener('click', (event) => {
@@ -142,4 +154,4 @@ class Home extends Downloader {
 
 const home = new Home()
 
-home.startListen()
+home.initialize().startListen()

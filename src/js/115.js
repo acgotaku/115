@@ -22,8 +22,16 @@ class Disk {
       if (event.data.type && event.data.type === 'showToast') {
         this.showToast(event.data.data)
       }
+      if (event.data.type && event.data.type === 'refresh') {
+        this.refresh()
+      }
     })
   }
+
+  refresh () {
+    this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
+  }
+
   getFileInfoFromElements (list) {
     const selected = []
     Array.from(list).forEach((item) => {

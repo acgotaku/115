@@ -3,15 +3,15 @@ import Store from './store'
 
 class UI {
   constructor () {
-    this.version = '0.3.2'
-    this.updateDate = '2018/06/10'
-    this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
+    this.version = '0.3.3'
+    this.updateDate = '2019/04/27'
     Store.on('updateView', (configData) => {
       this.updateSetting(configData)
       this.updateMenu(configData)
     })
   }
   init () {
+    this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     this.addSettingUI()
     this.addTextExport()
     Store.trigger('initConfigData')
