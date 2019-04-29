@@ -17,7 +17,7 @@ const postcss = require('gulp-postcss')
 const sass = require('gulp-sass')
 const autoprefixer = require('autoprefixer')
 const concat = require('gulp-concat')
-const cssmin = require('gulp-cssmin')
+const cleanCSS = require('gulp-clean-css')
 
 const imagemin = require('gulp-imagemin')
 const mozjpeg = require('imagemin-mozjpeg')
@@ -109,7 +109,7 @@ gulp.task('css', function () {
     ]))
     .pipe(concat('style.css'))
     .pipe(gulpIf(config.env.dev, sourcemaps.write()))
-    .pipe(gulpIf(config.env.prod, cssmin()))
+    .pipe(gulpIf(config.env.prod, cleanCSS()))
     .pipe(gulp.dest('dist/css/'))
 })
 
