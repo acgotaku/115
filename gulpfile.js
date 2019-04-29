@@ -32,9 +32,11 @@ const cssTargets = ['./src/css/**/*.scss']
 const imageTargets = ['./src/img/**/*']
 const copyTarget = ['./_locales/**/*', 'background.js', 'manifest.json']
 const config = {
-  errorHandler: function (err) {
-    console.log(err.toString())
-    this.emit('end')
+  plumberConfig: {
+    errorHandler: function (err) {
+      console.log(err.toString())
+      this.emit('end')
+    }
   },
   env: {
     dev: process.env.NODE_ENV === 'development',
