@@ -59,12 +59,10 @@
     "stylelint": "^10.0.1",
     "stylelint-config-sass-guidelines": "^6.0.0",
     "stylelint-order": "^3.0.0",
-    "stylelint-scss": "^3.6.0"
-  },
-  "dependencies": {
+    "stylelint-scss": "^3.6.0",
     "gulp-rollup-each": "^3.0.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-node-resolve": "^5.0.0"
+    "rollup-plugin-node-resolve": "^4.2.3"
   }
 }

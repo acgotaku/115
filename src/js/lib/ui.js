@@ -183,6 +183,14 @@ class UI {
             </div><!-- /.setting-menu-row -->
             <div class="setting-menu-row">
               <div class="setting-menu-name">
+                <label class="setting-menu-label">强制SSL下载</label>
+              </div>
+              <div class="setting-menu-value">
+                <input type="checkbox" class="setting-menu-checkbox ssl-s">
+              </div>
+            </div><!-- /.setting-menu-row -->
+            <div class="setting-menu-row">
+              <div class="setting-menu-name">
                 <label class="setting-menu-label">递归下载间隔</label>
               </div>
               <div class="setting-menu-value">
@@ -297,7 +305,7 @@ class UI {
     testAria2.innerText = '测试连接，成功显示版本号'
   }
   updateSetting (configData) {
-    const { rpcList, configSync, sha1Check, interval, downloadPath, userAgent, browserUserAgent, referer, headers } = configData
+    const { rpcList, configSync, sha1Check, ssl, interval, downloadPath, userAgent, browserUserAgent, referer, headers } = configData
     // reset dom
     document.querySelectorAll('.rpc-s').forEach((rpc, index) => {
       if (index !== 0) {
@@ -324,6 +332,7 @@ class UI {
     })
     document.querySelector('.configSync-s').checked = configSync
     document.querySelector('.sha1Check-s').checked = sha1Check
+    document.querySelector('.ssl-s').checked = ssl
     document.querySelector('.interval-s').value = interval
     document.querySelector('.downloadPath-s').value = downloadPath
     document.querySelector('.userAgent-s').value = userAgent
@@ -346,6 +355,7 @@ class UI {
     }).filter(el => el)
     const configSync = document.querySelector('.configSync-s').checked
     const sha1Check = document.querySelector('.sha1Check-s').checked
+    const ssl = document.querySelector('.ssl-s').checked
     const interval = document.querySelector('.interval-s').value
     const downloadPath = document.querySelector('.downloadPath-s').value
     const userAgent = document.querySelector('.userAgent-s').value
@@ -357,6 +367,7 @@ class UI {
       rpcList,
       configSync,
       sha1Check,
+      ssl,
       interval,
       downloadPath,
       userAgent,
