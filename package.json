@@ -51,7 +51,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-stylelint": "^9.0.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-zip": "^4.2.0",
+    "gulp-zip": "^5.0.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^7.0.0",
     "run-sequence": "^2.2.0",
