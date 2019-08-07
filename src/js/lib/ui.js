@@ -21,6 +21,7 @@ class UI {
       <div id="exportMenu" class="export">
         <a class="export-button">导出下载</a>
         <div id="aria2List" class="export-menu">
+          <a class="export-menu-item" id="batchOpen" href="javascript:void(0);">批量打开</a>
           <a class="export-menu-item" id="aria2Text" href="javascript:void(0);">文本导出</a>
           <a class="export-menu-item" id="settingButton" href="javascript:void(0);">设置</a>
         </div>

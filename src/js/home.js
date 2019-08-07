@@ -53,6 +53,11 @@ class Home extends Downloader {
           Core.aria2TXTMode(fileDownloadInfo)
           document.querySelector('#textMenu').classList.add('open-o')
         }
+        if (this.mode === 'OPEN') {
+          for (var f of fileDownloadInfo) {
+            window.open('https://115.com/?ct=play&ac=location&pickcode=' + f.pickcode)
+          }
+        }
       })
     }
 
@@ -89,6 +94,10 @@ class Home extends Downloader {
       if (event.target.id === 'aria2Text') {
         this.getSelected()
         this.mode = 'TXT'
+      }
+      if (event.target.id === 'batchOpen') {
+        this.getSelected()
+        this.mode = 'OPEN'
       }
     })
   }
@@ -143,7 +152,8 @@ class Home extends Downloader {
             name: files[item.pickcode].path + item.file_name,
             link: item.file_url,
             sha1: files[item.pickcode].sha1,
-            cookies: item.cookies
+            cookies: item.cookies,
+            pickcode: item.pickcode
           })
           resolve()
         })
