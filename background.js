@@ -1,4 +1,4 @@
-const httpSend = ({url, options}, resolve, reject) => {
+const httpSend = ({ url, options }, resolve, reject) => {
   fetch(url, options).then((response) => {
     if (response.ok) {
       response.json().then((data) => {
@@ -84,7 +84,7 @@ if (previousVersion === '' || previousVersion !== manifest.version) {
   var opt = {
     type: 'basic',
     title: '更新',
-    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新修改IDM导出~',
+    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新添加批量打开功能~',
     iconUrl: 'img/icon.jpg'
   }
   const id = new Date().getTime().toString()

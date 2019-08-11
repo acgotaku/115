@@ -55,7 +55,7 @@ gulp.task('lint:css', function () {
   return gulp.src(cssTargets)
     .pipe(stylelint({
       reporters: [
-        {formatter: 'string', console: true}
+        { formatter: 'string', console: true }
       ]
     }))
 })
@@ -76,11 +76,11 @@ gulp.task('js', function () {
           browser: true
         }),
         rollupCommon()
-      ]},
-      {
-        format: 'iife'
-      }
-      ))
+      ] },
+    {
+      format: 'iife'
+    }
+    ))
     // write sourcemaps
     .pipe(gulpIf(config.env.dev, sourcemaps.write()))
     .pipe(gulpIf(config.env.prod, uglify()))
@@ -93,7 +93,7 @@ gulp.task('css', function () {
     .pipe(plumber(config.plumberConfig))
     .pipe(stylelint({
       reporters: [
-        {formatter: 'string', console: true}
+        { formatter: 'string', console: true }
       ]
     }))
     .pipe(gulpIf(config.env.dev, sourcemaps.init()))
