@@ -56,7 +56,7 @@
     "imagemin-pngquant": "^7.0.0",
     "run-sequence": "^2.2.0",
     "stylefmt": "^6.0.3",
-    "stylelint": "^10.0.1",
+    "stylelint": "^11.0.0",
     "stylelint-config-sass-guidelines": "^6.0.0",
     "stylelint-order": "^3.0.0",
     "stylelint-scss": "^3.6.0",
