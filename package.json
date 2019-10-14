@@ -49,7 +49,7 @@
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-stylelint": "^9.0.0",
+    "gulp-stylelint": "^10.0.0",
     "gulp-uglify": "^3.0.2",
     "gulp-zip": "^4.2.0",
     "imagemin-mozjpeg": "^8.0.0",
