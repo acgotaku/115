@@ -9,12 +9,14 @@ class Downloader {
     this.folders = []
     this.files = {}
   }
+
   start (interval = 300, done) {
     this.interval = interval
     this.done = done
     this.currentTaskId = new Date().getTime()
     this.getNextFile(this.currentTaskId)
   }
+
   reset () {
     this.fileDownloadInfo = []
     this.currentTaskId = 0
@@ -22,12 +24,15 @@ class Downloader {
     this.files = {}
     this.completedCount = 0
   }
+
   addFolder (item) {
     this.folders.push(item)
   }
+
   addFile (file) {
     this.files[file.pick_code] = file
   }
+
   getNextFile (taskId) {
     if (taskId !== this.currentTaskId) {
       return
@@ -41,7 +46,7 @@ class Downloader {
         if (response.ok) {
           response.json().then((data) => {
             setTimeout(() => this.getNextFile(taskId), this.interval)
-            let path = fold.path + data.path[data.path.length - 1].name + '/'
+            const path = fold.path + data.path[data.path.length - 1].name + '/'
             data.data.forEach((item) => {
               if (!item.sha) {
                 this.folders.push({

@@ -10,12 +10,14 @@ class UI {
       this.updateMenu(configData)
     })
   }
+
   init () {
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     this.addSettingUI()
     this.addTextExport()
     Store.trigger('initConfigData')
   }
+
   addMenu (element, position) {
     const menu = `
       <div id="exportMenu" class="export">
@@ -49,9 +51,10 @@ class UI {
       event.stopPropagation()
     })
   }
+
   addContextMenuRPCSectionWithCallback (callback) {
     const addContextMenuRPCSection = (node) => {
-      const dom = `<div class="cell" id="more-menu-rpc-section"><ul></ul></div>`
+      const dom = '<div class="cell" id="more-menu-rpc-section"><ul></ul></div>'
       node.insertAdjacentHTML('beforebegin', dom)
       if (this.mostRecentConfigData) {
         this.updateMenu(this.mostRecentConfigData)
@@ -66,8 +69,7 @@ class UI {
       addContextMenuRPCSection(contextMenuNode)
     } else if ('MutationObserver' in window) {
       const body = this.context.querySelector('body')
-      let observer
-      observer = new MutationObserver((mutationsList) => {
+      const observer = new MutationObserver((mutationsList) => {
         const contextMenuNode = this.context.querySelector('body > .context-menu .cell')
         if (contextMenuNode) {
           observer.disconnect()
@@ -79,6 +81,7 @@ class UI {
       })
     }
   }
+
   resetMenu () {
     this.context.querySelectorAll('#more-menu-rpc-section li').forEach((item) => {
       item.remove()
@@ -87,6 +90,7 @@ class UI {
       rpc.remove()
     })
   }
+
   updateMenu (configData) {
     this.resetMenu()
     const { rpcList } = configData
@@ -104,6 +108,7 @@ class UI {
       contextMenuSection.insertAdjacentHTML('afterbegin', contextMenuDOMList)
     }
   }
+
   addTextExport () {
     const text = `
       <div id="textMenu" class="modal text-menu">
@@ -137,6 +142,7 @@ class UI {
       this.resetTextExport()
     })
   }
+
   resetTextExport () {
     const textMenu = document.querySelector('#textMenu')
     textMenu.querySelector('#aria2Txt').href = ''
@@ -145,6 +151,7 @@ class UI {
     textMenu.querySelector('#aria2CmdTxt').value = ''
     textMenu.querySelector('#copyDownloadLinkTxt').dataset.link = ''
   }
+
   addSettingUI () {
     const setting = `
       <div id="settingMenu" class="modal setting-menu">
@@ -299,12 +306,14 @@ class UI {
       userAgentField.disabled = browserUACheckbox.checked
     })
   }
+
   resetSetting () {
     const message = document.querySelector('#message')
     message.innerText = ''
     const testAria2 = document.querySelector('#testAria2')
     testAria2.innerText = '测试连接，成功显示版本号'
   }
+
   updateSetting (configData) {
     const { rpcList, configSync, sha1Check, ssl, interval, downloadPath, userAgent, browserUserAgent, referer, headers } = configData
     // reset dom

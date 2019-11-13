@@ -11,10 +11,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-chache-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "package.json" }}
-      - run: npm install
+            - node-chache-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ checksum "package.json" }}
+      - run: yarn install
       - save_cache:
-          key: node-chache-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "package.json" }}
+          key: node-chache-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ checksum "package.json" }}
           paths:
             - node_modules/
       - persist_to_workspace:
