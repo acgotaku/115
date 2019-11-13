@@ -2,6 +2,7 @@ class Disk {
   constructor () {
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
   }
+
   // Type类型有
   // inf err war
   showToast ({ message, type }) {
@@ -11,6 +12,7 @@ class Disk {
       timeout: 1000
     })
   }
+
   startListen () {
     window.addEventListener('message', (event) => {
       if (event.data.type && event.data.type === 'getSelected') {
@@ -56,10 +58,12 @@ class Disk {
     })
     return selected
   }
+
   getSelected () {
     const list = this.context.querySelectorAll('li[rel="item"].selected')
     return this.getFileInfoFromElements(list)
   }
+
   getHovered () {
     const list = this.context.querySelectorAll('li[rel="item"].hover')
     return this.getFileInfoFromElements(list)

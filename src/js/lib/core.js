@@ -4,6 +4,7 @@ class Core {
   constructor () {
     this.cookies = {}
   }
+
   httpSend ({ url, options }, resolve, reject) {
     fetch(url, options).then((response) => {
       if (response.ok) {
@@ -17,36 +18,43 @@ class Core {
       reject(err)
     })
   }
+
   getConfigData (key = null) {
     return Store.getConfigData(key)
   }
+
   objectToQueryString (obj) {
     return Object.keys(obj).map((key) => {
       return `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`
     }).join('&')
   }
+
   sendToBackground (method, data, callback) {
     chrome.runtime.sendMessage({
       method,
       data
     }, callback)
   }
+
   showToast (message, type) {
     window.postMessage({ type: 'showToast', data: { message, type } }, location.origin)
   }
+
   getHashParameter (name) {
     const hash = window.location.hash
     const paramsString = hash.substr(1)
     const searchParams = new URLSearchParams(paramsString)
     return searchParams.get(name)
   }
+
   formatCookies () {
     const cookies = []
-    for (let key in this.cookies) {
+    for (const key in this.cookies) {
       cookies.push(`${key}=${this.cookies[key]}`)
     }
     return cookies.join('; ')
   }
+
   getHeader (type = 'RPC') {
     const headerOption = []
     const useBrowserUA = this.getConfigData('browserUserAgent')
@@ -79,6 +87,7 @@ class Core {
       }).join('\r\n')
     }
   }
+
   // 解析 RPC地址 返回验证数据 和地址
   parseURL (url) {
     const parseURL = new URL(url)
@@ -89,14 +98,15 @@ class Core {
       }
     }
     const paramsString = parseURL.hash.substr(1)
-    let options = {}
+    const options = {}
     const searchParams = new URLSearchParams(paramsString)
-    for (let key of searchParams) {
+    for (const key of searchParams) {
       options[key[0]] = key.length === 2 ? key[1] : 'enabled'
     }
     const path = parseURL.origin + parseURL.pathname
     return { authStr, path, options }
   }
+
   generateParameter (authStr, path, data) {
     if (authStr && authStr.startsWith('token')) {
       data.params.unshift(authStr)
@@ -110,13 +120,14 @@ class Core {
       }
     }
     if (authStr && authStr.startsWith('Basic')) {
-      parameter.options.headers['Authorization'] = authStr
+      parameter.options.headers.Authorization = authStr
     }
     return parameter
   }
+
   // get aria2 version
   getVersion (rpcPath, element) {
-    let data = {
+    const data = {
       jsonrpc: '2.0',
       method: 'aria2.getVersion',
       id: 1,
@@ -131,6 +142,7 @@ class Core {
       }
     })
   }
+
   copyText (text) {
     const input = document.createElement('textarea')
     document.body.appendChild(input)
@@ -145,6 +157,7 @@ class Core {
       this.showToast('拷贝失败 QAQ', 'err')
     }
   }
+
   // cookies format  [{"url": "http://pan.baidu.com/", "name": "BDUSS"},{"url": "http://pcs.baidu.com/", "name": "pcsett"}]
   requestCookies (cookies) {
     return new Promise((resolve) => {
@@ -153,6 +166,7 @@ class Core {
       })
     })
   }
+
   aria2RPCMode (rpcPath, fileDownloadInfo) {
     const { authStr, path, options } = this.parseURL(rpcPath)
     const ssl = this.getConfigData('ssl')
@@ -176,13 +190,13 @@ class Core {
       const rpcOption = rpcData.params[1]
       const dir = this.getConfigData('downloadPath')
       if (dir) {
-        rpcOption['dir'] = dir
+        rpcOption.dir = dir
       }
       if (sha1Check) {
-        rpcOption['checksum'] = `sha-1=${file.sha1}`
+        rpcOption.checksum = `sha-1=${file.sha1}`
       }
       if (options) {
-        for (let key in options) {
+        for (const key in options) {
           rpcOption[key] = options[key]
         }
       }
@@ -195,6 +209,7 @@ class Core {
       })
     })
   }
+
   aria2TXTMode (fileDownloadInfo) {
     const aria2CmdTxt = []
     const aria2Txt = []

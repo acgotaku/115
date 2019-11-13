@@ -12,7 +12,7 @@ class Home extends Downloader {
     }
     const listParameter = {
       search,
-      url: `//webapi.115.com/files?`,
+      url: '//webapi.115.com/files?',
       options: {
         credentials: 'include',
         method: 'GET'
@@ -101,6 +101,7 @@ class Home extends Downloader {
       }
     })
   }
+
   addContextMenuEventListener () {
     const section = this.context.querySelector('#more-menu-rpc-section')
     section.addEventListener('click', (event) => {
@@ -116,9 +117,11 @@ class Home extends Downloader {
   getSelected () {
     window.postMessage({ type: 'getSelected' }, location.origin)
   }
+
   getHovered () {
     window.postMessage({ type: 'getHovered' }, location.origin)
   }
+
   getFile (file) {
     const options = {
       credentials: 'include',
@@ -143,6 +146,7 @@ class Home extends Downloader {
       })
     })
   }
+
   getFiles (files) {
     const list = Object.keys(files).map(item => this.getFile(item))
     return new Promise((resolve) => {

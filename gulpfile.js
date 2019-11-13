@@ -8,7 +8,6 @@ const rollupCommon = require('rollup-plugin-commonjs')
 const del = require('del')
 const zip = require('gulp-zip')
 const gulpIf = require('gulp-if')
-const runSequence = require('run-sequence')
 
 const eslint = require('gulp-eslint')
 const stylelint = require('gulp-stylelint')
@@ -24,13 +23,33 @@ const mozjpeg = require('imagemin-mozjpeg')
 const pngquant = require('imagemin-pngquant')
 
 const plumber = require('gulp-plumber')
-const sourcemaps = require('gulp-sourcemaps')
+
 const uglify = require('gulp-uglify')
-const jsTargets = ['./src/js/**/*.js']
-const jsEntries = ['./src/js/*.js']
-const cssTargets = ['./src/css/**/*.scss']
-const imageTargets = ['./src/img/**/*']
-const copyTarget = ['./_locales/**/*', 'background.js', 'manifest.json']
+
+const paths = {
+  scripts: {
+    src: 'src/js/**/*.js',
+    entry: 'src/js/*.js',
+    dest: 'dist/js/'
+  },
+  styles: {
+    src: 'src/css/**/*.scss',
+    dest: 'dist/css/'
+  },
+  images: {
+    src: 'src/img/**/*',
+    dest: 'dist/img/'
+  },
+  copys: {
+    src: ['_locales/**/*', 'background.js', 'manifest.json'],
+    dest: 'dist/'
+  },
+  compress: {
+    src: 'dist/**/*',
+    dest: 'dist/'
+  }
+}
+
 const config = {
   plumberConfig: {
     errorHandler: function (err) {
@@ -44,28 +63,27 @@ const config = {
   }
 }
 
-gulp.task('lint:js', function () {
-  return gulp.src(jsTargets)
+function lintJS () {
+  return gulp.src(paths.scripts.src)
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-})
+}
 
-gulp.task('lint:css', function () {
-  return gulp.src(cssTargets)
+function lintCSS () {
+  return gulp.src(paths.styles.src)
     .pipe(stylelint({
       reporters: [
         { formatter: 'string', console: true }
       ]
     }))
-})
+}
 
-gulp.task('js', function () {
-  return gulp.src(jsEntries)
+function scripts () {
+  return gulp.src(paths.scripts.entry)
     .pipe(plumber(config.plumberConfig))
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(gulpIf(config.env.dev, sourcemaps.init({ loadMaps: true })))
     .pipe(rollupEach({
       isCache: true,
       plugins: [
@@ -76,45 +94,39 @@ gulp.task('js', function () {
           browser: true
         }),
         rollupCommon()
-      ] },
+      ]
+    },
     {
       format: 'iife'
     }
     ))
-    // write sourcemaps
-    .pipe(gulpIf(config.env.dev, sourcemaps.write()))
     .pipe(gulpIf(config.env.prod, uglify()))
+    .pipe(gulp.dest(paths.scripts.dest), { sourcemaps: config.env.dev })
+}
 
-    .pipe(gulp.dest('dist/js/'))
-})
-
-gulp.task('css', function () {
-  return gulp.src(cssTargets)
+function styles () {
+  return gulp.src(paths.styles.src)
     .pipe(plumber(config.plumberConfig))
     .pipe(stylelint({
       reporters: [
         { formatter: 'string', console: true }
       ]
     }))
-    .pipe(gulpIf(config.env.dev, sourcemaps.init()))
     .pipe(sass({
       outputStyle: 'nested',
       precision: 3,
       includePaths: ['.']
     }))
     .pipe(postcss([
-      autoprefixer({
-        browsers: ['last 1 versions']
-      })
+      autoprefixer()
     ]))
     .pipe(concat('style.css'))
-    .pipe(gulpIf(config.env.dev, sourcemaps.write()))
     .pipe(gulpIf(config.env.prod, cleanCSS()))
-    .pipe(gulp.dest('dist/css/'))
-})
+    .pipe(gulp.dest(paths.styles.dest), { sourcemaps: config.env.dev })
+}
 
-gulp.task('img', function () {
-  return gulp.src(imageTargets)
+function images () {
+  return gulp.src(paths.images.src)
     .pipe(plumber(config.plumberConfig))
     .pipe(imagemin([
       pngquant(),
@@ -122,36 +134,37 @@ gulp.task('img', function () {
       imagemin.svgo()], {
       verbose: true
     }))
-    .pipe(gulp.dest('dist/img/'))
-})
-gulp.task('copy', function () {
-  return gulp.src(copyTarget, { base: '.' })
-    .pipe(gulp.dest('dist/'))
-})
-gulp.task('build', ['js', 'css', 'img', 'copy'])
+    .pipe(gulp.dest(paths.images.dest))
+}
 
-gulp.task('zip', function () {
-  return gulp.src('dist/**/*')
+function copys () {
+  return gulp.src(paths.copys.src, { base: '.' })
+    .pipe(gulp.dest(paths.copys.dest))
+}
+
+function compress () {
+  return gulp.src(paths.compress.src)
     .pipe(zip('chrome.zip'))
-    .pipe(gulp.dest('dist/'))
-})
-gulp.task('clean', function () {
-  return del([
-    'dist/**/*'
-  ])
-})
-gulp.task('serve', ['clean'], function () {
-  runSequence(['build'], function () {
-    gulp.watch(copyTarget, ['copy'])
-    gulp.watch(jsTargets, ['js'])
-    gulp.watch(cssTargets, ['css'])
-  })
-})
+    .pipe(gulp.dest(paths.compress.dest))
+}
 
-gulp.task('public', ['clean'], function () {
-  runSequence('build', 'zip')
-})
+function clean () {
+  return del(['dist'])
+}
 
-gulp.task('default', function () {
-  console.info('You should use npm run dev to start development mode.')
-})
+function watch () {
+  gulp.watch(paths.copys.src, copys)
+  gulp.watch(paths.scripts.src, scripts)
+  gulp.watch(paths.styles.src, styles)
+}
+
+const build = gulp.parallel(scripts, styles, images, copys)
+const serve = gulp.series(clean, build, watch)
+const publish = gulp.series(clean, build, compress)
+
+exports.build = build
+exports.serve = serve
+exports.publish = publish
+exports.lintJS = lintJS
+exports.lintCSS = lintCSS
+exports.clean = clean
