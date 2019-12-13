@@ -12,7 +12,7 @@ class Home extends Downloader {
     }
     const listParameter = {
       search,
-      url: '//webapi.115.com/files?',
+      url: `${location.protocol}//webapi.115.com/files?`,
       options: {
         credentials: 'include',
         method: 'GET'
@@ -54,7 +54,7 @@ class Home extends Downloader {
           document.querySelector('#textMenu').classList.add('open-o')
         }
         if (this.mode === 'OPEN') {
-          for (var f of fileDownloadInfo) {
+          for (const f of fileDownloadInfo) {
             window.open('https://115.com/?ct=play&ac=location&pickcode=' + f.pickcode)
           }
         }
@@ -128,21 +128,15 @@ class Home extends Downloader {
       method: 'GET'
     }
     return new Promise((resolve) => {
-      fetch(`//webapi.115.com/files/download?pickcode=${file}`, options).then((response) => {
-        if (response.ok) {
-          response.json().then((data) => {
-            const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
-            Core.requestCookies([{ path }]).then((cookies) => {
-              data.cookies = cookies
-              resolve(data)
-            })
-          })
-        } else {
-          console.log(response)
-        }
-      }).catch((err) => {
-        Core.showToast('网络请求失败', 'err')
-        console.log(err)
+      Core.sendToBackground('fetch', {
+        url: `${location.protocol}//webapi.115.com/files/download?pickcode=${file}`,
+        options
+      }, (data) => {
+        const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
+        Core.requestCookies([{ path }]).then((cookies) => {
+          data.cookies = cookies
+          resolve(data)
+        })
       })
     })
   }

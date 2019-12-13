@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       })
       return true
     case 'configData':
-      for (let key in request.data) {
+      for (const key in request.data) {
         localStorage.setItem(key, request.data[key])
       }
       break
@@ -36,6 +36,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       }, (err) => {
         console.log(err)
         sendResponse(false)
+      })
+      return true
+    case 'fetch':
+      httpSend(request.data, (data) => {
+        sendResponse(data)
+      }, (err) => {
+        console.log(err)
+        sendResponse(err)
       })
       return true
     case 'getCookies':
@@ -55,9 +63,9 @@ const getCookies = (details) => {
   return new Promise(function (resolve) {
     const list = details.map(item => getCookie(item))
     Promise.all(list).then(function (cookies) {
-      let obj = {}
-      for (let cookie of cookies) {
-        for (let item of cookie) {
+      const obj = {}
+      for (const cookie of cookies) {
+        for (const item of cookie) {
           if (item !== null) {
             obj[item.name] = item.value
           }
@@ -84,7 +92,7 @@ if (previousVersion === '' || previousVersion !== manifest.version) {
   var opt = {
     type: 'basic',
     title: '更新',
-    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新添加批量打开功能~',
+    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新修复Chromev79版本不能使用的问题~',
     iconUrl: 'img/icon.jpg'
   }
   const id = new Date().getTime().toString()
