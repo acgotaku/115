@@ -28,6 +28,7 @@ class Home extends Downloader {
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     UI.init()
     UI.addMenu(this.context.querySelector('#js_upload_btn'), 'beforebegin')
+    this.context.querySelector('.right-tvf').style.display = 'block'
     this.addMenuButtonEventListener()
     UI.addContextMenuRPCSectionWithCallback(() => {
       this.addContextMenuEventListener()

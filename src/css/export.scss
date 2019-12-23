@@ -3,11 +3,10 @@
 
 .export {
   cursor: pointer;
+  float: left;
   font-size: 14px;
-  line-height: 30px;
-  margin-right: 36px;
-  position: absolute;
-  right: 260px;
+  line-height: 32px;
+  position: relative;
   text-align: center;
   width: 82px;
   z-index: 1111;
@@ -25,7 +24,7 @@
 
   &-button {
     background: #00a8ff;
-    border-radius: 3px;
+    border-radius: 4px;
     color: #fff;
     display: block;
   }
@@ -36,6 +35,8 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     display: none;
     flex-direction: column;
+    position: absolute;
+    width: 100%;
 
     &-item:hover {
       background: $grey-da;
