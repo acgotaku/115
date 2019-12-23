@@ -28,8 +28,30 @@ jobs:
       - attach_workspace:
           at: ~/project
 
+      - run:
+          name: install dependency
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y python python-pip vim-common
+            git clone https://github.com/pawliczka/CRX3-Creator.git /tmp/CRX3-Creator
+            sudo pip2 install -r /tmp/CRX3-Creator/requirements.txt
+
       - run: npm run test
       - run: npm run build
+      - run: echo -e $KEY > /tmp/key.pem
+      - run: python /tmp/CRX3-Creator/main.py -o 115.crx -pem /tmp/key.pem dist/
+      - run: rm -rf release/
+      - run: mv dist/ release/
+      - run:
+          name: Avoid hosts unknown for github
+          command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - run: |
+          git config --global user.email "acgotaku311@gmail.com"
+          git config --global user.name "acgotaku311"
+          git add 115.crx
+          git add release/
+          git commit -m "[ci skip] update crx and release"
+          git push -u origin master
 
   test:
     <<: *defaults
