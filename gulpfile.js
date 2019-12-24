@@ -6,7 +6,7 @@ const rollupResolve = require('rollup-plugin-node-resolve')
 const rollupCommon = require('rollup-plugin-commonjs')
 
 const del = require('del')
-const zip = require('gulp-zip')
+// const zip = require('gulp-zip')
 const gulpIf = require('gulp-if')
 
 const eslint = require('gulp-eslint')
@@ -142,11 +142,11 @@ function copys () {
     .pipe(gulp.dest(paths.copys.dest))
 }
 
-function compress () {
-  return gulp.src(paths.compress.src)
-    .pipe(zip('chrome.zip'))
-    .pipe(gulp.dest(paths.compress.dest))
-}
+// function compress () {
+//   return gulp.src(paths.compress.src)
+//     .pipe(zip('chrome.zip'))
+//     .pipe(gulp.dest(paths.compress.dest))
+// }
 
 function clean () {
   return del(['dist'])
@@ -160,7 +160,7 @@ function watch () {
 
 const build = gulp.parallel(scripts, styles, images, copys)
 const serve = gulp.series(clean, build, watch)
-const publish = gulp.series(clean, build, compress)
+const publish = gulp.series(clean, build)
 
 exports.build = build
 exports.serve = serve
