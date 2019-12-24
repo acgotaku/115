@@ -1,4 +1,4 @@
-# 115Exporter [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ojafklbojgenkohhdgdjeaepnbjffdjf.svg)](https://chrome.google.com/webstore/detail/115exporter/ojafklbojgenkohhdgdjeaepnbjffdjf)
+# 115Exporter
 
 
 ## Sign in on Chrome
@@ -12,6 +12,11 @@ Use fake115 can Sign in on Chrome: https://github.com/kkHAIKE/fake115
     - Set `--rpc-secret=<secret>` if you are using aria2 1.18.4(or higher) with 'JSON-RPC PATH' like http://token:secret@hostname:port/jsonrpc
     - Set `--rpc-user=<username> --rpc-passwd=<passwd>` if you are using aria2 1.15.2(or higher) with 'JSON-RPC PATH' like http://username:passwd@hostname:port/jsonrpc
     - Use `http://localhost:6800/jsonrpc#max-connection-per-server=5&split=10` set download options for specific file.
+
+## Install
+
+* Chrome : Click **Settings** -> **Extensions**, drag `115.crx` file to the page, install it, or check **Developer mode** -> **Load unpacked extension**, navigate to the `release` folder.
+* Firefox : Open **about:debugging** in Firefox, click "Load Temporary Add-on" and navigate to the `release` folder, select `manifest.json`, click OK.
 
 ## License
 
