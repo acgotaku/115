@@ -1,1 +1,23 @@
-!function(){"use strict";var n=document.querySelector('iframe[rel="wangpan"]');n&&n.addEventListener("load",function e(){if(n.contentDocument.querySelector("#js_top_panel_box")){var t=document.createElement("script");t.src=chrome.runtime.getURL("js/115.js"),document.body.appendChild(t),chrome.runtime.sendMessage({method:"addScript",data:"js/home.js"}),n.removeEventListener("load",e)}})}();
+(function () {
+  'use strict';
+
+  var iframe = document.querySelector('iframe[rel="wangpan"]');
+
+  function add115JS() {
+    if (iframe.contentDocument.querySelector('#js_top_panel_box')) {
+      var script = document.createElement('script');
+      script.src = chrome.runtime.getURL('js/115.js');
+      document.body.appendChild(script);
+      chrome.runtime.sendMessage({
+        method: 'addScript',
+        data: 'js/home.js'
+      });
+      iframe.removeEventListener('load', add115JS);
+    }
+  }
+
+  if (iframe) {
+    iframe.addEventListener('load', add115JS);
+  }
+
+}());

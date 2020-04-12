@@ -1,1 +1,129 @@
-!function(){"use strict";function a(e,t){for(var n=0;n<t.length;n++){var a=t[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}(new(function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.context=document.querySelector('iframe[rel="wangpan"]').contentDocument}return function(e,t,n){t&&a(e.prototype,t),n&&a(e,n)}(e,[{key:"showToast",value:function(e){var t=e.message,n=e.type;window.Core.MinMessage.Show({text:t,type:n,timeout:1e3})}},{key:"startListen",value:function(){var t=this;window.addEventListener("message",function(e){e.data.type&&"getSelected"===e.data.type&&window.postMessage({type:"selected",data:t.getSelected()},location.origin),e.data.type&&"getHovered"===e.data.type&&window.postMessage({type:"hovered",data:t.getHovered()},location.origin),e.data.type&&"showToast"===e.data.type&&t.showToast(e.data.data),e.data.type&&"refresh"===e.data.type&&t.refresh()})}},{key:"refresh",value:function(){this.context=document.querySelector('iframe[rel="wangpan"]').contentDocument}},{key:"getFileInfoFromElements",value:function(e){var n=[];return Array.from(e).forEach(function(e){var t=e.getAttribute("file_type");"1"===t&&n.push({isdir:!1,sha1:e.getAttribute("sha1"),pick_code:e.getAttribute("pick_code"),path:""}),"0"===t&&n.push({isdir:!0,cate_id:e.getAttribute("cate_id"),path:""})}),n}},{key:"getSelected",value:function(){var e=this.context.querySelectorAll('li[rel="item"].selected');return this.getFileInfoFromElements(e)}},{key:"getHovered",value:function(){var e=this.context.querySelectorAll('li[rel="item"].hover');return this.getFileInfoFromElements(e)}}]),e}())).startListen()}();
+(function () {
+  'use strict';
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  var Disk =
+  /*#__PURE__*/
+  function () {
+    function Disk() {
+      _classCallCheck(this, Disk);
+
+      this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument;
+    } // Type类型有
+    // inf err war
+
+
+    _createClass(Disk, [{
+      key: "showToast",
+      value: function showToast(_ref) {
+        var message = _ref.message,
+            type = _ref.type;
+        window.Core.MinMessage.Show({
+          text: message,
+          type: type,
+          timeout: 1000
+        });
+      }
+    }, {
+      key: "startListen",
+      value: function startListen() {
+        var _this = this;
+
+        window.addEventListener('message', function (event) {
+          if (event.data.type && event.data.type === 'getSelected') {
+            window.postMessage({
+              type: 'selected',
+              data: _this.getSelected()
+            }, location.origin);
+          }
+
+          if (event.data.type && event.data.type === 'getHovered') {
+            window.postMessage({
+              type: 'hovered',
+              data: _this.getHovered()
+            }, location.origin);
+          }
+
+          if (event.data.type && event.data.type === 'showToast') {
+            _this.showToast(event.data.data);
+          }
+
+          if (event.data.type && event.data.type === 'refresh') {
+            _this.refresh();
+          }
+        });
+      }
+    }, {
+      key: "refresh",
+      value: function refresh() {
+        this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument;
+      }
+    }, {
+      key: "getFileInfoFromElements",
+      value: function getFileInfoFromElements(list) {
+        var selected = [];
+        Array.from(list).forEach(function (item) {
+          var type = item.getAttribute('file_type'); // file
+
+          if (type === '1') {
+            selected.push({
+              isdir: false,
+              sha1: item.getAttribute('sha1'),
+              pick_code: item.getAttribute('pick_code'),
+              path: ''
+            });
+          } // fold
+
+
+          if (type === '0') {
+            selected.push({
+              isdir: true,
+              cate_id: item.getAttribute('cate_id'),
+              path: ''
+            });
+          }
+        });
+        return selected;
+      }
+    }, {
+      key: "getSelected",
+      value: function getSelected() {
+        var list = this.context.querySelectorAll('li[rel="item"].selected');
+        return this.getFileInfoFromElements(list);
+      }
+    }, {
+      key: "getHovered",
+      value: function getHovered() {
+        var list = this.context.querySelectorAll('li[rel="item"].hover');
+        return this.getFileInfoFromElements(list);
+      }
+    }]);
+
+    return Disk;
+  }();
+
+  var disk = new Disk();
+  disk.startListen();
+
+}());
