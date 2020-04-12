@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run dev",
     "serve": "npm run dev",
-    "dev": "NODE_ENV=development gulp serve",
-    "build": "NODE_ENV=production gulp publish",
+    "dev": "set NODE_ENV=development && gulp serve",
+    "build": "set NODE_ENV=production && gulp publish",
     "clean": "gulp clean",
     "lint:js": "gulp lintJS",
     "lint:css": "gulp lintCSS",
