@@ -247,7 +247,7 @@ class UI {
             <div class="setting-menu-copyright">
               <div class="setting-menu-item">
                 <label class="setting-menu-label">&copy; Copyright</label>
-                <a class="setting-menu-link" href="https://github.com/acgotaku/BaiduExporter" target="_blank">雪月秋水</a>
+                <a class="setting-menu-link" href="https://github.com/acgotaku/115" target="_blank">雪月秋水</a>
               </div>
               <div class="setting-menu-item">
                 <label class="setting-menu-label">Version: ${this.version}</label>
