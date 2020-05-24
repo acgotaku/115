@@ -23,9 +23,7 @@
     return Constructor;
   }
 
-  var Disk =
-  /*#__PURE__*/
-  function () {
+  var Disk = /*#__PURE__*/function () {
     function Disk() {
       _classCallCheck(this, Disk);
 

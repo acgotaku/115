@@ -69,6 +69,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -85,9 +98,98 @@
     return _assertThisInitialized(self);
   }
 
-  var EventEmitter =
-  /*#__PURE__*/
-  function () {
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+    return function () {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _createForOfIteratorHelper(o) {
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+        var i = 0;
+
+        var F = function () {};
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var it,
+        normalCompletion = true,
+        didErr = false,
+        err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
+  }
+
+  var EventEmitter = /*#__PURE__*/function () {
     function EventEmitter() {
       _classCallCheck(this, EventEmitter);
 
@@ -132,17 +234,17 @@
     return EventEmitter;
   }();
 
-  var Store =
-  /*#__PURE__*/
-  function (_EventEmitter) {
+  var Store = /*#__PURE__*/function (_EventEmitter) {
     _inherits(Store, _EventEmitter);
+
+    var _super = _createSuper(Store);
 
     function Store() {
       var _this;
 
       _classCallCheck(this, Store);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Store).call(this));
+      _this = _super.call(this);
       _this.defaultRPC = [{
         name: 'ARIA2 RPC',
         url: 'http://localhost:6800/jsonrpc'
@@ -248,9 +350,7 @@
 
   var Store$1 = new Store();
 
-  var Core =
-  /*#__PURE__*/
-  function () {
+  var Core = /*#__PURE__*/function () {
     function Core() {
       _classCallCheck(this, Core);
 
@@ -385,28 +485,19 @@
         var paramsString = parseURL.hash.substr(1);
         var options = {};
         var searchParams = new URLSearchParams(paramsString);
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+
+        var _iterator = _createForOfIteratorHelper(searchParams),
+            _step;
 
         try {
-          for (var _iterator = searchParams[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var key = _step.value;
             options[key[0]] = key.length === 2 ? key[1] : 'enabled';
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
 
         var path = parseURL.origin + parseURL.pathname;
@@ -594,9 +685,7 @@
 
   var Core$1 = new Core();
 
-  var UI =
-  /*#__PURE__*/
-  function () {
+  var UI = /*#__PURE__*/function () {
     function UI() {
       var _this = this;
 
@@ -882,9 +971,7 @@
 
   var UI$1 = new UI();
 
-  var Downloader =
-  /*#__PURE__*/
-  function () {
+  var Downloader = /*#__PURE__*/function () {
     function Downloader(listParameter) {
       _classCallCheck(this, Downloader);
 
@@ -983,10 +1070,10 @@
     return Downloader;
   }();
 
-  var Home =
-  /*#__PURE__*/
-  function (_Downloader) {
+  var Home = /*#__PURE__*/function (_Downloader) {
     _inherits(Home, _Downloader);
+
+    var _super = _createSuper(Home);
 
     function Home() {
       var _this;
@@ -1007,7 +1094,7 @@
           method: 'GET'
         }
       };
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, listParameter));
+      _this = _super.call(this, listParameter);
       _this.mode = 'RPC';
       _this.rpcURL = 'http://localhost:6800/jsonrpc';
       _this.iframe = document.querySelector('iframe[rel="wangpan"]');
@@ -1055,28 +1142,18 @@
             }
 
             if (_this3.mode === 'OPEN') {
-              var _iteratorNormalCompletion = true;
-              var _didIteratorError = false;
-              var _iteratorError = undefined;
+              var _iterator = _createForOfIteratorHelper(fileDownloadInfo),
+                  _step;
 
               try {
-                for (var _iterator = fileDownloadInfo[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                for (_iterator.s(); !(_step = _iterator.n()).done;) {
                   var f = _step.value;
                   window.open('https://115.com/?ct=play&ac=location&pickcode=' + f.pickcode);
                 }
               } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
+                _iterator.e(err);
               } finally {
-                try {
-                  if (!_iteratorNormalCompletion && _iterator.return != null) {
-                    _iterator.return();
-                  }
-                } finally {
-                  if (_didIteratorError) {
-                    throw _iteratorError;
-                  }
-                }
+                _iterator.f();
               }
             }
           });
