@@ -1,30 +1,29 @@
-const gulp = require('gulp')
+import gulp from 'gulp'
 
-const rollupEach = require('gulp-rollup-each')
-const rollupBabel = require('rollup-plugin-babel')
-const rollupResolve = require('rollup-plugin-node-resolve')
-const rollupCommon = require('rollup-plugin-commonjs')
+import rollupEach from 'gulp-rollup-each'
+import rollupCommon from '@rollup/plugin-commonjs'
+import rollupResolve from '@rollup/plugin-node-resolve'
+import rollupBuble from '@rollup/plugin-buble'
 
-const del = require('del')
-// const zip = require('gulp-zip')
-const gulpIf = require('gulp-if')
+import del from 'del'
+import gulpIf from 'gulp-if'
 
-const eslint = require('gulp-eslint')
-const stylelint = require('gulp-stylelint')
+import eslint from 'gulp-eslint'
+import stylelint from 'gulp-stylelint'
 
-const postcss = require('gulp-postcss')
-const sass = require('gulp-sass')
-const autoprefixer = require('autoprefixer')
-const concat = require('gulp-concat')
-const cleanCSS = require('gulp-clean-css')
+import postcss from 'gulp-postcss'
+import sass from 'gulp-sass'
+import autoprefixer from 'autoprefixer'
+import concat from 'gulp-concat'
+import cleanCSS from 'gulp-clean-css'
 
-const imagemin = require('gulp-imagemin')
-const mozjpeg = require('imagemin-mozjpeg')
-const pngquant = require('imagemin-pngquant')
+import imagemin from 'gulp-imagemin'
+import mozjpeg from 'imagemin-mozjpeg'
+import pngquant from 'imagemin-pngquant'
 
-const plumber = require('gulp-plumber')
+import plumber from 'gulp-plumber'
 
-const uglify = require('gulp-uglify')
+import terser from 'gulp-terser'
 
 const paths = {
   scripts: {
@@ -80,28 +79,28 @@ function lintCSS () {
 }
 
 function scripts () {
-  return gulp.src(paths.scripts.entry)
+  return gulp.src(paths.scripts.entry, { sourcemaps: config.env.dev })
     .pipe(plumber(config.plumberConfig))
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(rollupEach({
       isCache: true,
       plugins: [
-        rollupBabel({
-          presets: ['@babel/preset-env']
-        }),
+        rollupCommon(),
         rollupResolve({
           browser: true
         }),
-        rollupCommon()
+        rollupBuble({
+          transforms: { forOf: false, asyncAwait: false }
+        })
       ]
     },
     {
       format: 'iife'
     }
     ))
-    .pipe(gulpIf(config.env.prod, uglify()))
-    .pipe(gulp.dest(paths.scripts.dest), { sourcemaps: config.env.dev })
+    .pipe(gulpIf(config.env.prod, terser()))
+    .pipe(gulp.dest(paths.scripts.dest, { sourcemaps: config.env.dev }))
 }
 
 function styles () {
@@ -141,12 +140,6 @@ function copys () {
   return gulp.src(paths.copys.src, { base: '.' })
     .pipe(gulp.dest(paths.copys.dest))
 }
-
-// function compress () {
-//   return gulp.src(paths.compress.src)
-//     .pipe(zip('chrome.zip'))
-//     .pipe(gulp.dest(paths.compress.dest))
-// }
 
 function clean () {
   return del(['dist'])

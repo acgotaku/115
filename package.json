@@ -33,6 +33,9 @@
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
+    "@rollup/plugin-buble": "^0.21.0",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
     "autoprefixer": "^9.8.0",
     "del": "^5.1.0",
     "eslint-config-standard": "^14.1.1",
@@ -40,6 +43,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "esm": "^3.2.25",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
@@ -48,20 +52,16 @@
     "gulp-imagemin": "^7.1.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
+    "gulp-rollup-each": "^3.0.2",
     "gulp-sass": "^4.1.0",
     "gulp-stylelint": "^13.0.0",
-    "gulp-uglify": "^3.0.2",
-    "gulp-zip": "^5.0.1",
+    "gulp-terser": "^1.2.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^8.0.0",
     "stylefmt": "^6.0.3",
     "stylelint": "^13.5.0",
     "stylelint-config-sass-guidelines": "^7.0.0",
     "stylelint-order": "^4.0.0",
-    "stylelint-scss": "^3.17.2",
-    "gulp-rollup-each": "^3.0.2",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "stylelint-scss": "^3.17.2"
   }
 }
