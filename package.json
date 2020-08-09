@@ -56,7 +56,7 @@
     "gulp-rollup-each": "^3.0.2",
     "gulp-sass": "^4.1.0",
     "gulp-stylelint": "^13.0.0",
-    "gulp-terser": "^1.2.0",
+    "gulp-terser": "^1.3.2",
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-pngquant": "^9.0.0",
     "stylefmt": "^6.0.3",
