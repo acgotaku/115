@@ -170,6 +170,12 @@ class Core {
   aria2RPCMode (rpcPath, fileDownloadInfo) {
     const { authStr, path, options } = this.parseURL(rpcPath)
     const ssl = this.getConfigData('ssl')
+    const small = this.getConfigData('small')
+
+    if (small) {
+      fileDownloadInfo.sort((a, b) => a.size - b.size)
+    }
+
     fileDownloadInfo.forEach((file) => {
       this.cookies = file.cookies
       if (ssl) {
