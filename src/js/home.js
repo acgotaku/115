@@ -150,6 +150,7 @@ class Home extends Downloader {
           this.fileDownloadInfo.push({
             name: files[item.pickcode].path + item.file_name,
             link: item.file_url,
+            size: item.file_size,
             sha1: files[item.pickcode].sha1,
             cookies: item.cookies,
             pickcode: item.pickcode

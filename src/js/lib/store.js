@@ -11,6 +11,7 @@ class Store extends EventEmitter {
       configSync: false,
       sha1Check: false,
       ssl: false,
+      small: false,
       interval: 300,
       downloadPath: '',
       userAgent: this.defaultUserAgent,
