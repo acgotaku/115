@@ -58,7 +58,7 @@
     "gulp-stylelint": "^13.0.0",
     "gulp-terser": "^1.4.0",
     "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-pngquant": "^9.0.0",
+    "imagemin-pngquant": "^9.0.1",
     "stylefmt": "^6.0.3",
     "stylelint": "^13.7.0",
     "stylelint-config-sass-guidelines": "^7.1.0",
