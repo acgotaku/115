@@ -37,3 +37,8 @@
     width: 100%;
   }
 }
+
+// stylelint-disable selector-no-qualifying-type
+input[type=file] {
+  visibility: hidden;
+}
