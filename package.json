@@ -32,7 +32,7 @@
   "homepage": "https://github.com/acgotaku/115#readme",
   "devDependencies": {
     "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-env": "^7.12.10",
     "@rollup/plugin-buble": "^0.21.0",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
