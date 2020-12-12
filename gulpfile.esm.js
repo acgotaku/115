@@ -43,6 +43,10 @@ const paths = {
     src: ['_locales/**/*', 'background.js', 'manifest.json'],
     dest: 'dist/'
   },
+  vendor: {
+    src: ['src/vendor/*.js'],
+    dest: 'dist/js/'
+  },
   compress: {
     src: 'dist/**/*',
     dest: 'dist/'
@@ -141,6 +145,11 @@ function copys () {
     .pipe(gulp.dest(paths.copys.dest))
 }
 
+function copyVendor () {
+  return gulp.src(paths.vendor.src)
+    .pipe(gulp.dest(paths.vendor.dest))
+}
+
 function clean () {
   return del(['dist'])
 }
@@ -151,7 +160,7 @@ function watch () {
   gulp.watch(paths.styles.src, styles)
 }
 
-const build = gulp.parallel(scripts, styles, images, copys)
+const build = gulp.parallel(scripts, styles, images, copys, copyVendor)
 const serve = gulp.series(clean, build, watch)
 const publish = gulp.series(clean, build)
 

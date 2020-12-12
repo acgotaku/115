@@ -92,7 +92,7 @@ if (previousVersion === '' || previousVersion !== manifest.version) {
   var opt = {
     type: 'basic',
     title: '更新',
-    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新修复Chromev79版本不能使用的问题~',
+    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新修复无法下载的问题~',
     iconUrl: 'img/icon.jpg'
   }
   const id = new Date().getTime().toString()

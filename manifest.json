@@ -1,28 +1,36 @@
 {
-   "background": {
-    "scripts": [ "background.js" ],
+  "background": {
+    "scripts": ["background.js"],
     "persistent": false
   },
-   "content_scripts": [ {
-     "js": ["js/start.js" ],
+  "content_scripts": [
+    {
+      "js": ["js/start.js"],
       "matches": ["*://*.115.com/*"],
       "run_at": "document_end"
-   }, {
-     "css": [ "css/style.css" ],
-     "all_frames": true,
+    },
+    {
+      "js": ["js/jsencrypt.js"],
+      "matches": ["*://*.115.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "css": ["css/style.css"],
+      "all_frames": true,
       "matches": ["*://*.115.com/*"]
-   } ],
-   "default_locale": "en",
-   "description": "__MSG_description__",
-   "icons": {
-      "32": "img/logo32.png",
-      "16": "img/logo16.png",
-      "48": "img/logo48.png",
-      "128": "img/logo128.png"
-   },
-    "web_accessible_resources": [ "js/115.js" ],
-   "manifest_version": 2,
-   "permissions": [ "cookies", "storage", "tabs", "*://*.115.com/*"],
-   "name": "__MSG_appName__",
-   "version": "0.3.6"
+    }
+  ],
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "32": "img/logo32.png",
+    "16": "img/logo16.png",
+    "48": "img/logo48.png",
+    "128": "img/logo128.png"
+  },
+  "web_accessible_resources": ["js/115.js"],
+  "manifest_version": 2,
+  "permissions": ["cookies", "storage", "tabs", "*://*.115.com/*"],
+  "name": "__MSG_appName__",
+  "version": "0.3.6"
 }
