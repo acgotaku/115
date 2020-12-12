@@ -131,6 +131,9 @@ class Home extends Downloader {
       pickcode: file
     }), timestamp)
     const options = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       credentials: 'include',
       method: 'POST',
       body: `data=${encodeURIComponent(data)}`
