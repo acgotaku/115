@@ -153,6 +153,8 @@ class Home extends Downloader {
             data.cookies = cookies
             resolve(data)
           })
+        } else {
+          resolve(file)
         }
       })
     })
@@ -163,18 +165,26 @@ class Home extends Downloader {
     return new Promise((resolve) => {
       Promise.all(list).then((items) => {
         items.forEach((item) => {
-          this.fileDownloadInfo.push({
-            name: files[item.pickcode].path + item.file_name,
-            link: item.file_url,
-            size: item.file_size,
-            sha1: files[item.pickcode].sha1,
-            cookies: item.cookies,
-            pickcode: item.pickcode
-          })
-          resolve()
+          if (this.isObject(item)) {
+            this.fileDownloadInfo.push({
+              name: files[item.pickcode].path + item.file_name,
+              link: item.file_url,
+              size: item.file_size,
+              sha1: files[item.pickcode].sha1,
+              cookies: item.cookies,
+              pickcode: item.pickcode
+            })
+          } else {
+            console.log(files[item])
+          }
         })
+        resolve()
       })
     })
+  }
+
+  isObject (obj) {
+    return obj !== null && typeof obj === 'object'
   }
 }
 
