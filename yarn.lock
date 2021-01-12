@@ -4169,10 +4169,10 @@ gulp-stylelint@^13.0.0:
     strip-ansi "^6.0.0"
     through2 "^3.0.1"
 
-gulp-terser@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-terser/-/gulp-terser-2.0.0.tgz#07f95ef9121fe9d4970c3c4ee775c9cd658d0474"
-  integrity sha512-8KxzgUpNeLsSujUCrNKUiSI1ioO5TfW4ODhbM+wzNTWgYp7yCIl1c/5EeOI+SOXaNLi+BzzMqrbb0eYMIThFCQ==
+gulp-terser@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/gulp-terser/-/gulp-terser-2.0.1.tgz#5f8f4fc54588b79519243809cc8eef4936286d0d"
+  integrity sha512-XCrnCXP8ovNpgLK9McJIXlgm0j3W2TsiWu7K9y3m+Sn5XZgUzi6U8MPHtS3NdLMic9poCj695N0ARJ2B6atypw==
   dependencies:
     plugin-error "^1.0.1"
     terser "5.4.0"
