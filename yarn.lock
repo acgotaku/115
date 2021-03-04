@@ -4154,15 +4154,14 @@ gulp-plumber@^1.2.1:
     plugin-error "^0.1.2"
     through2 "^2.0.3"
 
-gulp-postcss@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-postcss/-/gulp-postcss-8.0.0.tgz#8d3772cd4d27bca55ec8cb4c8e576e3bde4dc550"
-  integrity sha512-Wtl6vH7a+8IS/fU5W9IbOpcaLqKxd5L1DUOzaPmlnCbX1CrG0aWdwVnC3Spn8th0m8D59YbysV5zPUe1n/GJYg==
+gulp-postcss@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-postcss/-/gulp-postcss-9.0.0.tgz#2ade18809ab475dae743a88bd6501af0b04ee54e"
+  integrity sha512-5mSQ9CK8salSagrXgrVyILfEMy6I5rUGPRiR9rVjgJV9m/rwdZYUhekMr+XxDlApfc5ZdEJ8gXNZrU/TsgT5dQ==
   dependencies:
-    fancy-log "^1.3.2"
+    fancy-log "^1.3.3"
     plugin-error "^1.0.1"
-    postcss "^7.0.2"
-    postcss-load-config "^2.0.0"
+    postcss-load-config "^2.1.1"
     vinyl-sourcemaps-apply "^0.2.1"
 
 gulp-rollup-each@^3.0.2:
@@ -6517,10 +6516,10 @@ postcss-less@^3.1.4:
   dependencies:
     postcss "^7.0.14"
 
-postcss-load-config@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/postcss-load-config/-/postcss-load-config-2.1.0.tgz#c84d692b7bb7b41ddced94ee62e8ab31b417b003"
-  integrity sha512-4pV3JJVPLd5+RueiVVB+gFOAa7GWc25XQcMp86Zexzke69mKf6Nx9LRcQywdz7yZI9n1udOxmLuAwTBypypF8Q==
+postcss-load-config@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/postcss-load-config/-/postcss-load-config-2.1.2.tgz#c5ea504f2c4aef33c7359a34de3573772ad7502a"
+  integrity sha512-/rDeGV6vMUo3mwJZmeHfEDvwnTKKqQ0S7OHUi/kJvvtx3aWtyWG2/0ZWnzCt2keEclwN6Tf0DST2v9kITdOKYw==
   dependencies:
     cosmiconfig "^5.0.0"
     import-cwd "^2.0.0"
