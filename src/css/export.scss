@@ -3,11 +3,12 @@
 
 .export {
   cursor: pointer;
-  float: left;
   font-size: 14px;
   line-height: 32px;
-  position: relative;
+  position: absolute;
+  right: 200px;
   text-align: center;
+  top: 20px;
   width: 82px;
   z-index: 1111;
 

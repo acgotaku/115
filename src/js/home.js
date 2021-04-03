@@ -28,7 +28,7 @@ class Home extends Downloader {
   initialize () {
     this.context = document.querySelector('iframe[rel="wangpan"]').contentDocument
     UI.init()
-    UI.addMenu(this.context.querySelector('#js_fake_path'), 'beforebegin')
+    UI.addMenu(this.context.querySelector('#js_top_panel_box'), 'afterbegin')
     this.context.querySelector('.right-tvf').style.display = 'block'
     this.addMenuButtonEventListener()
     UI.addContextMenuRPCSectionWithCallback(() => {
