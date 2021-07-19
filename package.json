@@ -63,7 +63,7 @@
     "stylelint": "^13.11.0",
     "stylelint-config-sass-guidelines": "^7.1.0",
     "stylelint-order": "^4.0.0",
-    "stylelint-scss": "^3.17.2"
+    "stylelint-scss": "^3.20.1"
   },
   "dependencies": {
     "blueimp-md5": "^2.18.0"
