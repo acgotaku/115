@@ -100,8 +100,9 @@ class Core {
     const paramsString = parseURL.hash.substr(1)
     const options = {}
     const searchParams = new URLSearchParams(paramsString)
-    for (const key of searchParams) {
-      options[key[0]] = key.length === 2 ? key[1] : 'enabled'
+    for (const searchParam of searchParams) {
+      const [option, value] = searchParam
+      options[option] = value.length ? value : 'enabled'
     }
     const path = parseURL.origin + parseURL.pathname
     return { authStr, path, options }
