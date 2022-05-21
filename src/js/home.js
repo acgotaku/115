@@ -1,7 +1,6 @@
 import Core from './lib/core'
 import UI from './lib/ui'
 import Downloader from './lib/downloader'
-import Secret from './lib/secret'
 
 class Home extends Downloader {
   constructor () {
@@ -125,37 +124,20 @@ class Home extends Downloader {
   }
 
   getFile (file) {
-    const now = Date.now()
-    const timestamp = Math.floor(now / 1000)
-    const { data, key } = Secret.encode(JSON.stringify({
-      pickcode: file
-    }), timestamp)
     const options = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
       credentials: 'include',
-      method: 'POST',
-      body: `data=${encodeURIComponent(data)}`
+      method: 'GET'
     }
     return new Promise((resolve) => {
       Core.sendToBackground('fetch', {
-        url: `https://proapi.115.com/app/chrome/downurl?t=${timestamp}`,
+        url: `${location.protocol}//webapi.115.com/files/download?pickcode=${file}`,
         options
-      }, (json) => {
-        if (json.state) {
-          const result = JSON.parse(Secret.decode(json.data, key))
-          const data = Object.values(result).pop()
-          data.pickcode = data.pick_code
-          data.file_url = data.url.url
-          const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
-          Core.requestCookies([{ path }]).then((cookies) => {
-            data.cookies = cookies
-            resolve(data)
-          })
-        } else {
-          resolve(file)
-        }
+      }, (data) => {
+        const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
+        Core.requestCookies([{ path }]).then((cookies) => {
+          data.cookies = cookies
+          resolve(data)
+        })
       })
     })
   }
