@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/project/115
   docker:
-    - image: circleci/node:12.16.1-stretch
+    - image: circleci/node:16-stretch
 jobs:
   install:
     <<: *defaults

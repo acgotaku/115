@@ -12,7 +12,8 @@ import eslint from 'gulp-eslint'
 import stylelint from 'gulp-stylelint'
 
 import postcss from 'gulp-postcss'
-import sass from 'gulp-sass'
+import dartSass from 'sass'
+import gulpSass from 'gulp-sass'
 import autoprefixer from 'autoprefixer'
 import concat from 'gulp-concat'
 import cleanCSS from 'gulp-clean-css'
@@ -24,6 +25,8 @@ import pngquant from 'imagemin-pngquant'
 import plumber from 'gulp-plumber'
 
 import terser from 'gulp-terser'
+
+const sass = gulpSass(dartSass)
 
 const paths = {
   scripts: {
@@ -116,7 +119,6 @@ function styles () {
       ]
     }))
     .pipe(sass({
-      outputStyle: 'nested',
       precision: 3,
       includePaths: ['.']
     }))
