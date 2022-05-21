@@ -23,19 +23,30 @@ jobs:
           node-version: "16.x"
           cache: "yarn"
 
-      - name: Install deps
+      - name: Install RX3-Creator
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python python-pip vim-common
+          sudo add-apt-repository universe
+          sudo apt update
+          sudo apt install -y python2 vim-common
+          curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+          sudo python2 get-pip.py
           git clone https://github.com/pawliczka/CRX3-Creator.git /tmp/CRX3-Creator
           sudo pip2 install -r /tmp/CRX3-Creator/requirements.txt
 
-      - run: yarn build
-      - name: Build package
+      - name: Install deps
+        run: yarn install --frozen-lockfile
+
+      - name: Build 115
+        run: yarn build
+
+      - name: Write pem to file
+        run: |
+          echo "$CHROME_PEM" > /tmp/chrome.pem
         env:
           CHROME_PEM: ${{ secrets.CHROME_PEM }}
+
+      - name: Package 115
         run: |
-          echo $CHROME_PEM > /tmp/chrome.pem
           python /tmp/CRX3-Creator/main.py -o 115.crx -pem /tmp/chrome.pem dist
           rm -rf release
           mv dist release
@@ -43,5 +54,5 @@ jobs:
 
       - uses: EndBug/add-and-commit@v9
         with:
-          add: 'release'
-          message: '[ci skip] update crx and release'
+          add: "release"
+          message: "[ci skip] update crx and release"
