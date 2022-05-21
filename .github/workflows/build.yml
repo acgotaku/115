@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          cache: "yarn"
+
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python python-pip vim-common
+          git clone https://github.com/pawliczka/CRX3-Creator.git /tmp/CRX3-Creator
+          sudo pip2 install -r /tmp/CRX3-Creator/requirements.txt
+
+      - run: yarn build
+      - name: Build package
+        env:
+          CHROME_PEM: ${{ secrets.CHROME_PEM }}
+        run: |
+          echo $CHROME_PEM > /tmp/chrome.pem
+          python /tmp/CRX3-Creator/main.py -o 115.crx -pem /tmp/chrome.pem dist
+          rm -rf release
+          mv dist release
+          mv 115.crx release
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: 'release'
+          message: '[ci skip] update crx and release'
