@@ -1,10 +1,9 @@
-name: Build
+name: Release
 
-on: [workflow_dispatch]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
-  cancel-in-progress: true
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]*'
 
 jobs:
   build:
@@ -45,11 +44,10 @@ jobs:
       - name: Package 115
         run: |
           python /tmp/CRX3-Creator/main.py -o 115.crx -pem /tmp/chrome.pem dist
-          rm -rf release
-          mv dist release
-          mv 115.crx release
 
-      - uses: EndBug/add-and-commit@v9
+      - name: Create release
+        uses: ncipollo/release-action@v1
         with:
-          add: "release"
-          message: "[ci skip] update crx and release"
+          artifacts: "115.crx"
+          tag: ${{ github.ref }}
+          name: Release ${{ github.ref }}
