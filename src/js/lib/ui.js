@@ -191,6 +191,14 @@ class UI {
             </div><!-- /.setting-menu-row -->
             <div class="setting-menu-row">
               <div class="setting-menu-name">
+                <label class="setting-menu-label">115会员</label>
+              </div>
+              <div class="setting-menu-value">
+                <input type="checkbox" class="setting-menu-checkbox vip-s">
+              </div>
+            </div><!-- /.setting-menu-row -->
+            <div class="setting-menu-row">
+              <div class="setting-menu-name">
                 <label class="setting-menu-label">小文件优先</label>
               </div>
               <div class="setting-menu-value">
@@ -323,7 +331,7 @@ class UI {
   }
 
   updateSetting (configData) {
-    const { rpcList, configSync, sha1Check, ssl, small, interval, downloadPath, userAgent, browserUserAgent, referer, headers } = configData
+    const { rpcList, configSync, sha1Check, vip, ssl, small, interval, downloadPath, userAgent, browserUserAgent, referer, headers } = configData
     // reset dom
     document.querySelectorAll('.rpc-s').forEach((rpc, index) => {
       if (index !== 0) {
@@ -350,6 +358,7 @@ class UI {
     })
     document.querySelector('.configSync-s').checked = configSync
     document.querySelector('.sha1Check-s').checked = sha1Check
+    document.querySelector('.vip-s').checked = vip
     document.querySelector('.ssl-s').checked = ssl
     document.querySelector('.small-s').checked = small
     document.querySelector('.interval-s').value = interval
@@ -376,6 +385,7 @@ class UI {
     }).filter(el => el)
     const configSync = document.querySelector('.configSync-s').checked
     const sha1Check = document.querySelector('.sha1Check-s').checked
+    const vip = document.querySelector('.vip-s').checked
     const ssl = document.querySelector('.ssl-s').checked
     const small = document.querySelector('.small-s').checked
     const interval = document.querySelector('.interval-s').value
@@ -389,6 +399,7 @@ class UI {
       rpcList,
       configSync,
       sha1Check,
+      vip,
       ssl,
       small,
       interval,

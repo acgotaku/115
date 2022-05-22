@@ -10,6 +10,7 @@ class Store extends EventEmitter {
       rpcList: this.defaultRPC,
       configSync: false,
       sha1Check: false,
+      vip: false,
       ssl: false,
       small: false,
       interval: 300,
