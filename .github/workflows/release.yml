@@ -43,11 +43,11 @@ jobs:
 
       - name: Package 115
         run: |
-          python /tmp/CRX3-Creator/main.py -o 115.crx -pem /tmp/chrome.pem dist
+          python /tmp/CRX3-Creator/main.py -o 115-${{ github.ref_name }}.crx -pem /tmp/chrome.pem dist
 
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "115.crx"
+          artifacts: 115-${{ github.ref_name }}.crx
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
