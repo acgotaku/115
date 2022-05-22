@@ -1,6 +1,6 @@
 {
   "name": "115",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Assistant for 115 to export download links to aria2-rpc.",
   "main": "background.js",
   "scripts": {

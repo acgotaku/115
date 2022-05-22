@@ -89,10 +89,10 @@ const showNotification = (id, opt) => {
 const manifest = chrome.runtime.getManifest()
 const previousVersion = localStorage.getItem('version')
 if (previousVersion === '' || previousVersion !== manifest.version) {
-  var opt = {
+  const opt = {
     type: 'basic',
     title: '更新',
-    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新修复无法下载的问题~',
+    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新添加会员下载功能~',
     iconUrl: 'img/icon.jpg'
   }
   const id = new Date().getTime().toString()
