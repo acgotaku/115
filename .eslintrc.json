@@ -1,9 +1,0 @@
-{
-  "extends": "standard",
-  "env": {
-      "browser": true
-  },
-  "globals": {
-    "chrome": true
-  }
-}

@@ -370,6 +370,8 @@ class UI {
       const url = rpc.querySelector('.url-s').value
       if (name && url) {
         return { name, url }
+      } else {
+        return null
       }
     }).filter(el => el)
     const configSync = document.querySelector('.configSync-s').checked

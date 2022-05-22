@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import md5 from 'blueimp-md5'
 
 class Secret {
@@ -34,7 +35,7 @@ class Secret {
   }
 
   xor115Enc (src, srclen, key, keylen) {
-    var i, j, k, mod4, ref, ref1, ref2, ret
+    let i, j, k, mod4, ref, ref1, ref2, ret
     mod4 = srclen % 4
     ret = []
     if (mod4 !== 0) {
@@ -49,10 +50,10 @@ class Secret {
   };
 
   getkey (length, key) {
-    var i
+    let i
     if (key != null) {
       return (() => {
-        var j, ref, results
+        let j, ref, results
         results = []
         for (i = j = 0, ref = length; (ref >= 0 ? j < ref : j > ref); i = ref >= 0 ? ++j : --j) {
           results.push(((key[i] + this.kts[length * i]) & 0xff) ^ this.kts[length * (length - 1 - i)])
@@ -67,7 +68,7 @@ class Secret {
   }
 
   asymEncode (src, srclen) {
-    var i, j, m, ref, ret
+    let i, j, m, ref, ret
     m = 128 - 11
     ret = ''
     for (i = j = 0, ref = Math.floor((srclen + m - 1) / m); (ref >= 0 ? j < ref : j > ref); i = ref >= 0 ? ++j : --j) {
@@ -77,7 +78,7 @@ class Secret {
   }
 
   asymDecode (src, srclen) {
-    var i, j, m, ref, ret
+    let i, j, m, ref, ret
     m = 128
     ret = ''
     for (i = j = 0, ref = Math.floor((srclen + m - 1) / m); (ref >= 0 ? j < ref : j > ref); i = ref >= 0 ? ++j : --j) {
@@ -87,7 +88,7 @@ class Secret {
   };
 
   symEncode (src, srclen, key1, key2) {
-    var k1, k2, ret
+    let k1, k2, ret
     k1 = this.getkey(4, key1)
     k2 = this.getkey(12, key2)
     ret = this.xor115Enc(src, srclen, k1, 4)
@@ -97,7 +98,7 @@ class Secret {
   };
 
   symDecode (src, srclen, key1, key2) {
-    var k1, k2, ret
+    let k1, k2, ret
     k1 = this.getkey(4, key1)
     k2 = this.getkey(12, key2)
     ret = this.xor115Enc(src, srclen, k2, 12)
@@ -107,7 +108,7 @@ class Secret {
   };
 
   bytesToString (buf) {
-    var i, j, len, ret
+    let i, j, len, ret
     ret = ''
     for (j = 0, len = buf.length; j < len; j++) {
       i = buf[j]
@@ -117,7 +118,7 @@ class Secret {
   }
 
   stringToBytes (str) {
-    var i, j, ref, ret
+    let i, j, ref, ret
     ret = []
     for (i = j = 0, ref = str.length; (ref >= 0 ? j < ref : j > ref); i = ref >= 0 ? ++j : --j) {
       ret.push(str.charCodeAt(i))
