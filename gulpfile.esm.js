@@ -8,9 +8,6 @@ import rollupBuble from '@rollup/plugin-buble'
 import del from 'del'
 import gulpIf from 'gulp-if'
 
-import eslint from 'gulp-eslint'
-import stylelint from 'gulp-stylelint'
-
 import postcss from 'gulp-postcss'
 import dartSass from 'sass'
 import gulpSass from 'gulp-sass'
@@ -69,27 +66,9 @@ const config = {
   }
 }
 
-function lintJS () {
-  return gulp.src(paths.scripts.src)
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
-}
-
-function lintCSS () {
-  return gulp.src(paths.styles.src)
-    .pipe(stylelint({
-      reporters: [
-        { formatter: 'string', console: true }
-      ]
-    }))
-}
-
 function scripts () {
   return gulp.src(paths.scripts.entry, { sourcemaps: config.env.dev })
     .pipe(plumber(config.plumberConfig))
-    .pipe(eslint())
-    .pipe(eslint.format())
     .pipe(rollupEach({
       isCache: true,
       plugins: [
@@ -113,11 +92,6 @@ function scripts () {
 function styles () {
   return gulp.src(paths.styles.src)
     .pipe(plumber(config.plumberConfig))
-    .pipe(stylelint({
-      reporters: [
-        { formatter: 'string', console: true }
-      ]
-    }))
     .pipe(sass({
       precision: 3,
       includePaths: ['.']
@@ -169,6 +143,4 @@ const publish = gulp.series(clean, build)
 exports.build = build
 exports.serve = serve
 exports.publish = publish
-exports.lintJS = lintJS
-exports.lintCSS = lintCSS
 exports.clean = clean

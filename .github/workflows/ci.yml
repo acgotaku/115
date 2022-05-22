@@ -29,5 +29,5 @@ jobs:
       - name: Install deps
         run: yarn install --frozen-lockfile
 
-      - name: Unit test
-        run: yarn test
+      - name: Lint test
+        run: yarn lint:fix

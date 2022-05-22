@@ -8,7 +8,7 @@ class Disk {
   showToast ({ message, type }) {
     window.Core.MinMessage.Show({
       text: message,
-      type: type,
+      type,
       timeout: 1000
     })
   }
