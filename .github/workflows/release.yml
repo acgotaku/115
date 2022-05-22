@@ -17,11 +17,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
       - name: Set node version
         uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
-          cache: "yarn"
+          node-version: '16.x'
+          cache: 'pnpm'
 
       - name: Install RX3-Creator
         run: |
@@ -34,10 +39,10 @@ jobs:
           sudo pip2 install -r /tmp/CRX3-Creator/requirements.txt
 
       - name: Install deps
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build 115
-        run: yarn build
+        run: pnpm build
 
       - name: Write pem to file
         run: |
