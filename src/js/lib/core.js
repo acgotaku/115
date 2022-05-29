@@ -170,7 +170,6 @@ class Core {
 
   aria2RPCMode (rpcPath, fileDownloadInfo) {
     const { authStr, path, options } = this.parseURL(rpcPath)
-    const ssl = this.getConfigData('ssl')
     const small = this.getConfigData('small')
 
     if (small) {
@@ -179,9 +178,6 @@ class Core {
 
     fileDownloadInfo.forEach((file) => {
       this.cookies = file.cookies
-      if (ssl) {
-        file.link = file.link.replace(/^(http:\/\/)/, 'https://')
-      }
       const rpcData = {
         jsonrpc: '2.0',
         method: 'aria2.addUri',
@@ -223,12 +219,8 @@ class Core {
     const idmTxt = []
     const downloadLinkTxt = []
     const prefixTxt = 'data:text/plain;charset=utf-8,'
-    const ssl = this.getConfigData('ssl')
     fileDownloadInfo.forEach((file) => {
       this.cookies = file.cookies
-      if (ssl) {
-        file.link = file.link.replace(/^(http:\/\/)/, 'https://')
-      }
       let aria2CmdLine = `aria2c -c -s10 -k1M -x16 --enable-rpc=false -o ${JSON.stringify(file.name)} ${this.getHeader('aria2Cmd')} ${JSON.stringify(file.link)}`
       let aria2Line = [file.link, this.getHeader('aria2c'), ` out=${file.name}`].join('\n')
       const sha1Check = this.getConfigData('sha1Check')

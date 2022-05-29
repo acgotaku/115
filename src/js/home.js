@@ -124,39 +124,44 @@ class Home extends Downloader {
     window.postMessage({ type: 'getHovered' }, location.origin)
   }
 
-  getFile (file) {
+  getFile (pickcode) {
     const vip = Core.getConfigData('vip')
     if (vip) {
-      return this.getFileFromProAPI(file)
+      return this.getFileFromProAPI(pickcode)
     } else {
-      return this.getFileFromWebAPI(file)
+      return this.getFileFromWebAPI(pickcode)
     }
   }
 
-  getFileFromWebAPI (file) {
+  getFileFromWebAPI (pickcode) {
     const options = {
       credentials: 'include',
       method: 'GET'
     }
     return new Promise((resolve) => {
       Core.sendToBackground('fetch', {
-        url: `${location.protocol}//webapi.115.com/files/download?pickcode=${file}`,
+        url: `${location.protocol}//webapi.115.com/files/download?pickcode=${pickcode}`,
         options
       }, (data) => {
-        const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
-        Core.requestCookies([{ path }]).then((cookies) => {
-          data.cookies = cookies
-          resolve(data)
-        })
+        if (data.file_url) {
+          const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
+          Core.requestCookies([{ path }]).then((cookies) => {
+            data.cookies = cookies
+            resolve(data)
+          })
+        } else {
+          Core.showToast('无法获取下载地址!', 'err')
+          resolve(pickcode)
+        }
       })
     })
   }
 
-  getFileFromProAPI (file) {
+  getFileFromProAPI (pickcode) {
     const now = Date.now()
     const timestamp = Math.floor(now / 1000)
     const { data, key } = Secret.encode(JSON.stringify({
-      pickcode: file
+      pickcode
     }), timestamp)
     const options = {
       headers: {
@@ -176,20 +181,25 @@ class Home extends Downloader {
           const data = Object.values(result).pop()
           data.pickcode = data.pick_code
           data.file_url = data.url.url
-          const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
-          Core.requestCookies([{ path }]).then((cookies) => {
-            data.cookies = cookies
-            resolve(data)
-          })
+          if (data.file_url) {
+            const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
+            Core.requestCookies([{ path }]).then((cookies) => {
+              data.cookies = cookies
+              resolve(data)
+            })
+          } else {
+            Core.showToast('无法获取下载地址!', 'err')
+            resolve(pickcode)
+          }
         } else {
-          resolve(file)
+          resolve(pickcode)
         }
       })
     })
   }
 
   getFiles (files) {
-    const list = Object.keys(files).map(item => this.getFile(item))
+    const list = Object.keys(files).map(pickcode => this.getFile(pickcode))
     return new Promise((resolve) => {
       Promise.all(list).then((items) => {
         items.forEach((item) => {
