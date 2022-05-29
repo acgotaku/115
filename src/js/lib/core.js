@@ -145,15 +145,12 @@ class Core {
   }
 
   copyText (text) {
-    const input = document.createElement('textarea')
-    document.body.appendChild(input)
-    input.value = text
-    input.focus()
-    input.select()
-    const result = document.execCommand('copy')
-    input.remove()
-    if (result) {
-      this.showToast('拷贝成功~', 'inf')
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        this.showToast('拷贝成功~', 'inf')
+      }).catch(() => {
+        this.showToast('拷贝失败 QAQ', 'err')
+      })
     } else {
       this.showToast('拷贝失败 QAQ', 'err')
     }
