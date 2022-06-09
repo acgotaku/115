@@ -3,7 +3,6 @@ import gulp from 'gulp'
 import rollupEach from 'gulp-rollup-each'
 import rollupCommon from '@rollup/plugin-commonjs'
 import rollupResolve from '@rollup/plugin-node-resolve'
-import rollupBuble from '@rollup/plugin-buble'
 
 import del from 'del'
 import gulpIf from 'gulp-if'
@@ -75,9 +74,6 @@ function scripts () {
         rollupCommon(),
         rollupResolve({
           browser: true
-        }),
-        rollupBuble({
-          transforms: { forOf: false, asyncAwait: false }
         })
       ]
     },
