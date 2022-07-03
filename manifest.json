@@ -23,7 +23,6 @@
   "default_locale": "en",
   "description": "__MSG_description__",
   "icons": {
-    "32": "img/logo32.png",
     "16": "img/logo16.png",
     "48": "img/logo48.png",
     "128": "img/logo128.png"
