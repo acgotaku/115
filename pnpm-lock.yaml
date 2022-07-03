@@ -23,6 +23,7 @@ specifiers:
   gulp-rollup-each: ^4.0.1
   gulp-sass: ^5.1.0
   gulp-terser: ^2.0.1
+  gulp-zip: ^5.1.0
   imagemin-mozjpeg: ^9.0.0
   imagemin-pngquant: ^9.0.2
   postcss: ^8.4.14
@@ -58,6 +59,7 @@ devDependencies:
   gulp-rollup-each: 4.0.1
   gulp-sass: 5.1.0
   gulp-terser: 2.1.0
+  gulp-zip: 5.1.0_gulp@4.0.2
   imagemin-mozjpeg: 9.0.0
   imagemin-pngquant: 9.0.2
   postcss: 8.4.14
@@ -2845,6 +2847,23 @@ packages:
       terser: 5.14.0
       through2: 4.0.2
       vinyl-sourcemaps-apply: 0.2.1
+    dev: true
+
+  /gulp-zip/5.1.0_gulp@4.0.2:
+    resolution: {integrity: sha512-XZr/y91IliK/SpR74g3TkZejGkGEmK7CSDjSghT1jXshgO+dFvpLIz9w9fpuwkew6i7k4F+G24TubNgq1ISzEw==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      gulp: '>=4'
+    peerDependenciesMeta:
+      gulp:
+        optional: true
+    dependencies:
+      get-stream: 5.2.0
+      gulp: 4.0.2
+      plugin-error: 1.0.1
+      through2: 3.0.2
+      vinyl: 2.2.1
+      yazl: 2.5.1
     dev: true
 
   /gulp/4.0.2:
@@ -6218,4 +6237,10 @@ packages:
     dependencies:
       buffer-crc32: 0.2.13
       fd-slicer: 1.1.0
+    dev: true
+
+  /yazl/2.5.1:
+    resolution: {integrity: sha512-phENi2PLiHnHb6QBVot+dJnaAZ0xosj7p3fWl+znIjBDlnMI2PsZCJZ306BPTFOaHf5qdDEI8x5qFrSOBN5vrw==}
+    dependencies:
+      buffer-crc32: 0.2.13
     dev: true

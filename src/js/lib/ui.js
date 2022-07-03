@@ -3,8 +3,8 @@ import Store from './store'
 
 class UI {
   constructor () {
-    this.version = '0.4.3'
-    this.updateDate = '2022/06/09'
+    this.version = '0.5.0'
+    this.updateDate = '2022/07/03'
     Store.on('updateView', (configData) => {
       this.updateSetting(configData)
       this.updateMenu(configData)

@@ -15,10 +15,13 @@ const httpSend = ({ url, options }, resolve, reject) => {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.method) {
     case 'addScript':
-      chrome.tabs.executeScript(sender.tab.id, { file: request.data })
+      chrome.scripting.executeScript({
+        target: { tabId: sender.tab.id },
+        files: [request.data]
+      })
       break
     case 'rpcData':
-      httpSend(request.data, (data) => {
+      httpSend(request.data, () => {
         sendResponse(true)
       }, (err) => {
         console.log(err)
@@ -77,25 +80,26 @@ const getCookies = (details) => {
 }
 
 const showNotification = (id, opt) => {
-  if (!chrome.notifications) {
-    return
-  }
   chrome.notifications.create(id, opt, () => {})
   setTimeout(() => {
     chrome.notifications.clear(id, () => {})
   }, 5000)
 }
 // 软件版本更新提示
-const manifest = chrome.runtime.getManifest()
-const previousVersion = localStorage.getItem('version')
-if (previousVersion === '' || previousVersion !== manifest.version) {
-  const opt = {
-    type: 'basic',
-    title: '更新',
-    messa0ge: '115助手更新到' + manifest.version + '版本啦～\n此次更新添加会员下载功能~',
-    iconUrl: 'img/icon.jpg'
+(async () => {
+  const manifest = chrome.runtime.getManifest()
+  const { version: previousVersion } = await chrome.storage.local.get('version')
+  if (previousVersion === '' || previousVersion !== manifest.version) {
+    const opt = {
+      type: 'basic',
+      title: '更新',
+      message: '115助手更新到' + manifest.version + '版本啦～\n此次更新升级到Manifest V3~',
+      iconUrl: 'img/icon.jpg'
+    }
+    const id = new Date().getTime().toString()
+    showNotification(id, opt)
+    await chrome.storage.local.set({
+      version: manifest.version
+    })
   }
-  const id = new Date().getTime().toString()
-  showNotification(id, opt)
-  localStorage.setItem('version', manifest.version)
-}
+})()
