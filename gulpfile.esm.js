@@ -22,6 +22,8 @@ import plumber from 'gulp-plumber'
 
 import terser from 'gulp-terser'
 
+import zip from 'gulp-zip'
+
 const sass = gulpSass(dartSass)
 
 const paths = {
@@ -132,9 +134,15 @@ function watch () {
   gulp.watch(paths.styles.src, styles)
 }
 
+export function compress () {
+  return gulp.src(paths.compress.src)
+    .pipe(zip('chrome.zip'))
+    .pipe(gulp.dest(paths.compress.dest))
+}
+
 const build = gulp.parallel(scripts, styles, images, copys, copyVendor)
 const serve = gulp.series(clean, build, watch)
-const publish = gulp.series(clean, build)
+const publish = gulp.series(clean, build, compress)
 
 exports.build = build
 exports.serve = serve

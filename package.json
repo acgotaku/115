@@ -49,6 +49,7 @@
     "gulp-rollup-each": "^4.0.1",
     "gulp-sass": "^5.1.0",
     "gulp-terser": "^2.0.1",
+    "gulp-zip": "^5.1.0",
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-pngquant": "^9.0.2",
     "postcss": "^8.4.14",
