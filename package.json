@@ -9,7 +9,7 @@
     "dev": "cross-env NODE_ENV=development gulp serve",
     "build": "cross-env NODE_ENV=production gulp publish",
     "clean": "gulp clean",
-    "eslint:fix": "eslint --fix src",
+    "eslint:fix": "eslint --fix src background.js",
     "stylelint:fix": "stylelint \"src/**/*.scss\" --fix",
     "lint:fix": "npm run stylelint:fix && npm run eslint:fix"
   },
