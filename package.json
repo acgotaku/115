@@ -1,6 +1,6 @@
 {
   "name": "115",
-  "version": "0.4.3",
+  "version": "0.5.1",
   "description": "Assistant for 115 to export download links to aria2-rpc.",
   "main": "background.js",
   "scripts": {
@@ -61,6 +61,7 @@
     "stylelint-scss": "^4.2.0"
   },
   "dependencies": {
+    "big-integer": "^1.6.51",
     "blueimp-md5": "^2.18.0"
   }
 }

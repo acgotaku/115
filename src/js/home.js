@@ -182,8 +182,7 @@ class Home extends Downloader {
           data.pickcode = data.pick_code
           data.file_url = data.url.url
           if (data.file_url) {
-            const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
-            Core.requestCookies([{ path }]).then((cookies) => {
+            Core.requestCookies([{ url: 'https://proapi.115.com/', name: 'acw_tc' }]).then((cookies) => {
               data.cookies = cookies
               resolve(data)
             })
