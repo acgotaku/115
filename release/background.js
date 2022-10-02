@@ -93,7 +93,7 @@ const showNotification = (id, opt) => {
     const opt = {
       type: 'basic',
       title: '更新',
-      message: '115助手更新到' + manifest.version + '版本啦～\n此次更新升级到Manifest V3~',
+      message: '115助手更新到' + manifest.version + '版本啦～\n此次更新修复导出下载~',
       iconUrl: 'img/icon.jpg'
     }
     const id = new Date().getTime().toString()

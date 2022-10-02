@@ -9,11 +9,6 @@
       "run_at": "document_end"
     },
     {
-      "js": ["js/jsencrypt.js"],
-      "matches": ["*://*.115.com/*"],
-      "run_at": "document_start"
-    },
-    {
       "css": ["css/style.css"],
       "all_frames": true,
       "matches": ["*://*.115.com/*"]
@@ -34,5 +29,5 @@
   "permissions": ["cookies", "storage", "notifications", "scripting"],
   "host_permissions": ["*://*.115.com/*"],
   "name": "__MSG_appName__",
-  "version": "0.5.0"
+  "version": "0.5.1"
 }
