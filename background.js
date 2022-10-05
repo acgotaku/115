@@ -15,10 +15,7 @@ const httpSend = ({ url, options }, resolve, reject) => {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.method) {
     case 'addScript':
-      chrome.scripting.executeScript({
-        target: { tabId: sender.tab.id },
-        files: [request.data]
-      })
+      chrome.tabs.executeScript(sender.tab.id, { file: request.data })
       break
     case 'rpcData':
       httpSend(request.data, () => {
@@ -78,28 +75,3 @@ const getCookies = (details) => {
     })
   })
 }
-
-const showNotification = (id, opt) => {
-  chrome.notifications.create(id, opt, () => {})
-  setTimeout(() => {
-    chrome.notifications.clear(id, () => {})
-  }, 5000)
-}
-// 软件版本更新提示
-(async () => {
-  const manifest = chrome.runtime.getManifest()
-  const { version: previousVersion } = await chrome.storage.local.get('version')
-  if (previousVersion === '' || previousVersion !== manifest.version) {
-    const opt = {
-      type: 'basic',
-      title: '更新',
-      message: '115助手更新到' + manifest.version + '版本啦～\n此次更新修复导出下载~',
-      iconUrl: 'img/icon.jpg'
-    }
-    const id = new Date().getTime().toString()
-    showNotification(id, opt)
-    await chrome.storage.local.set({
-      version: manifest.version
-    })
-  }
-})()
