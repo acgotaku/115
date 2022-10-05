@@ -1,4 +1,4 @@
-# 115Exporter
+# 115Exporter [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ojafklbojgenkohhdgdjeaepnbjffdjf.svg)](https://chrome.google.com/webstore/detail/115exporter/ojafklbojgenkohhdgdjeaepnbjffdjf?hl=en)
 
 ## Sign in on Chrome
 
