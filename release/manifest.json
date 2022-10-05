@@ -1,6 +1,7 @@
 {
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"],
+    "persistent": false
   },
   "content_scripts": [
     {
@@ -21,13 +22,9 @@
     "48": "img/logo48.png",
     "128": "img/logo128.png"
   },
-  "web_accessible_resources": [{
-    "resources": ["js/115.js"],
-    "matches": ["*://*.115.com/*"]
-  }],
-  "manifest_version": 3,
-  "permissions": ["cookies", "storage", "notifications", "scripting"],
-  "host_permissions": ["*://*.115.com/*"],
+  "web_accessible_resources": ["js/115.js"],
+  "manifest_version": 2,
+  "permissions": ["cookies", "storage", "tabs", "*://*.115.com/*"],
   "name": "__MSG_appName__",
-  "version": "0.5.1"
+  "version": "0.4.3"
 }
