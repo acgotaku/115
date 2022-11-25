@@ -166,10 +166,10 @@ class UI {
             </div>
             <div class="setting-menu-row rpc-s">
               <div class="setting-menu-name">
-                <input class="setting-menu-input name-s" spellcheck="false">
+                <input class="setting-menu-input name-s" spellcheck="false" placeholder="名称">
               </div>
               <div class="setting-menu-value">
-                <input class="setting-menu-input url-s" spellcheck="false">
+                <input class="setting-menu-input url-s" spellcheck="false" placeholder="示例: http://token:RPC密钥@127.0.0.1:6800/jsonrpc">
                 <a class="setting-menu-button" id="addRPC" href="javascript:void(0);">添加RPC地址</a>
               </div>
             </div><!-- /.setting-menu-row -->
@@ -282,10 +282,10 @@ class UI {
       const RPC = `
         <div class="setting-menu-row rpc-s">
           <div class="setting-menu-name">
-            <input class="setting-menu-input name-s" spellcheck="false">
+            <input class="setting-menu-input name-s" spellcheck="false" placeholder="名称">
           </div>
           <div class="setting-menu-value">
-            <input class="setting-menu-input url-s" spellcheck="false">
+            <input class="setting-menu-input url-s" spellcheck="false" placeholder="示例: http://token:RPC密钥@127.0.0.1:6800/jsonrpc">
           </div>
         </div><!-- /.setting-menu-row -->`
       Array.from(rpcDOMList).pop().insertAdjacentHTML('afterend', RPC)
@@ -339,10 +339,10 @@ class UI {
         const RPC = `
           <div class="setting-menu-row rpc-s">
             <div class="setting-menu-name">
-              <input class="setting-menu-input name-s" value="${rpc.name}" spellcheck="false">
+              <input class="setting-menu-input name-s" value="${rpc.name}" spellcheck="false" placeholder="名称">
             </div>
             <div class="setting-menu-value">
-              <input class="setting-menu-input url-s" value="${rpc.url}" spellcheck="false">
+              <input class="setting-menu-input url-s" value="${rpc.url}" spellcheck="false" placeholder="示例: http://token:RPC密钥@127.0.0.1:6800/jsonrpc">
             </div>
           </div><!-- /.setting-menu-row -->`
         Array.from(rpcDOMList).pop().insertAdjacentHTML('afterend', RPC)
