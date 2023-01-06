@@ -57,7 +57,7 @@
     "sass": "^1.52.1",
     "stylelint": "^14.8.3",
     "stylelint-config-sass-guidelines": "^9.0.1",
-    "stylelint-order": "^5.0.0",
+    "stylelint-order": "^6.0.1",
     "stylelint-scss": "^4.2.0"
   },
   "dependencies": {
