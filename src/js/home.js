@@ -197,27 +197,27 @@ class Home extends Downloader {
     })
   }
 
-  getFiles (files) {
-    const list = Object.keys(files).map(pickcode => this.getFile(pickcode))
-    return new Promise((resolve) => {
-      Promise.all(list).then((items) => {
-        items.forEach((item) => {
-          if (this.isObject(item)) {
-            this.fileDownloadInfo.push({
-              name: files[item.pickcode].path + item.file_name,
-              link: item.file_url,
-              size: item.file_size,
-              sha1: files[item.pickcode].sha1,
-              cookies: item.cookies,
-              pickcode: item.pickcode
-            })
-          } else {
-            console.log(files[item])
-          }
+  async getFiles (files) {
+    for (const pickcode in files) {
+      await this.sleep(Core.getConfigData('interval'))
+      const file = await this.getFile(pickcode)
+      if (this.isObject(file)) {
+        this.fileDownloadInfo.push({
+          name: files[file.pickcode].path + file.file_name,
+          link: file.file_url,
+          size: file.file_size,
+          sha1: files[file.pickcode].sha1,
+          cookies: file.cookies,
+          pickcode: file.pickcode
         })
-        resolve()
-      })
-    })
+      } else {
+        console.log(files[file])
+      }
+    }
+  }
+
+  sleep (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
   isObject (obj) {
