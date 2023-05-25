@@ -83,7 +83,7 @@ class Core {
     } else if (type === 'idm') {
       return headerOption.map((item) => {
         const headers = item.split(': ')
-        return `${headers[0].toLowerCase()}: ${headers[1]}`
+        return `${headers[0]}: ${headers[1]}`
       }).join('\r\n')
     }
   }
