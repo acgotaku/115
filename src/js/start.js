@@ -14,4 +14,12 @@ function add115JS () {
 
 if (iframe) {
   iframe.addEventListener('load', add115JS)
+} else if (location.pathname.startsWith('/storage/')) {
+  const script = document.createElement('script')
+  script.src = chrome.runtime.getURL('js/115_new.js')
+  document.body.appendChild(script)
+  chrome.runtime.sendMessage({
+    method: 'addScript',
+    data: 'js/home_new.js'
+  })
 }

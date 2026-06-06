@@ -64,7 +64,7 @@ class Downloader {
           }
         })
       })
-    } else if (this.files.length !== 0) {
+    } else if (Object.keys(this.files).length !== 0) {
       Core.showToast('正在获取下载地址...', 'inf')
       this.getFiles(this.files).then(() => {
         this.done(this.fileDownloadInfo)
@@ -75,7 +75,7 @@ class Downloader {
     }
   }
 
-  getFiles (files) {
+  getFiles (_files) {
     throw new Error('subclass should implement this method!')
   }
 }

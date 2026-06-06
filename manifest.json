@@ -22,12 +22,12 @@
     "128": "img/logo128.png"
   },
   "web_accessible_resources": [{
-    "resources": ["js/115.js"],
+    "resources": ["js/115.js", "js/115_new.js"],
     "matches": ["*://*.115.com/*"]
   }],
   "manifest_version": 3,
   "permissions": ["cookies", "storage", "notifications", "scripting"],
   "host_permissions": ["*://*.115.com/*"],
   "name": "__MSG_appName__",
-  "version": "0.5.1"
+  "version": "1.0.0"
 }

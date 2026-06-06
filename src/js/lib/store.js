@@ -28,7 +28,7 @@ class Store extends EventEmitter {
   init () {
     chrome.storage.sync.get(null, (items) => {
       for (const key in items) {
-        chrome.storage.local.set({ key: items[key] }, () => {
+        chrome.storage.local.set({ [key]: items[key] }, () => {
           console.log('chrome first local set: %s, %s', key, items[key])
         })
       }

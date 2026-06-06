@@ -42,7 +42,7 @@ class Core {
 
   getHashParameter (name) {
     const hash = window.location.hash
-    const paramsString = hash.substr(1)
+    const paramsString = hash.slice(1)
     const searchParams = new URLSearchParams(paramsString)
     return searchParams.get(name)
   }
@@ -97,7 +97,7 @@ class Core {
         authStr = `Basic ${btoa(authStr)}`
       }
     }
-    const paramsString = parseURL.hash.substr(1)
+    const paramsString = parseURL.hash.slice(1)
     const options = {}
     const searchParams = new URLSearchParams(paramsString)
     for (const searchParam of searchParams) {
