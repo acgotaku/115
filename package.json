@@ -38,8 +38,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.0",
     "eslint-plugin-promise": "^6.0.0",
-    "esm": "^3.2.25",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-if": "^3.0.0",
@@ -63,5 +62,16 @@
   "dependencies": {
     "big-integer": "^1.6.51",
     "blueimp-md5": "^2.18.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "es5-ext",
+      "fsevents",
+      "gifsicle",
+      "mozjpeg",
+      "optipng-bin",
+      "pngquant-bin"
+    ]
   }
 }

@@ -1,3 +1,4 @@
+import { existsSync } from 'fs'
 import gulp from 'gulp'
 
 import rollupEach from 'gulp-rollup-each'
@@ -120,11 +121,14 @@ function copys () {
 }
 
 function copyVendor () {
+  if (!existsSync('src/vendor')) {
+    return Promise.resolve()
+  }
   return gulp.src(paths.vendor.src)
     .pipe(gulp.dest(paths.vendor.dest))
 }
 
-function clean () {
+export function clean () {
   return del(['dist'])
 }
 
@@ -140,11 +144,6 @@ export function compress () {
     .pipe(gulp.dest(paths.compress.dest))
 }
 
-const build = gulp.parallel(scripts, styles, images, copys, copyVendor)
-const serve = gulp.series(clean, build, watch)
-const publish = gulp.series(clean, build, compress)
-
-exports.build = build
-exports.serve = serve
-exports.publish = publish
-exports.clean = clean
+export const build = gulp.parallel(scripts, styles, images, copys, copyVendor)
+export const serve = gulp.series(clean, build, watch)
+export const publish = gulp.series(clean, build, compress)
