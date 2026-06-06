@@ -1,5 +1,5 @@
 @charset 'utf-8';
-@import './lib/share';
+@use './lib/share' as *;
 
 .text-menu {
   &-row {

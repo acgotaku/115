@@ -42,15 +42,12 @@
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-if": "^3.0.0",
-    "gulp-imagemin": "^7.1.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.1",
     "gulp-rollup-each": "^4.0.1",
-    "gulp-sass": "^5.1.0",
+    "gulp-sass": "^6.0.0",
     "gulp-terser": "^2.0.1",
     "gulp-zip": "^5.1.0",
-    "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-pngquant": "^9.0.2",
     "postcss": "^8.4.14",
     "rollup": "^2.74.1",
     "sass": "^1.52.1",
@@ -62,16 +59,5 @@
   "dependencies": {
     "big-integer": "^1.6.51",
     "blueimp-md5": "^2.18.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "es5-ext",
-      "fsevents",
-      "gifsicle",
-      "mozjpeg",
-      "optipng-bin",
-      "pngquant-bin"
-    ]
   }
 }
