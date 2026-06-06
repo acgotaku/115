@@ -83,6 +83,7 @@ class UI {
   }
 
   resetMenu () {
+    if (!this.context) return
     this.context.querySelectorAll('#more-menu-rpc-section li').forEach((item) => {
       item.remove()
     })
@@ -92,6 +93,7 @@ class UI {
   }
 
   updateMenu (configData) {
+    if (!this.context) return
     this.resetMenu()
     const { rpcList } = configData
     let rpcDOMList = ''
