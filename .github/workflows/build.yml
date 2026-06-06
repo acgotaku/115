@@ -42,7 +42,7 @@ jobs:
 
       - name: Package 115
         run: |
-          crx3 create dist -p /tmp/chrome.pem -o 115.crx
+          crx3 create dist -p /tmp/chrome.pem -o ./115.crx
           rm -rf release
           mv dist release
           mv 115.crx release
