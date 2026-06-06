@@ -144,7 +144,8 @@ class Home extends Downloader {
         options
       }, (data) => {
         if (data.file_url) {
-          const path = data.file_url.match(/.*115.com(\/.*\/)/)[1]
+          const pathMatch = data.file_url.match(/.*115.com(\/.*\/)/)
+          const path = pathMatch ? pathMatch[1] : '/'
           Core.requestCookies([{ path }]).then((cookies) => {
             data.cookies = cookies
             resolve(data)

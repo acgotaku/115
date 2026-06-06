@@ -97,9 +97,9 @@ class UI {
     let rpcDOMList = ''
     let contextMenuDOMList = ''
     rpcList.forEach((rpc) => {
-      const rpcDOM = `<a class="export-menu-item rpc-button" href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a>`
+      const rpcDOM = `<a class="export-menu-item rpc-button" href="javascript:void(0);" data-url="${rpc.url}">${rpc.name}</a>`
       rpcDOMList += rpcDOM
-      contextMenuDOMList += `<li><a href="javascript:void(0);" data-url=${rpc.url}>${rpc.name}</a></li>`
+      contextMenuDOMList += `<li><a href="javascript:void(0);" data-url="${rpc.url}">${rpc.name}</a></li>`
     })
     this.context.querySelector('#aria2List').insertAdjacentHTML('afterbegin', rpcDOMList)
 
