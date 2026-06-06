@@ -132,12 +132,13 @@ class HomeNew extends Downloader {
     }
 
     window.addEventListener('message', (event) => {
+      if (event.origin !== location.origin) return
       const type = event.data && event.data.type
       if (!type) return
       if (type === 'selected' || type === 'hovered') {
         this.reset()
         const selectedFile = event.data.data
-        if (selectedFile.length === 0) {
+        if (!Array.isArray(selectedFile) || selectedFile.length === 0) {
           Core.showToast('请选择一下你要保存的文件哦', 'war')
           return
         }

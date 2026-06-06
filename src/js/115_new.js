@@ -16,7 +16,7 @@ window.fetch = async function (...args) {
       const clone = response.clone()
       clone.json().then(data => {
         if (data && Array.isArray(data.data)) {
-          const cid = new URL(url).searchParams.get('cid') || '0'
+          const cid = new URL(url, location.href).searchParams.get('cid') || '0'
           window.__115_filesCache.set(cid, data.data)
         }
       }).catch(() => {})
@@ -96,6 +96,7 @@ function showToast (message, type) {
 }
 
 window.addEventListener('message', (event) => {
+  if (event.origin !== location.origin) return
   if (!event.data || !event.data.type) return
   switch (event.data.type) {
     case 'getSelected':
@@ -105,7 +106,7 @@ window.addEventListener('message', (event) => {
       window.postMessage({ type: 'hovered', data: getHoveredFiles() }, location.origin)
       break
     case 'showToast':
-      showToast(event.data.data.message, event.data.data.type)
+      showToast(event.data.data?.message, event.data.data?.type)
       break
   }
 })
