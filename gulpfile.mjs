@@ -5,19 +5,15 @@ import rollupEach from 'gulp-rollup-each'
 import rollupCommon from '@rollup/plugin-commonjs'
 import rollupResolve from '@rollup/plugin-node-resolve'
 
-import del from 'del'
+import { deleteAsync } from 'del'
 import gulpIf from 'gulp-if'
 
 import postcss from 'gulp-postcss'
-import dartSass from 'sass'
+import * as dartSass from 'sass'
 import gulpSass from 'gulp-sass'
 import autoprefixer from 'autoprefixer'
 import concat from 'gulp-concat'
 import cleanCSS from 'gulp-clean-css'
-
-import imagemin from 'gulp-imagemin'
-import mozjpeg from 'imagemin-mozjpeg'
-import pngquant from 'imagemin-pngquant'
 
 import plumber from 'gulp-plumber'
 
@@ -105,13 +101,6 @@ function styles () {
 
 function images () {
   return gulp.src(paths.images.src)
-    .pipe(plumber(config.plumberConfig))
-    .pipe(imagemin([
-      pngquant(),
-      mozjpeg(),
-      imagemin.svgo()], {
-      verbose: true
-    }))
     .pipe(gulp.dest(paths.images.dest))
 }
 
@@ -129,7 +118,7 @@ function copyVendor () {
 }
 
 export function clean () {
-  return del(['dist'])
+  return deleteAsync(['dist'])
 }
 
 function watch () {
