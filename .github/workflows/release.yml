@@ -13,50 +13,23 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.11.0
 
       - name: Set node version
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '25.8.2'
           cache: 'pnpm'
 
-      # - name: Install RX3-Creator
-      #   run: |
-      #     sudo add-apt-repository universe
-      #     sudo apt update
-      #     sudo apt install -y python2 vim-common
-      #     curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
-      #     sudo python2 get-pip.py
-      #     git clone https://github.com/pawliczka/CRX3-Creator.git /tmp/CRX3-Creator
-      #     sudo pip2 install -r /tmp/CRX3-Creator/requirements.txt
-
-      # - name: Install deps
-      #   run: pnpm install --frozen-lockfile
-
-      # - name: Build 115
-      #   run: pnpm build
-
-      # - name: Write pem to file
-      #   run: |
-      #     echo "$CHROME_PEM" > /tmp/chrome.pem
-      #   env:
-      #     CHROME_PEM: ${{ secrets.CHROME_PEM }}
-
-      # - name: Package 115
-      #   run: |
-      #     python /tmp/CRX3-Creator/main.py -o 115-${{ github.ref_name }}.crx -pem /tmp/chrome.pem dist
-
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
-          # artifacts: 115-${{ github.ref_name }}.crx
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
