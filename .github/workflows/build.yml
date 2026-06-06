@@ -25,15 +25,8 @@ jobs:
           node-version: '25.8.2'
           cache: 'pnpm'
 
-      - name: Install RX3-Creator
-        run: |
-          sudo add-apt-repository universe
-          sudo apt update
-          sudo apt install -y python2 vim-common
-          curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
-          sudo python2 get-pip.py
-          git clone https://github.com/pawliczka/CRX3-Creator.git /tmp/CRX3-Creator
-          sudo pip2 install -r /tmp/CRX3-Creator/requirements.txt
+      - name: Install CRX3 tools
+        run: pip3 install crx3
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
@@ -49,7 +42,7 @@ jobs:
 
       - name: Package 115
         run: |
-          python /tmp/CRX3-Creator/main.py -o 115.crx -pem /tmp/chrome.pem dist
+          crx3 dist -p /tmp/chrome.pem -o 115.crx
           rm -rf release
           mv dist release
           mv 115.crx release
