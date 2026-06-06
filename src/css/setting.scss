@@ -26,7 +26,7 @@
   &-input {
     @include button-border;
     height: 28px;
-    padding: 0 $padding-space;
+    padding: 0 $padding-space !important;
     width: 70%;
 
     &.small-o {
@@ -35,7 +35,7 @@
 
     &.textarea-o {
       height: 80px;
-      padding: 5px $padding-space;
+      padding: 5px $padding-space !important;
     }
 
     &:focus {
@@ -75,7 +75,7 @@
 
     &.blue-o {
       background-color: #3b8cff;
-      color: #fff;
+      color: #fff !important;
 
       &:hover {
         background-color: #77afff;
@@ -93,7 +93,7 @@
   }
 
   &-label {
-    padding-left: $padding-space;
+    padding-left: $padding-space !important;
 
     &.orange-o {
       color: #e15f00;
@@ -116,7 +116,7 @@
   &-value {
     align-items: center;
     display: flex;
-    padding-left: 20px;
+    padding-left: 20px !important;
     width: 80%;
   }
 
