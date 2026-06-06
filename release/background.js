@@ -3,13 +3,11 @@ const httpSend = ({ url, options }, resolve, reject) => {
     if (response.ok) {
       response.json().then((data) => {
         resolve(data)
-      })
+      }).catch(reject)
     } else {
       reject(response)
     }
-  }).catch((err) => {
-    reject(err)
-  })
+  }).catch(reject)
 }
 // https://developer.chrome.com/apps/runtime#event-onMessage
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -28,11 +26,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         sendResponse(false)
       })
       return true
-    case 'configData':
-      for (const key in request.data) {
-        localStorage.setItem(key, request.data[key])
-      }
-      break
     case 'rpcVersion':
       httpSend(request.data, (data) => {
         sendResponse(data.result.version)
@@ -93,7 +86,7 @@ const showNotification = (id, opt) => {
     const opt = {
       type: 'basic',
       title: '更新',
-      message: '115助手更新到' + manifest.version + '版本啦～\n此次更新修复导出下载~',
+      message: '115助手更新到' + manifest.version + '版本啦～\n此次更新支持新版本UI~',
       iconUrl: 'img/icon.jpg'
     }
     const id = new Date().getTime().toString()
