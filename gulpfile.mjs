@@ -5,7 +5,7 @@ import rollupEach from 'gulp-rollup-each'
 import rollupCommon from '@rollup/plugin-commonjs'
 import rollupResolve from '@rollup/plugin-node-resolve'
 
-import del from 'del'
+import { deleteAsync } from 'del'
 import gulpIf from 'gulp-if'
 
 import postcss from 'gulp-postcss'
@@ -118,7 +118,7 @@ function copyVendor () {
 }
 
 export function clean () {
-  return del(['dist'])
+  return deleteAsync(['dist'])
 }
 
 function watch () {
