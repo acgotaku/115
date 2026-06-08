@@ -29,5 +29,5 @@
   "permissions": ["cookies", "storage", "notifications", "scripting"],
   "host_permissions": ["*://*.115.com/*"],
   "name": "__MSG_appName__",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
