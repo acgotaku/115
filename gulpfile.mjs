@@ -100,8 +100,8 @@ function styles () {
 }
 
 function images () {
-  return gulp.src(paths.images.src)
-    .pipe(gulp.dest(paths.images.dest))
+  return gulp.src(paths.images.src, { encoding: false })
+    .pipe(gulp.dest(paths.images.dest, { encoding: false }))
 }
 
 function copys () {
