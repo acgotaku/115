@@ -128,7 +128,7 @@ function watch () {
 }
 
 export function compress () {
-  return gulp.src(paths.compress.src)
+  return gulp.src(paths.compress.src, { encoding: false })
     .pipe(zip('chrome.zip'))
     .pipe(gulp.dest(paths.compress.dest))
 }
