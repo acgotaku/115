@@ -48,7 +48,7 @@
     "gulp-sass": "^6.0.0",
     "gulp-terser": "^2.0.1",
     "gulp-zip": "^6.0.0",
-    "postcss": "^8.4.14",
+    "postcss": "^8.5.18",
     "rollup": "^2.74.1",
     "sass": "^1.52.1",
     "stylelint": "^14.8.3",
