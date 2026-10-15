@@ -20,6 +20,8 @@
   &-inner {
     background-color: $grey-fa;
     border-radius: 4px;
+    color: var(--ext115-text);
+    color-scheme: var(--ext115-scheme);
     margin: auto;
     width: 650px;
   }

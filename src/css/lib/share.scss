@@ -1,13 +1,18 @@
 @charset 'utf-8';
-$grey-da: #dadada;
-$grey-fa: #fafafa;
-$opacity-5: rgba(0, 0, 0, 0.5);
+$grey-da: var(--ext115-menu-hover);
+$grey-fa: var(--ext115-bg);
+$opacity-5: var(--ext115-overlay);
 $header-height: 40px;
 $row-height: 40px;
 $padding-space: 10px;
-$border: 1px solid $grey-da;
+$border: 1px solid var(--ext115-border);
 
 @mixin button-border {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--ext115-control-border);
   border-radius: 4px;
+}
+
+@mixin control-colors {
+  background-color: var(--ext115-input-bg);
+  color: var(--ext115-text);
 }

@@ -20,11 +20,12 @@
   }
 
   &-row:hover {
-    background-color: #eff4f8;
+    background-color: var(--ext115-bg-hover);
   }
 
   &-input {
     @include button-border;
+    @include control-colors;
     height: 28px;
     padding: 0 $padding-space !important;
     width: 70%;
@@ -43,6 +44,7 @@
     }
 
     &:disabled {
+      background-color: var(--ext115-input-disabled-bg);
       opacity: 0.5;
 
       &:hover {
@@ -53,7 +55,8 @@
 
   &-button {
     @include button-border;
-    color: #666;
+    background-color: transparent;
+    color: var(--ext115-text-secondary);
     height: 28px;
     line-height: 28px;
     margin-left: 10px;
@@ -63,7 +66,7 @@
     &:hover,
     &:focus {
       border-color: #5cb3fd;
-      color: #666;
+      color: var(--ext115-text-secondary);
       text-decoration: none;
     }
 
@@ -96,7 +99,7 @@
     padding-left: $padding-space !important;
 
     &.orange-o {
-      color: #e15f00;
+      color: var(--ext115-accent);
     }
 
     &.for {

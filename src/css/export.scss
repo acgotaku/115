@@ -31,13 +31,18 @@
   }
 
   &-menu {
-    background: #fff;
+    background: var(--ext115-menu-bg);
     border-radius: 0 0 3px 3px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 10px var(--ext115-shadow);
+    color-scheme: var(--ext115-scheme);
     display: none;
     flex-direction: column;
     position: absolute;
     width: 100%;
+
+    &-item {
+      color: var(--ext115-text) !important;
+    }
 
     &-item:hover {
       background: $grey-da;

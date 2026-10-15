@@ -1,0 +1,47 @@
+@charset 'utf-8';
+
+// Colors are set explicitly so the injected UI doesn't inherit the host page's theme.
+:root {
+  --ext115-scheme: light;
+  --ext115-text: #333;
+  --ext115-text-secondary: #666;
+  --ext115-bg: #fafafa;
+  --ext115-bg-hover: #eff4f8;
+  --ext115-menu-bg: #fff;
+  --ext115-menu-hover: #dadada;
+  --ext115-input-bg: #fff;
+  --ext115-input-disabled-bg: #f0f0f0;
+  --ext115-border: #dadada;
+  --ext115-control-border: rgba(0, 0, 0, 0.15);
+  --ext115-overlay: rgba(0, 0, 0, 0.5);
+  --ext115-shadow: rgba(0, 0, 0, 0.3);
+  --ext115-accent: #e15f00;
+}
+
+@mixin dark-palette {
+  --ext115-scheme: dark;
+  --ext115-text: #e5e5e5;
+  --ext115-text-secondary: #b0b0b0;
+  --ext115-bg: #24262b;
+  --ext115-bg-hover: #2f323a;
+  --ext115-menu-bg: #2a2d33;
+  --ext115-menu-hover: #3a3e47;
+  --ext115-input-bg: #1b1d21;
+  --ext115-input-disabled-bg: #2a2c31;
+  --ext115-border: #3a3d44;
+  --ext115-control-border: rgba(255, 255, 255, 0.18);
+  --ext115-overlay: rgba(0, 0, 0, 0.65);
+  --ext115-shadow: rgba(0, 0, 0, 0.6);
+  --ext115-accent: #ff8a3d;
+}
+
+// 115 sets data-theme on <html>; fall back to the OS setting when it's absent (e.g. old UI)
+:root[data-theme='dark'] {
+  @include dark-palette;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-palette;
+  }
+}

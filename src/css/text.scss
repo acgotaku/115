@@ -16,7 +16,7 @@
 
   &-button {
     @include button-border;
-    color: #666;
+    color: var(--ext115-text-secondary);
     height: 38px;
     line-height: 38px;
     padding: 0 30px;
@@ -25,13 +25,14 @@
     &:hover,
     &:focus {
       border-color: #5cb3fd;
-      color: #666;
+      color: var(--ext115-text-secondary);
       text-decoration: none;
     }
   }
 
   &-textarea {
     @include button-border;
+    @include control-colors;
     padding: 5px $padding-space;
     resize: none;
     width: 100%;
